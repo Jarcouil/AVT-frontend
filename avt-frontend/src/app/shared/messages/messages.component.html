@@ -1,0 +1,10 @@
+<div *ngIf="messagesService.messages.length"  role="alert">
+    <div  *ngFor='let message of messagesService.messages'> 
+        <div *ngIf="message.code == 200" class="alert alert-primary">
+            {{message.message}}
+        </div>
+        <div *ngIf="message.code == 400" class="alert alert-danger">
+            {{message.message}}
+        </div>
+    </div>
+</div>

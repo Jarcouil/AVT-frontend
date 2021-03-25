@@ -8,6 +8,8 @@ import { AccountComponent } from './account/account.component';
 import { UploadModule } from './upload/upload.module';
 import { MeasurementOverviewModule } from './measurement-overview/measurement-overview.module';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     MeasurementModule,
     UploadModule,
-    MeasurementOverviewModule
+    MeasurementOverviewModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

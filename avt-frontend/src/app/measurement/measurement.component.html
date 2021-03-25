@@ -1,20 +1,18 @@
-<div class="left_navbar">
-    <nav class="navbar bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="export">export</a>
-              </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="all">all</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="3dgraph">3dgraph</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="2dgraph">2dgraph</a>
-            </li>
-          </ul>
-    </nav>
-</div>
+<h4><strong>{{measurement.name}}</strong></h4>
+
+<ul>
+  <li >
+    <a  routerLink="all">Alle data</a>
+  </li>
+  <li >
+    <a  routerLink="3dgraph">3D grafiek</a>
+  </li>
+  <li >
+    <a  routerLink="2dgraph">2D grafieken</a>
+  </li>
+  <li >
+    <a  routerLink="export">Exporteren</a>
+  </li>
+</ul>
 
 <router-outlet></router-outlet>

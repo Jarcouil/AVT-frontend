@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Measurement } from '../measurement-overview/measurement';
+import { MeasurementService } from './service/measurement.service';
 
 @Component({
   selector: 'app-measurement',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeasurementComponent implements OnInit {
 
-  constructor() { }
+  measurement: Measurement = {id: 1, name: "Meting 1", description: "beschrijving", created_at: '10-11-2000'};
+
+  constructor(
+    private measurementService: MeasurementService,
+  ) { }
 
   ngOnInit(): void {
   }
+
+
 
 }
