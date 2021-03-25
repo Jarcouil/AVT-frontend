@@ -23,11 +23,11 @@ export class MeasurementOverviewService {
       )
   }
 
-  getMeasurement(id: number): Observable<Measurement> {
-    return this.http.get<Measurement>(this.apiUrl)
+  getMeasurement(id: number): Observable<Measurement[]> {
+    return this.http.get<Measurement[]>(this.apiUrl + "/" + id)
       .pipe(
         tap(_ => this.log('fetched measurement', 200)),
-        catchError(this.handleError<Measurement>('getMeasurement'))
+        catchError(this.handleError<Measurement[]>('getMeasurement'))
       )
   }
 

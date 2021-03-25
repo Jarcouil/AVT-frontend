@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Measurement } from '../measurement-overview/measurement';
-import { MeasurementService } from './service/measurement.service';
+import { MeasurementOverviewService } from '../measurement-overview/service/measurement-overview.service';
 
 @Component({
   selector: 'app-measurement',
@@ -9,15 +10,25 @@ import { MeasurementService } from './service/measurement.service';
 })
 export class MeasurementComponent implements OnInit {
 
-  measurement: Measurement = {id: 1, name: "Meting 1", description: "beschrijving", created_at: '10-11-2000'};
+  public measurement: Measurement = {id: 0, name: 'naam', description: 'beschrijving', created_at: '10-11-2000'};
 
   constructor(
-    private measurementService: MeasurementService,
-  ) { }
+    private measurementOverviewService: MeasurementOverviewService,
+    private route: ActivatedRoute
+
+  ) {}
+
 
   ngOnInit(): void {
+    this.getMeasurement();
   }
 
+  getMeasurement(): void {
+    var id = +(this.route.snapshot.paramMap.get('id') || 0);
 
 
+    this.measurementOverviewService.getMeasurement(id)
+      .subscribe(measurement => this.measurement = measurement[0])
+
+  }
 }
