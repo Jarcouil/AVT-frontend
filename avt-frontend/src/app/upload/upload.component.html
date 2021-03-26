@@ -65,44 +65,47 @@
         </div>
     </div>
 
-    <button [disabled]="uploadForm.invalid" class="btn btn-primary" type="submit">Verwerk bestand</button>
+    <button [ngClass]="{'disabled': uploadForm.invalid}" class="btn btn-primary" type="submit">Verwerk bestand</button>
   
 </form>
 <br>
 
 <div *ngIf="submit && uploadForm.controls['file'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['file'].errors && uploadForm.controls['file'].errors.required">
+    <div *ngIf="uploadForm.controls['file'].errors?.required">
         Bestand is verplicht
     </div>
-    <div *ngIf="uploadForm.controls['file'].errors && uploadForm.controls['file'].errors.extension">
+    <div *ngIf="uploadForm.controls['file'].errors?.extension">
         Bestand moet een .dad extensie hebben
     </div> 
 </div>
 
-<div *ngIf="submit && name && name.invalid" class="alert alert-danger">
-    Naam is verplicht
+<div *ngIf="submit && uploadForm.controls['name'].invalid" class="alert alert-danger">
+    <div *ngIf="uploadForm.controls['name'].errors?.required">
+        Naam is verplicht
+    </div>
+
 </div>
 
 <div *ngIf="submit && uploadForm.controls['minWaveLength'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors && uploadForm.controls['minWaveLength'].errors.required">
+    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.required">
         Minimale golflengte is verplicht
     </div> 
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors && uploadForm.controls['minWaveLength'].errors.min">
+    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.min">
         Minimale golflengte moet minimaal {{minMinWaveLength}} zijn
     </div>
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors && uploadForm.controls['minWaveLength'].errors.max">
+    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.max">
         Minimale golflengte mag maximaal {{maxMinWaveLength}} zijn
     </div>
 </div>
 
 <div *ngIf="submit && uploadForm.controls['maxWaveLength'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors && uploadForm.controls['maxWaveLength'].errors.required">
+    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.required">
         Maximale golflengte is verplicht
     </div> 
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors && uploadForm.controls['maxWaveLength'].errors.min">
+    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.min">
         Maximale golflengte moet minimaal {{minMaxWaveLength}} zijn
     </div>
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors && uploadForm.controls['maxWaveLength'].errors.max">
+    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.max">
         Maximale golflengte mag maximaal {{maxMaxWaveLength}} zijn
     </div>
 </div>
@@ -112,13 +115,17 @@
 </div>
 
 <div *ngIf="submit && uploadForm.controls['description'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['description'].errors && uploadForm.controls['description'].errors.required">
+    <div *ngIf="uploadForm.controls['description'].errors?.required">
         Beschrijving is verplicht
     </div>
 
-    <div *ngIf="uploadForm.controls['description'].errors && uploadForm.controls['description'].errors.minlength">
+    <div *ngIf="uploadForm.controls['description'].errors?.minlength">
         Minimale lengte van de beschrijving is 4
     </div>
+</div>
+
+<div *ngIf="submit && uploadForm.errors?.minLowerThanMaxValidator" class="alert alert-danger">
+    Maximale golflengte mag niet minder of gelijk zijn aan de minimale golflengte
 </div>
 
 
