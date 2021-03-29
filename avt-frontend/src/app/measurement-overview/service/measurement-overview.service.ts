@@ -31,6 +31,14 @@ export class MeasurementOverviewService {
       )
   }
 
+  deleteMeasurement(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url)
+      .pipe(
+        catchError(this.handleError('deleteMeasurement'))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { time } from '@rxweb/reactive-form-validators';
 import { MessagesService } from '../shared/messages/messages.service';
 import { Measurement } from './measurement';
 import { MeasurementOverviewService } from './service/measurement-overview.service';
@@ -24,6 +25,12 @@ export class MeasurementOverviewComponent implements OnInit {
 
   getMeasurements(): void {
     this.measurementOverviewService.getAllMeasurements().subscribe(measurements => this.measurements = measurements);
+  }
+
+  deleteMeasurement(id: number): void {
+    this.measurementOverviewService.deleteMeasurement(id).subscribe();
+    
+    this.getMeasurements();
   }
 
 }
