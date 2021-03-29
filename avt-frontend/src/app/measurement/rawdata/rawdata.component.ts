@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagesService } from 'src/app/shared/messages/messages.service';
 
 @Component({
   selector: 'app-rawdata',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RawdataComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private messagesService: MessagesService
+  ) { }
 
   ngOnInit(): void {
+    this.messagesService.clear()
   }
 
 }

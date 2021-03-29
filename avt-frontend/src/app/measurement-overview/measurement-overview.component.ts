@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagesService } from '../shared/messages/messages.service';
 import { Measurement } from './measurement';
 import { MeasurementOverviewService } from './service/measurement-overview.service';
 
@@ -11,10 +12,14 @@ export class MeasurementOverviewComponent implements OnInit {
 
   measurements: Measurement[] = [];
 
-  constructor(private measurementOverviewService: MeasurementOverviewService) { }
+  constructor(private measurementOverviewService: MeasurementOverviewService,
+    private messagesService: MessagesService
+    ) { }
 
   ngOnInit(): void {
     this.getMeasurements()
+    this.messagesService.clear()
+
   }
 
   getMeasurements(): void {

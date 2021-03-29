@@ -1,10 +1,25 @@
 <div *ngIf="messagesService.messages.length"  role="alert">
     <div  *ngFor='let message of messagesService.messages'> 
         <div *ngIf="message.code == 200" class="alert alert-primary">
-            {{message.message}}
+                {{message.message}}
+                <button 
+                    (click)="this.messagesService.clear()" 
+                    class="btn button" 
+                    style="float: right; margin-top: 0rem; margin:-0.5rem;">
+                    clear
+                </button>
+            
         </div>
         <div *ngIf="message.code == 400" class="alert alert-danger">
             {{message.message}}
+            <button 
+                (click)="this.messagesService.clear()" 
+                class="btn button" 
+                style="float: right; margin-top: 0rem; margin:-0.5rem;">
+                clear
+            </button>
+            
         </div>
     </div>
+    
 </div>

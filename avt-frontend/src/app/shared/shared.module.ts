@@ -13,7 +13,8 @@ import { MessagesComponent } from './messages/messages.component';
   ],
   exports: [
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MessagesComponent
   ]
 })
 export class SharedModule { }

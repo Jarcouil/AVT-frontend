@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { minLowerThanMaxValidator } from '../shared/directives/min-lower-than-max.directive';
+import { MessagesService } from '../shared/messages/messages.service';
 
 
 @Component({
@@ -21,11 +22,13 @@ export class UploadComponent implements OnInit {
   uploadForm: FormGroup
   constructor(
     private formBuilder: FormBuilder,
+    private messagesService: MessagesService
   ) {
     this.uploadForm = this.createForm()
    }
 
   ngOnInit(): void {
+    this.messagesService.clear()
   }
 
   onSubmit(): void {
