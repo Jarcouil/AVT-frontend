@@ -10,6 +10,8 @@ import { MeasurementOverviewModule } from './measurement-overview/measurement-ov
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { NgHttpLoaderModule } from 'ng-http-loader';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { SharedModule } from './shared/shared.module';
     UploadModule,
     MeasurementOverviewModule,
     SharedModule,
+    HttpClientModule,
+    NgHttpLoaderModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

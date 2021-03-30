@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Measurement } from 'src/app/measurement-overview/measurement';
 
@@ -22,9 +22,33 @@ export class UploadService {
       observe: 'events'
     })
       .pipe(
-        tap(_ => this.log('Posted dad file', 200)),
+        map(event => this.getEventMessage(event)),
+        tap(message => this.log(message, 200)),
         catchError(this.handleError<any>('postDadFile'))
       )
+  }
+
+  private getEventMessage(event: HttpEvent<any>) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return `Uploading bestand.`;
+  
+      case HttpEventType.UploadProgress:
+        // Compute and show the % done:
+        var percentDone = null
+        if(event.total){
+          percentDone = Math.round(100 * event.loaded / event.total);
+        } else {
+          percentDone = 0
+        }
+        return `Bestand is ${percentDone}% geüpload.`;
+  
+      case HttpEventType.Response:
+        return `Bestand is compleet verwerkt!`;
+  
+      default:
+        return `Bestand surprising upload event: ${event.type}.`;
+    }
   }
 
 
@@ -44,10 +68,10 @@ export class UploadService {
 
   private log(messageString: string, code: number) {
     let message: Message = {
-      message: `UploadServiceService: ${messageString}`,
+      message: `UploadService: ${messageString}`,
       code: code
     };
-
+    this.messagesService.clear()
     this.messagesService.add(message);
   }
 }
