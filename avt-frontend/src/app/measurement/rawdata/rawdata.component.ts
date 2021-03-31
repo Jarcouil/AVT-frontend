@@ -13,7 +13,7 @@ export class RawdataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.messagesService.clear()
+    this.messagesService.clear();
   }
 
 }

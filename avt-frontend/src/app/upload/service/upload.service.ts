@@ -24,21 +24,21 @@ export class UploadService {
         map(event => this.getEventMessage(event)),
         tap(message => this.log(message, 200)),
         catchError(this.handleError<any>('postDadFile'))
-      )
+      );
   }
 
-  private getEventMessage(event: HttpEvent<any>) {
+  private getEventMessage(event: HttpEvent<any>): string {
     switch (event.type) {
       case HttpEventType.Sent:
         return `Uploading bestand.`;
 
       case HttpEventType.UploadProgress:
         // Compute and show the % done:
-        var percentDone = null
+        let percentDone = null;
         if (event.total) {
           percentDone = Math.round(100 * event.loaded / event.total);
         } else {
-          percentDone = 0
+          percentDone = 0;
         }
         return `Bestand is ${percentDone}% geüpload.`;
 
@@ -65,12 +65,12 @@ export class UploadService {
     };
   }
 
-  private log(messageString: string, code: number) {
-    let message: Message = {
+  private log(messageString: string, httpCode: number): void {
+    const message: Message = {
       message: `UploadService: ${messageString}`,
-      code: code
+      code: httpCode
     };
-    this.messagesService.clear()
+    this.messagesService.clear();
     this.messagesService.add(message);
   }
 }

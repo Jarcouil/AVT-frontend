@@ -7,5 +7,4 @@ export class MeasurementService {
 
   constructor() { }
 
-
 }

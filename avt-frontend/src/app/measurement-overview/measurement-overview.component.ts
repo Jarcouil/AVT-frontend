@@ -12,13 +12,14 @@ export class MeasurementOverviewComponent implements OnInit {
 
   measurements: Measurement[] = [];
 
-  constructor(private measurementOverviewService: MeasurementOverviewService,
+  constructor(
+    private measurementOverviewService: MeasurementOverviewService,
     private messagesService: MessagesService
   ) { }
 
   ngOnInit(): void {
-    this.getMeasurements()
-    this.messagesService.clear()
+    this.getMeasurements();
+    this.messagesService.clear();
 
   }
 

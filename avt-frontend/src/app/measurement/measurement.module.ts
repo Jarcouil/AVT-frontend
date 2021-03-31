@@ -8,7 +8,6 @@ import { TwodimensionalgraphComponent } from './twodimensionalgraph/twodimension
 import { ExportComponent } from './export/export.component';
 import { RawdataComponent } from './rawdata/rawdata.component';
 
-
 @NgModule({
   declarations: [
     MeasurementComponent,

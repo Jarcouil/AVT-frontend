@@ -24,11 +24,11 @@ export class MeasurementComponent implements OnInit {
   }
 
   getMeasurement(): void {
-    var id = +(this.route.snapshot.paramMap.get('id') || 0);
+    const id = +(this.route.snapshot.paramMap.get('id') || 0);
 
 
     this.measurementOverviewService.getMeasurement(id)
-      .subscribe(measurement => this.measurement = measurement[0])
+      .subscribe(measurement => this.measurement = measurement[0]);
 
   }
 }

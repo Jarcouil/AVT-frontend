@@ -20,15 +20,15 @@ export class MeasurementOverviewService {
       .pipe(
         tap(_ => this.log('fetched measurements', 200)),
         catchError(this.handleError<Measurement[]>('getMeasurements', []))
-      )
+      );
   }
 
   getMeasurement(id: number): Observable<Measurement[]> {
-    return this.http.get<Measurement[]>(this.apiUrl + "/" + id)
+    return this.http.get<Measurement[]>(this.apiUrl + '/' + id)
       .pipe(
         tap(_ => this.log('fetched measurement', 200)),
         catchError(this.handleError<Measurement[]>('getMeasurement'))
-      )
+      );
   }
 
   deleteMeasurement(id: number): Observable<any> {
@@ -53,10 +53,10 @@ export class MeasurementOverviewService {
     };
   }
 
-  private log(messageString: string, code: number) {
-    let message: Message = {
+  private log(messageString: string, httpCode: number): void {
+    const message: Message = {
       message: `MeasurementService: ${messageString}`,
-      code: code
+      code: httpCode
     };
 
     this.messagesService.add(message);
