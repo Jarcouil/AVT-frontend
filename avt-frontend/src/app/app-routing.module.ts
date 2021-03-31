@@ -9,8 +9,9 @@ import { TwodimensionalgraphComponent } from './measurement/twodimensionalgraph/
 import { UploadComponent } from './upload/upload.component';
 
 const routes: Routes = [
-  { path: 'measurements/:id', component: MeasurementComponent,
-    children :[
+  {
+    path: 'measurements/:id', component: MeasurementComponent,
+    children: [
       { path: '3dgraph', component: ThreedimensionalgraphComponent },
       { path: '2dgraph', component: TwodimensionalgraphComponent },
       { path: 'all', component: RawdataComponent },

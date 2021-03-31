@@ -6,7 +6,8 @@ import { RawdataComponent } from './rawdata/rawdata.component';
 import { ThreedimensionalgraphComponent } from './threedimensionalgraph/threedimensionalgraph.component';
 
 const routes: Routes = [
-  { path: 'measurement', component: MeasurementComponent,
+  {
+    path: 'measurement', component: MeasurementComponent,
     children: [
       { path: '3dgraph', component: ThreedimensionalgraphComponent },
       { path: '2dgraph', component: ThreedimensionalgraphComponent },

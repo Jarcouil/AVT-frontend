@@ -12,7 +12,7 @@ import { UploadService } from './service/upload.service';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-  
+
   submit = false;
   minMinWaveLength = 0;
   maxMinWaveLength = 801;
@@ -26,7 +26,7 @@ export class UploadComponent implements OnInit {
     private uploadService: UploadService
   ) {
     this.uploadForm = this.createForm()
-   }
+  }
 
   ngOnInit(): void {
     this.messagesService.clear()
@@ -41,12 +41,12 @@ export class UploadComponent implements OnInit {
         file: fileList[0]
       });
       this.uploadForm.get('file')?.updateValueAndValidity()
-    }  
+    }
   }
 
   onSubmit(): void {
     this.submit = true;
-    if(this.uploadForm.valid){
+    if (this.uploadForm.valid) {
       var formData: any = new FormData();
       formData.append("file", this.getFile());
       formData.append("name", this.getName());
@@ -56,40 +56,40 @@ export class UploadComponent implements OnInit {
       formData.append("description", this.getDescription());
 
       this.uploadService.postDadFile(formData).subscribe(measurement => this.measurement = measurement)
-    } 
+    }
   }
 
-  createForm(){
+  createForm() {
     return this.formBuilder.group({
       name: ['', Validators.required],
       minWaveLength: [200, [Validators.required, Validators.min(this.minMinWaveLength), Validators.max(this.maxMinWaveLength)]],
       maxWaveLength: [800, [Validators.required, Validators.min(this.minMaxWaveLength), Validators.max(this.maxMaxWaveLength)]],
       coefficient: [-0.64, Validators.required], description: ['', [Validators.required, Validators.minLength(5)]],
-      file: [null, [Validators.required, RxwebValidators.extension({extensions:["dad"]})]] 
-    }, {validators: minLowerThanMaxValidator})
+      file: [null, [Validators.required, RxwebValidators.extension({ extensions: ["dad"] })]]
+    }, { validators: minLowerThanMaxValidator })
   }
 
-  getName(){
+  getName() {
     return this.uploadForm.get('name')?.value
   }
 
-  getDescription(){
+  getDescription() {
     return this.uploadForm.get('description')?.value
   }
 
-  getMinWaveLength(){
+  getMinWaveLength() {
     return this.uploadForm.get('minWaveLength')?.value
   }
 
-  getMaxWaveLength(){
+  getMaxWaveLength() {
     return this.uploadForm.get('maxWaveLength')?.value
   }
 
-  getCoefficient(){
+  getCoefficient() {
     return this.uploadForm.get('coefficient')?.value
   }
 
-  getFile(){
+  getFile() {
     return this.uploadForm.get('file')?.value
   }
 }

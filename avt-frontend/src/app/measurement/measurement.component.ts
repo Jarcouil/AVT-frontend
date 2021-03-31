@@ -10,13 +10,13 @@ import { MeasurementOverviewService } from '../measurement-overview/service/meas
 })
 export class MeasurementComponent implements OnInit {
 
-  public measurement: Measurement = {id: 0, name: 'naam', description: 'beschrijving', created_at: '10-11-2000'};
+  public measurement: Measurement = { id: 0, name: 'naam', description: 'beschrijving', created_at: '10-11-2000' };
 
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
     private route: ActivatedRoute
 
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {

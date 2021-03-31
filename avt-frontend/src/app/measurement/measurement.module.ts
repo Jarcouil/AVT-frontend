@@ -11,10 +11,10 @@ import { RawdataComponent } from './rawdata/rawdata.component';
 
 @NgModule({
   declarations: [
-    MeasurementComponent, 
-    ThreedimensionalgraphComponent, 
-    TwodimensionalgraphComponent, 
-    ExportComponent, 
+    MeasurementComponent,
+    ThreedimensionalgraphComponent,
+    TwodimensionalgraphComponent,
+    ExportComponent,
     RawdataComponent
   ],
   imports: [

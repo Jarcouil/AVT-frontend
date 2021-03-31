@@ -14,7 +14,7 @@
         <div class="col-md-3">
             <label for="name">
                 Naam
-              </label>
+            </label>
         </div>
         <div class="col-md-5">
             <input id="name" type="text" formControlName="name" class="form-control">
@@ -66,7 +66,7 @@
     </div>
 
     <button [ngClass]="{'disabled': uploadForm.invalid}" class="btn btn-primary" type="submit">Verwerk bestand</button>
-  
+
 </form>
 <br>
 
@@ -76,7 +76,7 @@
     </div>
     <div *ngIf="uploadForm.controls['file'].errors?.extension">
         Bestand moet een .dad extensie hebben
-    </div> 
+    </div>
 </div>
 
 <div *ngIf="submit && uploadForm.controls['name'].invalid" class="alert alert-danger">
@@ -89,7 +89,7 @@
 <div *ngIf="submit && uploadForm.controls['minWaveLength'].invalid" class="alert alert-danger">
     <div *ngIf="uploadForm.controls['minWaveLength'].errors?.required">
         Minimale golflengte is verplicht
-    </div> 
+    </div>
     <div *ngIf="uploadForm.controls['minWaveLength'].errors?.min">
         Minimale golflengte moet minimaal {{minMinWaveLength}} zijn
     </div>
@@ -101,7 +101,7 @@
 <div *ngIf="submit && uploadForm.controls['maxWaveLength'].invalid" class="alert alert-danger">
     <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.required">
         Maximale golflengte is verplicht
-    </div> 
+    </div>
     <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.min">
         Maximale golflengte moet minimaal {{minMaxWaveLength}} zijn
     </div>
