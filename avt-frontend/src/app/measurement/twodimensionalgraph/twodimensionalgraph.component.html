@@ -1,1 +1,35 @@
 <h4><strong>2D grafiek</strong></h4>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <p>Golflengte</p>
+      
+    </div>
+
+    <div class="col-md-3">
+        <p>Tijdstip</p>
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <select class="form-control">
+            <option *ngFor="let column of columns" [value]="column">{{column}}</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select class="form-control">
+            <option *ngFor="let id of ids" [value]="id">{{id}}</option>
+
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button class="btn btn-primary">Selecteren</button>
+    </div>
+</div>
+
+

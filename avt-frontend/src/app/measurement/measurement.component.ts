@@ -1,7 +1,8 @@
+import { Measurement } from './../measurement-overview/measurement';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Measurement } from '../measurement-overview/measurement';
 import { MeasurementOverviewService } from '../measurement-overview/service/measurement-overview.service';
+import { MeasurementService } from './service/measurement.service';
 
 @Component({
   selector: 'app-measurement',
@@ -10,13 +11,13 @@ import { MeasurementOverviewService } from '../measurement-overview/service/meas
 })
 export class MeasurementComponent implements OnInit {
 
-  public measurement: Measurement = { id: 0, name: 'naam', description: 'beschrijving', created_at: '10-11-2000' };
+  public measurement!: Measurement;
 
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
-    private route: ActivatedRoute
-
-  ) { }
+    private route: ActivatedRoute,
+    private measurementService: MeasurementService
+  ) {  }
 
 
   ngOnInit(): void {
@@ -26,9 +27,14 @@ export class MeasurementComponent implements OnInit {
   getMeasurement(): void {
     const id = +(this.route.snapshot.paramMap.get('id') || 0);
 
-
     this.measurementOverviewService.getMeasurement(id)
-      .subscribe(measurement => this.measurement = measurement[0]);
+      .subscribe(measurement => {
+        this.measurement = measurement[0];
+        this.setMeasurement();
+      });
+  }
 
+  setMeasurement(): void {
+    this.measurementService.setMeasurement(this.measurement);
   }
 }
