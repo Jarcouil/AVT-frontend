@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
+import { WavelengthsOfId } from '../twodimensionalgraph.component';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,28 @@ export class TwodimensionalgraphService {
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  getAllIdOfWavelength(name: string, wavelength: number): Observable<WavelengthsOfId[]> {
+    const url = `${this.apiUrl}/${name}/columns`;
+    const parameters = new HttpParams().set('c', wavelength.toString());
+
+    return this.http.get<WavelengthsOfId[]>(url, {params: parameters})
+      .pipe(
+        tap(_ => this.log('fetched columns of id', 200)),
+        catchError(this.handleError<[]>('getAllIdOfWavelength', []))
+      );
+  }
+
+  getAllWavelengthsOfId(name: string, id: number): Observable<[]> {
+    const url = `${this.apiUrl}/${name}/${id}`;
+
+    return this.http.get<[]>(url)
+      .pipe(
+        tap(_ => this.log('fetched columns of id', 200)),
+        catchError(this.handleError<[]>('getAllIdOfWavelength', []))
+      );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

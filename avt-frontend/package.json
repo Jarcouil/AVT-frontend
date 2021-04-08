@@ -21,8 +21,10 @@
     "@angular/router": "~11.2.4",
     "@rxweb/reactive-form-validators": "^2.1.2",
     "bootstrap": "^4.6.0",
+    "chart.js": "^2.9.3",
     "jquery": "^3.6.0",
     "ng-http-loader": "^9.1.0",
+    "ng2-charts": "^2.3.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
@@ -31,6 +33,7 @@
     "@angular-devkit/build-angular": "~0.1102.3",
     "@angular/cli": "~11.2.3",
     "@angular/compiler-cli": "~11.2.4",
+    "@types/chart.js": "^2.9.32",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",

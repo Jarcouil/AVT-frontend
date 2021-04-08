@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { MeasurementRoutingModule } from './measurement-routing.module';
 import { MeasurementComponent } from './measurement.component';
@@ -7,6 +8,7 @@ import { ThreedimensionalgraphComponent } from './threedimensionalgraph/threedim
 import { TwodimensionalgraphComponent } from './twodimensionalgraph/twodimensionalgraph.component';
 import { ExportComponent } from './export/export.component';
 import { RawdataComponent } from './rawdata/rawdata.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { RawdataComponent } from './rawdata/rawdata.component';
   ],
   imports: [
     CommonModule,
-    MeasurementRoutingModule
+    MeasurementRoutingModule,
+    FormsModule,
+    ChartsModule
   ]
 })
 export class MeasurementModule { }

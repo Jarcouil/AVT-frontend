@@ -4,32 +4,52 @@
 
     <div class="col-md-3">
         <p>Golflengte</p>
-      
     </div>
 
     <div class="col-md-3">
         <p>Tijdstip</p>
-        
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-3">
-        <select class="form-control">
-            <option *ngFor="let column of columns" [value]="column">{{column}}</option>
+        <select class="form-control" [(ngModel)]="selectedWavelength">
+            <option *ngFor="let column of columns" [ngValue]="column">{{column}}</option>
         </select>
     </div>
 
     <div class="col-md-3">
-        <select class="form-control">
-            <option *ngFor="let id of ids" [value]="id">{{id}}</option>
+        <select class="form-control" [(ngModel)]="selectedTimestamp">
+            <option *ngFor="let id of ids" [ngValue]="id">{{id}}</option>
 
         </select>
     </div>
 
     <div class="col-md-3">
-        <button class="btn btn-primary">Selecteren</button>
+        <button class="btn btn-primary" (click)="getGraphData()">Selecteren</button>
     </div>
 </div>
 
+<div class="chart-wrapper" *ngIf="showGraph1">
+    <canvas baseChart 
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels" 
+        [options]="lineChartOptions"
+        [colors]="lineChartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+</div>
 
+<div class="chart-wrapper" *ngIf="showGraph2">
+    <canvas baseChart 
+        [datasets]="lineChartData2" 
+        [labels]="lineChartLabels2" 
+        [options]="lineChartOptions"
+        [colors]="lineChartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+</div>
