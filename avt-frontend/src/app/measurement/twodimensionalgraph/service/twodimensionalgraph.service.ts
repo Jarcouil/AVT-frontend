@@ -16,12 +16,12 @@ export class TwodimensionalgraphService {
     private messagesService: MessagesService
   ) { }
 
-  getAllColumns(name: string): Observable<[]> {
+  getAllWavelengths(name: string): Observable<[]> {
     const url = `${this.apiUrl}/columns/${name}`;
     return this.http.get<[]>(url)
       .pipe(
         // tap(_ => this.log('fetched columns',200)),
-        catchError(this.handleError<[]>('getAllColumns', []))
+        catchError(this.handleError<[]>('getAllWavelengths', []))
       );
   }
 
@@ -38,7 +38,7 @@ export class TwodimensionalgraphService {
     const url = `${this.apiUrl}/${name}/columns`;
     const parameters = new HttpParams().set('c', wavelength.toString());
 
-    return this.http.get<WavelengthsOfId[]>(url, {params: parameters})
+    return this.http.get<WavelengthsOfId[]>(url, { params: parameters })
       .pipe(
         tap(_ => this.log('fetched columns of id', 200)),
         catchError(this.handleError<[]>('getAllIdOfWavelength', []))

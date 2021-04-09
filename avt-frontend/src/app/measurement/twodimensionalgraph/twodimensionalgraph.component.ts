@@ -5,7 +5,7 @@ import { TwodimensionalgraphService } from './service/twodimensionalgraph.servic
 import { MeasurementService } from '../service/measurement.service';
 import { Subscription } from 'rxjs';
 
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
 @Component({
@@ -15,7 +15,7 @@ import { Color, Label } from 'ng2-charts';
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   measurement!: Measurement;
-  columns = [];
+  wavelengths = [];
   ids = [];
   subscription: Subscription;
   showGraph1 = false;
@@ -23,8 +23,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
   selectedWavelength!: number;
   selectedTimestamp!: number;
-
-  // columnsOfId: WavelengthsOfId[] = [];
 
   lineChartData: ChartDataSets[] = [
     { data: [], label: 'Alle tijdstippen voor één golflengte' },
@@ -65,20 +63,19 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
         this.getItems();
       }
     );
-   }
+  }
 
   ngOnInit(): void {
     this.messagesService.clear();
   }
 
   getItems(): void {
-    this.getColumns(this.measurement.name);
+    this.getWavelengths(this.measurement.name);
     this.getIds(this.measurement.name);
   }
 
-
-  getColumns(name: string): void {
-    this.twodimensionalgraphService.getAllColumns(name).subscribe(columns => this.columns = columns);
+  getWavelengths(name: string): void {
+    this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => this.wavelengths = wavelengths);
   }
 
   getIds(name: string): void {
@@ -91,11 +88,11 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 
   getAllIdOfWavelength(): void {
-    this.twodimensionalgraphService.getAllIdOfWavelength(this.measurement.name, this.selectedWavelength )
-      .subscribe(columnsOfId => {
+    this.twodimensionalgraphService.getAllIdOfWavelength(this.measurement.name, this.selectedWavelength)
+      .subscribe(wavelengthsOfId => {
         this.showGraph1 = true;
-        this.lineChartLabels =        columnsOfId.map(columnsOfId => columnsOfId.id.toString());
-        this.lineChartData[0].data =  columnsOfId.map(columnsOfId => columnsOfId.column);
+        this.lineChartLabels = wavelengthsOfId.map(wavelengthOfId => wavelengthOfId.id.toString());
+        this.lineChartData[0].data = wavelengthsOfId.map(wavelengthOfId => wavelengthOfId.wavelength);
       });
   }
 
@@ -105,8 +102,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
         this.showGraph2 = true;
         this.lineChartLabels2 = Object.keys(wavelengthsOfId);
         this.lineChartData2[0].data = Object.values(wavelengthsOfId);
-        // console.log(wavelengthsOfId)
-      })
+      });
   }
 
   ngOnDestroy(): void {
@@ -116,5 +112,5 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
 export interface WavelengthsOfId {
   id: number;
-  column: number;
+  wavelength: number;
 }
