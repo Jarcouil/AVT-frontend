@@ -27,13 +27,13 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   // columnsOfId: WavelengthsOfId[] = [];
 
   lineChartData: ChartDataSets[] = [
-    { data: [], label: 'Tijdstippen per golflengte' },
+    { data: [], label: 'Alle tijdstippen voor één golflengte' },
   ];
 
   lineChartLabels: Label[] = [];
 
   lineChartData2: ChartDataSets[] = [
-    { data: [], label: 'Golflengtes per tijdstip' },
+    { data: [], label: 'Alle golflengtes voor één tijdstip' },
   ];
 
   lineChartLabels2: Label[] = [];
