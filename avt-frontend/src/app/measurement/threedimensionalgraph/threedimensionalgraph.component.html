@@ -1,3 +1,47 @@
 <h4><strong>3D grafiek</strong></h4>
 
+<div class="row">
+
+    <div class="col-md">
+        <p>Minimale golflengte</p>
+    </div>
+
+    <div class="col-md">
+        <p>Maximale Golflengte</p>
+    </div>
+
+    <div class="col-md">
+        <p>Minimaal tijdstip</p>
+    </div>
+
+    <div class="col-md">
+        <p>Maximaal tijdstip</p>
+    </div>
+    
+    <div class="col-md">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <input type="number" class="form-control" [(ngModel)]="xMin">
+    </div>
+
+    <div class="col-md">
+        <input type="number" class="form-control" [(ngModel)]="xMax">
+    </div>
+
+    <div class="col-md">
+        <input type="number" class="form-control" [(ngModel)]="yMin">
+    </div>
+
+    <div class="col-md">
+        <input type="number" class="form-control" [(ngModel)]="yMax">
+    </div>
+
+    <div class="col-md">
+        <button class="btn btn-primary" (click)="plotGraph()">Selecteren</button>
+    </div>
+</div>
+
 <div id="threedimensionalGraph" #threedimensionalGraph></div>

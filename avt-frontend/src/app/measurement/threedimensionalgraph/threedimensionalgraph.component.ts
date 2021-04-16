@@ -19,6 +19,30 @@ export class ThreedimensionalgraphComponent implements OnInit {
   measurement!: Measurement;
   subscription: Subscription;
   chromatograms: Array<Array<number>> = [];
+  xMin = 0;
+  xMax = 200;
+  yMin = 500;
+  yMax = 1000;
+
+  layout = {
+    autoexpand: 'true',
+    autosize: 'true',
+    width: '1000',
+    height: '800',
+    title: 'Absorptie per golflengtes en tijdstippen',
+    automargin: true,
+    scene: {
+      zaxis: { title: 'Absorptie' },
+      xaxis: {
+        title: 'Golflengte',
+        range: [this.xMin, this.xMax]
+      },
+      yaxis: {
+        title: 'Tijd',
+        range: [this.yMin, this.yMax]
+      }
+    }
+  };
 
   constructor(
     private twodimensionalgraphService: TwodimensionalgraphService,
@@ -40,7 +64,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
-        for (const value of Object.values(chromatogram)) {
+        for (const [key, value] of Object.entries(chromatogram)) {
           wavelengths.push(value);
         }
         timestamps.push(wavelengths);
@@ -50,23 +74,22 @@ export class ThreedimensionalgraphComponent implements OnInit {
     });
   }
 
+  updateAxisRange(): void {
+    this.layout.scene.xaxis.range = [this.xMin, this.xMax];
+    this.layout.scene.yaxis.range = [this.yMin, this.yMax];
+  }
+
   plotGraph(): void {
+    this.updateAxisRange();
     this.data = {
       z: this.chromatograms,
-      type: 'surface'
+      type: 'surface',
     };
 
     Plotly.newPlot(
       this.threedimensionalGraph.nativeElement,
       [this.data],
-      {
-        autoexpand: 'true',
-        autosize: 'true',
-        width: '1000',
-        height: '800',
-        title: 'Absorptie per golflengtes en tijdstippen',
-        automargin: true
-      }
+      this.layout
     );
   }
 }
