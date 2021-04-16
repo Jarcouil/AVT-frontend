@@ -55,6 +55,16 @@ export class TwodimensionalgraphService {
       );
   }
 
+  getAllData(name: string): Observable<Array<number>>{
+    const url = `${this.apiUrl}/data/${name}`;
+
+    return this.http.get<Array<number>>(url)
+      .pipe(
+        tap(_ => this.log('fetched all data', 200)),
+        catchError(this.handleError<[]>('getAllData', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
 

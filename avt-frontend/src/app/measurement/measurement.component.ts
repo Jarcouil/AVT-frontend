@@ -17,7 +17,7 @@ export class MeasurementComponent implements OnInit {
     private measurementOverviewService: MeasurementOverviewService,
     private route: ActivatedRoute,
     private measurementService: MeasurementService
-  ) {  }
+  ) { }
 
 
   ngOnInit(): void {
