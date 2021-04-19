@@ -15,8 +15,8 @@ import { Color, Label } from 'ng2-charts';
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   measurement!: Measurement;
-  wavelengths = [];
-  ids = [];
+  wavelengths: number[] = [];
+  ids: number[] = [];
   subscription: Subscription;
   showGraph1 = false;
   showGraph2 = false;

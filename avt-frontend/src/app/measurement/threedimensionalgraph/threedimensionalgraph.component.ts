@@ -16,13 +16,16 @@ export class ThreedimensionalgraphComponent implements OnInit {
 
   @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
+  
   measurement!: Measurement;
   subscription: Subscription;
   chromatograms: Array<Array<number>> = [];
-  xMin = 0;
-  xMax = 200;
-  yMin = 500;
-  yMax = 1000;
+  wavelengths: number[] = [];
+  ids: number[] = [];
+  xMin!: number;
+  xMax!: number;
+  yMin!: number;
+  yMax!: number;
 
   layout = {
     autoexpand: 'true',
@@ -51,6 +54,8 @@ export class ThreedimensionalgraphComponent implements OnInit {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
+        this.getWavelengths(this.measurement.name);
+        this.getIds(this.measurement.name);
         this.getAllData();
       }
     );
@@ -74,6 +79,22 @@ export class ThreedimensionalgraphComponent implements OnInit {
     });
   }
 
+  getWavelengths(name: string): void {
+    this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => {
+      this.wavelengths = wavelengths;
+      this.xMin = wavelengths[0];
+      this.xMax = wavelengths[wavelengths.length - 1];
+    });
+  }
+
+  getIds(name: string): void {
+    this.twodimensionalgraphService.getAllIds(name).subscribe(ids => {
+      this.ids = ids;
+      this.yMin = ids[0];
+      this.yMax = ids[ids.length - 1];
+    });
+  }
+
   updateAxisRange(): void {
     this.layout.scene.xaxis.range = [this.xMin, this.xMax];
     this.layout.scene.yaxis.range = [this.yMin, this.yMax];
@@ -81,9 +102,20 @@ export class ThreedimensionalgraphComponent implements OnInit {
 
   plotGraph(): void {
     this.updateAxisRange();
+
+    const hoverText = this.ids.map((yi, i) => this.wavelengths.map((xi, j) => `
+      Golflengte: ${xi}<br>
+      Tijd: ${yi}<br>
+      Absorptie: ${this.chromatograms[i][j]}
+      `));
+
     this.data = {
+      x: this.wavelengths,
+      y: this.ids,
       z: this.chromatograms,
       type: 'surface',
+      hoverinfo: 'text',
+      text: hoverText,
     };
 
     Plotly.newPlot(

@@ -16,18 +16,18 @@ export class TwodimensionalgraphService {
     private messagesService: MessagesService
   ) { }
 
-  getAllWavelengths(name: string): Observable<[]> {
+  getAllWavelengths(name: string): Observable<number[]> {
     const url = `${this.apiUrl}/columns/${name}`;
-    return this.http.get<[]>(url)
+    return this.http.get<number[]>(url)
       .pipe(
         // tap(_ => this.log('fetched columns',200)),
         catchError(this.handleError<[]>('getAllWavelengths', []))
       );
   }
 
-  getAllIds(name: string): Observable<[]> {
+  getAllIds(name: string): Observable<number[]> {
     const url = `${this.apiUrl}/id/${name}`;
-    return this.http.get<[]>(url)
+    return this.http.get<number[]>(url)
       .pipe(
         // tap(_ => this.log('fetched ids',200)),
         catchError(this.handleError<[]>('getAllIds', []))
