@@ -7,6 +7,8 @@ import { RawdataComponent } from './measurement/rawdata/rawdata.component';
 import { ThreedimensionalgraphComponent } from './measurement/threedimensionalgraph/threedimensionalgraph.component';
 import { TwodimensionalgraphComponent } from './measurement/twodimensionalgraph/twodimensionalgraph.component';
 import { UploadComponent } from './upload/upload.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from './shared/services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -18,10 +20,13 @@ const routes: Routes = [
       { path: 'all', component: RawdataComponent },
       { path: 'export', component: ExportComponent },
       { path: '**', redirectTo: 'all' }
-    ]
+    ],
+    canActivate: [AuthGuardService]
   },
-  { path: 'measurements', component: MeasurementOverviewComponent },
-  { path: 'upload', component: UploadComponent }
+  { path: 'measurements', component: MeasurementOverviewComponent, canActivate: [AuthGuardService] },
+  { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component: LoginComponent }
+
 ];
 
 @NgModule({

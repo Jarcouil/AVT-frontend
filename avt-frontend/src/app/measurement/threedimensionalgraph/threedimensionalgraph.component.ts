@@ -16,7 +16,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
 
   @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
-  
+
   measurement!: Measurement;
   subscription: Subscription;
   chromatograms: Array<Array<number>> = [];

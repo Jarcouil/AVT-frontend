@@ -15,5 +15,20 @@ li a {
     padding: 16px;
     text-decoration: none;
 }
+
+button {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    border: none;
+    float: right;
+}
  
 li a:hover { background-color: #111111; }
+
+button:hover { 
+    background-color: #111111;
+    color: white;
+ }
