@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.auth.getToken()) {
-      this.router.navigate(['measurement']);
+      this.router.navigate(['measurements']);
     }
   }
 

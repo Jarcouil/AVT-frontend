@@ -9,24 +9,29 @@ import { TwodimensionalgraphComponent } from './measurement/twodimensionalgraph/
 import { UploadComponent } from './upload/upload.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './shared/services/auth-guard.service';
+import { ProtectedComponent } from './protected/protected.component';
 
 const routes: Routes = [
   {
-    path: 'measurements/:id', component: MeasurementComponent,
+    path: '', component: ProtectedComponent, canActivate: [AuthGuardService],
     children: [
-      { path: '', redirectTo: 'all', pathMatch: 'full' },
-      { path: '3dgraph', component: ThreedimensionalgraphComponent },
-      { path: '2dgraph', component: TwodimensionalgraphComponent },
-      { path: 'all', component: RawdataComponent },
-      { path: 'export', component: ExportComponent },
-      { path: '**', redirectTo: 'all' }
-    ],
-    canActivate: [AuthGuardService]
+      { path: 'measurements/:id', component: MeasurementComponent,
+      children: [
+        { path: '', redirectTo: 'all', pathMatch: 'full' },
+        { path: '3dgraph', component: ThreedimensionalgraphComponent },
+        { path: '2dgraph', component: TwodimensionalgraphComponent },
+        { path: 'all', component: RawdataComponent },
+        { path: 'export', component: ExportComponent },
+        { path: '**', redirectTo: 'all' }
+      ],
+      canActivate: [AuthGuardService]
+    },
+    { path: 'measurements', component: MeasurementOverviewComponent, canActivate: [AuthGuardService] },
+    { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
+    ]
   },
-  { path: 'measurements', component: MeasurementOverviewComponent, canActivate: [AuthGuardService] },
-  { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
-  { path: 'login', component: LoginComponent }
-
+  { path: '**', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

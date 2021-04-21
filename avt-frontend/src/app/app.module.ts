@@ -8,17 +8,15 @@ import { AccountComponent } from './account/account.component';
 import { UploadModule } from './upload/upload.module';
 import { LoginModule } from './login/login.module';
 import { MeasurementOverviewModule } from './measurement-overview/measurement-overview.module';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor-service.service';
+import { ProtectedModule } from './protected/protected.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     AccountComponent,
   ],
   imports: [
@@ -29,7 +27,7 @@ import { InterceptorService } from './shared/services/interceptor-service.servic
     UploadModule,
     LoginModule,
     MeasurementOverviewModule,
-    SharedModule,
+    ProtectedModule,
     HttpClientModule,
     NgHttpLoaderModule.forRoot()
   ],
