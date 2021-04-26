@@ -10,6 +10,7 @@ import { UploadComponent } from './upload/upload.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { ProtectedComponent } from './protected/protected.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     },
     { path: 'measurements', component: MeasurementOverviewComponent, canActivate: [AuthGuardService] },
     { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
+    { path: 'account', component: AccountComponent, canActivate: [AuthGuardService] },
     ]
   },
   { path: '**', component: LoginComponent },

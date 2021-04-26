@@ -40,7 +40,7 @@ export class TwodimensionalgraphService {
 
     return this.http.get<WavelengthsOfId[]>(url, { params: parameters })
       .pipe(
-        tap(_ => this.log('fetched columns of id', 200)),
+        // tap(_ => this.log('fetched columns of id', 200)),
         catchError(this.handleError<[]>('getAllIdOfWavelength', []))
       );
   }
@@ -50,7 +50,7 @@ export class TwodimensionalgraphService {
 
     return this.http.get<[]>(url)
       .pipe(
-        tap(_ => this.log('fetched columns of id', 200)),
+        // tap(_ => this.log('fetched columns of id', 200)),
         catchError(this.handleError<[]>('getAllIdOfWavelength', []))
       );
   }
@@ -60,7 +60,7 @@ export class TwodimensionalgraphService {
 
     return this.http.get<Array<number>>(url)
       .pipe(
-        tap(_ => this.log('fetched all data', 200)),
+        // tap(_ => this.log('fetched all data', 200)),
         catchError(this.handleError<[]>('getAllData', []))
       );
   }

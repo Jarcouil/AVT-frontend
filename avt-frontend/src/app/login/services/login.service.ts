@@ -9,7 +9,7 @@ import { Message, MessagesService } from 'src/app/shared/messages/messages.servi
 })
 export class LoginService {
 
-  private apiUrl = 'http://localhost:3000/v1/login';
+  private apiUrl = 'http://localhost:3000/v1/auth/login';
 
   constructor(
     private http: HttpClient,
@@ -18,7 +18,7 @@ export class LoginService {
   login(uploadForm: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, uploadForm)
       .pipe(
-        tap(_ => this.log('Logged in', 200)),
+        // tap(_ => this.log('Logged in', 200)),
         catchError(this.handleError<[]>('login', []))
       );
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../../account/user';
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +8,24 @@ export class AuthService {
   constructor() {
   }
 
-  getUserDetails(): string {
-    return localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') || '') : null;
+  getUserDetails(): User {
+    return localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
   }
 
   setDataInLocalStorage(variableName: string, data: any): void {
     localStorage.setItem(variableName, data);
   }
 
+  setUserInLocalStorage(user: User): void {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
   getToken(): any {
-    return localStorage.getItem('token');
+    return localStorage.getItem('accessToken');
+  }
+
+  getUser(): any {
+    return localStorage.getItem('user');
   }
 
   clearStorage(): void {
@@ -24,6 +33,6 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
   }
 }

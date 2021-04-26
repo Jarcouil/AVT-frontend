@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { LoginService } from './services/login.service';
+import { User } from '../account/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,8 +34,10 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.loginService.login(formValues).subscribe(
         (res: any) => {
-          if (res.token) {
-            this.auth.setDataInLocalStorage('token', res.access_token);
+          if (res.accessToken) {
+            this.auth.setDataInLocalStorage('accessToken', res.accessToken);
+            const user: User = {id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt};
+            this.auth.setUserInLocalStorage(user);
             this.router.navigate(['measurements']);
           }
         }, err => {
