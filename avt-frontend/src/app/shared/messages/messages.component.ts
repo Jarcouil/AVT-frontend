@@ -10,6 +10,11 @@ export class MessagesComponent implements OnInit {
 
   constructor(public messagesService: MessagesService) { }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
   }
 

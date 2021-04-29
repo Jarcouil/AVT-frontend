@@ -19,22 +19,36 @@ export class MeasurementComponent implements OnInit {
     private measurementService: MeasurementService
   ) { }
 
-
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
     this.getMeasurement();
   }
 
+  /**
+   * Get current measurement from overview service
+   *
+   * @returns void
+   */
   getMeasurement(): void {
     const id = +(this.route.snapshot.paramMap.get('id') || 0);
 
     this.measurementOverviewService.getMeasurement(id)
-      .subscribe(measurement => {
-        this.measurement = measurement[0];
-        this.setMeasurement();
-      });
+      .subscribe(measurement => this.setMeasurement(measurement));
   }
 
-  setMeasurement(): void {
-    this.measurementService.setMeasurement(this.measurement);
+  /**
+   * Set current measurement
+   *
+   * @param measurement Measurment
+   *
+   * @returns void
+   */
+  setMeasurement(measurement: Measurement): void {
+    this.measurement = measurement;
+    this.measurementService.setMeasurement(measurement);
   }
 }

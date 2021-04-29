@@ -7,11 +7,23 @@ export class MessagesService {
 
   messages: Message[] = [];
 
-  add(message: Message) {
+  /**
+   * Add message to messages
+   *
+   * @param message Message
+   *
+   * @returns void
+   */
+  add(message: Message): void {
     this.messages.push(message);
   }
 
-  clear() {
+  /**
+   * Clear all messages
+   *
+   * @returns void
+   */
+  clear(): void {
     this.messages = [];
   }
 }

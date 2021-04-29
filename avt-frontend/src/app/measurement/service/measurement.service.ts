@@ -13,6 +13,13 @@ export class MeasurementService {
   constructor(
   ) { }
 
+  /**
+   * Set measurement
+   *
+   * @param measurement Measurement
+   *
+   * @returns void
+   */
   setMeasurement(measurement: Measurement): void{
     this.measurementSubject.next(measurement);
   }

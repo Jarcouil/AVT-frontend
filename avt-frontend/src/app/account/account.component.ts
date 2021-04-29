@@ -17,7 +17,19 @@ export class AccountComponent implements OnInit {
     this.user = this.auth.getUserDetails();
    }
 
+  /**
+   * On init
+   */
   ngOnInit(): void {
+  }
+
+  /**
+   * check if user in storage is admin
+   *
+   * @returns boolean
+   */
+  isAdmin(): boolean {
+    return this.user.isAdmin === 1;
   }
 
 }

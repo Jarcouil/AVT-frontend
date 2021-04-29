@@ -15,15 +15,28 @@ export class LoginService {
     private http: HttpClient,
     private messagesService: MessagesService) { }
 
+  /**
+   * login
+   *
+   * @param uploadForm FormData
+   * @returns Observable<any>
+   */
   login(uploadForm: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, uploadForm)
       .pipe(
-        // tap(_ => this.log('Logged in', 200)),
+        tap(_ => this.log('Logged in', 200)),
         catchError(this.handleError<[]>('login', []))
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  /**
+   * handle error
+   *
+   * @param operation string
+   * @param result T
+   * @returns any
+   */
+  private handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -37,6 +50,14 @@ export class LoginService {
     };
   }
 
+  /**
+   * log message with http code
+   *
+   * @param messageString string
+   * @param httpCode number
+   *
+   * @returns void
+   */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
       message: `Loginservice: ${messageString}`,

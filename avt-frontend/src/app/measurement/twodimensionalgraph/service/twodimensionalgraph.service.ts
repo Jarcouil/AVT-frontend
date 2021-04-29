@@ -16,8 +16,15 @@ export class TwodimensionalgraphService {
     private messagesService: MessagesService
   ) { }
 
-  getAllWavelengths(name: string): Observable<number[]> {
-    const url = `${this.apiUrl}/columns/${name}`;
+  /**
+   * Get all wavelengths of measurement
+   *
+   * @param measurementName string
+   *
+   * @returns Observable<number[]>
+   */
+  getAllWavelengths(measurementName: string): Observable<number[]> {
+    const url = `${this.apiUrl}/columns/${measurementName}`;
     return this.http.get<number[]>(url)
       .pipe(
         // tap(_ => this.log('fetched columns',200)),
@@ -25,8 +32,15 @@ export class TwodimensionalgraphService {
       );
   }
 
-  getAllIds(name: string): Observable<number[]> {
-    const url = `${this.apiUrl}/id/${name}`;
+  /**
+   * Get all ids of measurement
+   *
+   * @param measurementName string
+   *
+   * @returns Observable<number[]>
+   */
+  getAllIds(measurementName: string): Observable<number[]> {
+    const url = `${this.apiUrl}/id/${measurementName}`;
     return this.http.get<number[]>(url)
       .pipe(
         // tap(_ => this.log('fetched ids',200)),
@@ -34,8 +48,16 @@ export class TwodimensionalgraphService {
       );
   }
 
-  getAllIdOfWavelength(name: string, wavelength: number): Observable<WavelengthsOfId[]> {
-    const url = `${this.apiUrl}/${name}/columns`;
+  /**
+   * Get all ids of given measurment measurementName and wavelength
+   *
+   * @param measurementName string
+   * @param wavelength number
+   *
+   * @returns Observable<WavelengthsOfId[]>
+   */
+  getAllIdOfWavelength(measurementName: string, wavelength: number): Observable<WavelengthsOfId[]> {
+    const url = `${this.apiUrl}/${measurementName}/columns`;
     const parameters = new HttpParams().set('c', wavelength.toString());
 
     return this.http.get<WavelengthsOfId[]>(url, { params: parameters })
@@ -45,8 +67,16 @@ export class TwodimensionalgraphService {
       );
   }
 
-  getAllWavelengthsOfId(name: string, id: number): Observable<[]> {
-    const url = `${this.apiUrl}/${name}/${id}`;
+  /**
+   * Get all wavelengths of given measurment measurementName and id
+   *
+   * @param measurementName string
+   * @param id number
+   *
+   * @returns Observable<[]>
+   */
+  getAllWavelengthsOfId(measurementName: string, id: number): Observable<[]> {
+    const url = `${this.apiUrl}/${measurementName}/${id}`;
 
     return this.http.get<[]>(url)
       .pipe(
@@ -55,8 +85,16 @@ export class TwodimensionalgraphService {
       );
   }
 
-  getAllData(name: string): Observable<Array<number>>{
-    const url = `${this.apiUrl}/data/${name}`;
+  /**
+   * Get all data for 3d graph
+   *
+   * @param measurementName string
+   *
+   * @returns Observable<Array<number>>
+   */
+  getAllData(measurementName: string): Observable<Array<number>>{
+    // TODO 3d graph in 2d service
+    const url = `${this.apiUrl}/data/${measurementName}`;
 
     return this.http.get<Array<number>>(url)
       .pipe(

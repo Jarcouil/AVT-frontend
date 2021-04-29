@@ -18,6 +18,14 @@ export class InterceptorService {
   ) {
   }
 
+  /**
+   * Intercept http request
+   *
+   * @param request HttpRequest
+   * @param next HttpHandler
+   *
+   * @returns Observable<HttpEvent<any>>
+   */
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler

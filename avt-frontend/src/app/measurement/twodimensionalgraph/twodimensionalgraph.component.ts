@@ -60,33 +60,67 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
-        this.getItems();
+        this.getRanges();
       }
     );
   }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
     this.messagesService.clear();
   }
 
-  getItems(): void {
+  /**
+   * Get ranges of wavelengths and getIds of current measurement
+   *
+   * @returns void
+   */
+  getRanges(): void {
     this.getWavelengths(this.measurement.name);
     this.getIds(this.measurement.name);
   }
 
+  /**
+   * Get wavelenths of given measurment
+   *
+   * @param name string
+   *
+   * @returns void
+   */
   getWavelengths(name: string): void {
     this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => this.wavelengths = wavelengths);
   }
 
+  /**
+   * Get ids of given measurment
+   *
+   * @param name string
+   *
+   * @returns void
+   */
   getIds(name: string): void {
     this.twodimensionalgraphService.getAllIds(name).subscribe(ids => this.ids = ids);
   }
 
+  /**
+   * Get all data for the graphs
+   *
+   * @returns void
+   */
   getGraphData(): void {
     this.getAllIdOfWavelength();
     this.getAllWavelengthsOfId();
   }
 
+  /**
+   * Get all ids data for the selected wavelength
+   *
+   * @returns void
+   */
   getAllIdOfWavelength(): void {
     this.twodimensionalgraphService.getAllIdOfWavelength(this.measurement.name, this.selectedWavelength)
       .subscribe(wavelengthsOfId => {
@@ -96,6 +130,11 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Get all wavelengths data for the selected id/timestamp
+   *
+   * @returns void
+   */
   getAllWavelengthsOfId(): void {
     this.twodimensionalgraphService.getAllWavelengthsOfId(this.measurement.name, this.selectedTimestamp)
       .subscribe(wavelengthsOfId => {
@@ -105,6 +144,11 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * On destory
+   *
+   * @returns void
+   */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

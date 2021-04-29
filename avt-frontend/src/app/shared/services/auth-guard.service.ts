@@ -10,6 +10,15 @@ export class AuthGuardService {
     private authService: AuthService,
     private router: Router
   ) { }
+
+  /**
+   * Check if the user is validated
+   *
+   * @param next ActivatedRouteSnapshot
+   * @param state RouterStateSnapshot
+   *
+   * @returns boolean
+   */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.getToken()) {
       return true;

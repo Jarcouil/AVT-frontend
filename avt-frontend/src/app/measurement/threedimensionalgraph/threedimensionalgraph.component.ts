@@ -61,9 +61,19 @@ export class ThreedimensionalgraphComponent implements OnInit {
     );
   }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Get all data for the graph and plot graph
+   *
+   * @returns void
+   */
   getAllData(): void {
     this.twodimensionalgraphService.getAllData(this.measurement.name).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
@@ -79,6 +89,13 @@ export class ThreedimensionalgraphComponent implements OnInit {
     });
   }
 
+  /**
+   * Get all wavelengths of given measurement
+   *
+   * @param name string
+   *
+   * @returns void
+   */
   getWavelengths(name: string): void {
     this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
@@ -87,7 +104,15 @@ export class ThreedimensionalgraphComponent implements OnInit {
     });
   }
 
+  /**
+   * Get all ids of given measurement
+   *
+   * @param name string
+   *
+   * @returns void
+   */
   getIds(name: string): void {
+    // TODO change ids to timestamps
     this.twodimensionalgraphService.getAllIds(name).subscribe(ids => {
       this.ids = ids;
       this.yMin = ids[0];
@@ -95,11 +120,21 @@ export class ThreedimensionalgraphComponent implements OnInit {
     });
   }
 
+  /**
+   * Update the axis range of the graph based on the formValues
+   *
+   * @returns void
+   */
   updateAxisRange(): void {
     this.layout.scene.xaxis.range = [this.xMin, this.xMax];
     this.layout.scene.yaxis.range = [this.yMin, this.yMax];
   }
 
+  /**
+   * Plot the 3d graph
+   *
+   * @returns void
+   */
   plotGraph(): void {
     this.updateAxisRange();
 

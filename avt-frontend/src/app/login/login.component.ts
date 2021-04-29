@@ -23,12 +23,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
     if (this.auth.getToken()) {
       this.router.navigate(['measurements']);
     }
   }
 
+  /**
+   * Login with loginService and redirect to measurements
+   *
+   * @returns void
+   */
   login(): void {
     const formValues = this.form.value;
     if (this.form.valid) {
@@ -36,7 +46,7 @@ export class LoginComponent implements OnInit {
         (res: any) => {
           if (res.accessToken) {
             this.auth.setDataInLocalStorage('accessToken', res.accessToken);
-            const user: User = {id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt};
+            const user: User = { id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt };
             this.auth.setUserInLocalStorage(user);
             this.router.navigate(['measurements']);
           }
@@ -45,9 +55,5 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-  }
-
-  logout(): void {
-    this.auth.logout();
   }
 }
