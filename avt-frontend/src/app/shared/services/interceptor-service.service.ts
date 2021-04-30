@@ -7,9 +7,13 @@ import { Router } from '@angular/router';
 import { tap, catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
+const TOKEN_HEADER_KEY = 'x-access-token';   // for Node.js Express back-end
+
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class InterceptorService {
 
   constructor(
@@ -30,11 +34,11 @@ export class InterceptorService {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    request = request.clone({ headers: request.headers.set('Accept', 'application/json') }).clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.auth.getToken()}`
-      }
-    });
+    const token = this.auth.getToken();
+    if (token != null) {
+      request = request.clone({ headers: request.headers.set('Accept', 'application/json') })
+        .clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
+    }
 
     return next.handle(request);
   }

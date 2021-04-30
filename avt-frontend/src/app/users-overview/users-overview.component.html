@@ -1,23 +1,23 @@
-<h4><strong>Alle metingen</strong></h4>
+<h4><strong>Alle gebruikers</strong></h4>
 
 <table class="table table-striped">
     <caption>Lijst met metingen</caption>
     <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Naam</th>
-            <th scope="col">Beschrijving</th>
-            <th scope="col">Gemaakt op</th>
+            <th scope="col">Gebruikersnaam</th>
+            <th scope="col">Emailadres</th>
+            <th scope="col">Administrator</th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let measurement of measurements">
-            <td>{{measurement.id}}</td>
-            <td><a href="measurements/{{measurement.id}}/all">{{measurement.name}}</a></td>
-            <td>{{measurement.created_at}}</td>
-            <td>{{measurement.description}}</td>
-            <td><button class="btn" (click)="this.deleteMeasurement(measurement.id)">
+        <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{getAdminText(user.isAdmin)}}</td>
+            <td><button class="btn" (click)="this.deleteUser(user.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
@@ -29,3 +29,5 @@
         </tr>
     </tbody>
 </table>
+
+<button class="btn btn-primary" style="margin-right: 10px" routerLink="/account">Terug naar account pagina</button>

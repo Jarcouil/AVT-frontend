@@ -13,11 +13,13 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor-service.service';
 import { ProtectedModule } from './protected/protected.module';
+import { UsersOverviewComponent } from './users-overview/users-overview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
+    UsersOverviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -47,5 +47,4 @@ export class MeasurementOverviewComponent implements OnInit {
     this.measurementOverviewService.deleteMeasurement(id).subscribe();
     this.getMeasurements();
   }
-
 }
