@@ -35,7 +35,9 @@ export class InterceptorService {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = this.auth.getToken();
-    if (token != null) {
+    const currentUser = this.auth.currentUserValue;
+
+    if (token != null && currentUser) {
       request = request.clone({ headers: request.headers.set('Accept', 'application/json') })
         .clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
     }

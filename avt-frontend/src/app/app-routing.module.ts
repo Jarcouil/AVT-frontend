@@ -12,6 +12,7 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 import { ProtectedComponent } from './protected/protected.component';
 import { AccountComponent } from './account/account.component';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
+import { Role } from './models/role';
 
 const routes: Routes = [
   {
@@ -31,7 +32,7 @@ const routes: Routes = [
     { path: 'measurements', component: MeasurementOverviewComponent, canActivate: [AuthGuardService] },
     { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuardService] },
-    { path: 'users', component: UsersOverviewComponent, canActivate: [AuthGuardService] },
+    { path: 'users', component: UsersOverviewComponent, canActivate: [AuthGuardService], data: { roles: [Role.Admin] } },
     ]
   },
   { path: '**', component: LoginComponent },

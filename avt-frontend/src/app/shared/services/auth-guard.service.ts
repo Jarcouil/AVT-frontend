@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService {
+export class AuthGuardService implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router
@@ -20,12 +20,20 @@ export class AuthGuardService {
    * @returns boolean
    */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.getToken()) {
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser) {
+      if (next.data.roles && next.data.roles.indexOf(currentUser.isAdmin) === -1) {
+        // role not authorised so redirect to home page
+        this.router.navigate(['/measurements']);
+        return false;
+      }
+
+      // authorised so return true
       return true;
     }
+
     // navigate to login page
     this.router.navigate(['/login']);
-    // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }
 }
