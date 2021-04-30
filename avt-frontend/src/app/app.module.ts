@@ -1,3 +1,4 @@
+import { RegisterUserModule } from './register-user/register-user.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -27,6 +28,7 @@ import { UsersOverviewComponent } from './users-overview/users-overview.componen
     AppRoutingModule,
     MeasurementModule,
     UploadModule,
+    RegisterUserModule,
     LoginModule,
     MeasurementOverviewModule,
     ProtectedModule,
