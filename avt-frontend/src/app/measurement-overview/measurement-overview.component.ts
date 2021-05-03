@@ -1,7 +1,7 @@
+import { Measurement } from './measurement';
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '../shared/messages/messages.service';
 import { AuthService } from '../shared/services/auth.service';
-import { Measurement } from './measurement';
 import { MeasurementOverviewService } from './service/measurement-overview.service';
 
 @Component({
@@ -41,13 +41,16 @@ export class MeasurementOverviewComponent implements OnInit {
   /**
    * Delete measurment of given id and retreive measurements again
    *
-   * @param id number
+   * @param measurement Measurement
    *
    * @returns void
    */
-  deleteMeasurement(id: number): void {
-    this.measurementOverviewService.deleteMeasurement(id).subscribe();
-    this.getMeasurements();
+  deleteMeasurement(measurement: Measurement): void {
+    if (confirm('Weet je zeker dat je meting ' + measurement.name + ' wilt verwijderen?')) {
+      this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
+        this.getMeasurements();
+      });
+    }
   }
 
   /**

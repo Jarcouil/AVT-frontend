@@ -37,17 +37,6 @@ export class UsersOverviewComponent implements OnInit {
   }
 
   /**
-   * Get username of user with given id
-   *
-   * @param id number
-   *
-   * @returns username
-   */
-  getUserNameOfId(id: number): string {
-    return this.users.find(user => user.id === id)?.username || 'gebruikersnaam';
-  }
-
-  /**
    * Get text if user is admin
    *
    * @param i number
@@ -65,14 +54,15 @@ export class UsersOverviewComponent implements OnInit {
   /**
    * Delete user of given id and retreive users again
    *
-   * @param id number
+   * @param user User
    *
    * @returns void
    */
-  deleteUser(id: number): void {
-    if (confirm('Weet je zeker dat je gebruiker ' + this.getUserNameOfId(id) + ' wilt verwijderen?')) {
-      this.userOverviewService.deleteUser(id).subscribe();
-      this.getUsers();
+  deleteUser(user: User): void {
+    if (confirm('Weet je zeker dat je gebruiker ' + user.username + ' wilt verwijderen?')) {
+      this.userOverviewService.deleteUser(user.id).subscribe(result => {
+        this.getUsers();
+      });
     }
   }
 }
