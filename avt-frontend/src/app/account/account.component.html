@@ -1,39 +1,24 @@
 <h4><strong>Account pagina</strong></h4>
-<div class="row">
-    <div class="col-md-2">
-        <p>Gebruikersnaam:</p>
-    </div>
-    <div class="col-md-2">
-        <p>{{user!.username}}</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-        <p>Emailadres:</p>
-    </div>
-    <div class="col-md-2">
-        <p>{{user!.email}}</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2" style="float: right">
-        <p>Rol:</p>
-    </div>
-    <div class="col-md-2">
-        <p>{{admin[user!.isAdmin]}}</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-        <p>Aangemaakt op:</p>
-    </div>
-    <div class="col-md-2">
-        <p>{{user!.createdAt}}</p>
-    </div>
-</div>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>Gebruikersnaam</td>
+            <td>{{user!.username}}</td>
+        </tr>
+        <tr>
+            <td>Emailadres</td>
+            <td>{{user!.email}}</td>
+        </tr>
+        <tr>
+            <td>Administrator</td>
+            <td>{{getAdminText(user!.isAdmin)}}</td>
+        </tr>
+        <tr>
+            <td>Aangemaakt op:</td>
+            <td>{{user!.createdAt}}</td>
+        </tr>
+    </tbody>
+</table>
 
 <div *ngIf="isAdmin()">
     <button class="btn btn-primary" style="margin-right: 10px" routerLink="/users">Accounts overzicht</button>

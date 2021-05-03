@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private auth: AuthService,
   ) {
-    this.user = this.auth.getUserDetails();
+    this.user = this.auth.currentUserValue;
    }
 
   /**
@@ -31,5 +31,20 @@ export class AccountComponent implements OnInit {
   isAdmin(): boolean {
     return this.user.isAdmin === 1;
   }
+
+  /**
+   * Get text if user is admin
+   *
+   * @param i number
+   *
+   * @returns string
+   */
+     getAdminText(i: number): string {
+      if (i === 0) {
+        return 'Nee';
+      } else {
+        return 'Ja';
+      }
+    }
 
 }
