@@ -20,6 +20,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   showGraph1 = false;
   showGraph2 = false;
+  tableName!: string;
 
   selectedWavelength!: number;
   selectedTimestamp!: number;
@@ -60,6 +61,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
+        this.tableName = measurement.id.toString() + '_' + measurement.name;
         this.getRanges();
       }
     );
@@ -80,8 +82,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getRanges(): void {
-    this.getWavelengths(this.measurement.name);
-    this.getIds(this.measurement.name);
+    this.getWavelengths(this.tableName);
+    this.getIds(this.tableName);
   }
 
   /**
@@ -122,7 +124,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getAllIdOfWavelength(): void {
-    this.twodimensionalgraphService.getAllIdOfWavelength(this.measurement.name, this.selectedWavelength)
+    this.twodimensionalgraphService.getAllIdOfWavelength(this.tableName, this.selectedWavelength)
       .subscribe(wavelengthsOfId => {
         this.showGraph1 = true;
         this.lineChartLabels = wavelengthsOfId.map(wavelengthOfId => wavelengthOfId.id.toString());
@@ -136,7 +138,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getAllWavelengthsOfId(): void {
-    this.twodimensionalgraphService.getAllWavelengthsOfId(this.measurement.name, this.selectedTimestamp)
+    this.twodimensionalgraphService.getAllWavelengthsOfId(this.tableName, this.selectedTimestamp)
       .subscribe(wavelengthsOfId => {
         this.showGraph2 = true;
         this.lineChartLabels2 = Object.keys(wavelengthsOfId);

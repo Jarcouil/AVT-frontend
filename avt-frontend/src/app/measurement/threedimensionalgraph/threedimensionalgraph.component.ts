@@ -16,7 +16,8 @@ export class ThreedimensionalgraphComponent implements OnInit {
 
   @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
-
+  
+  tableName!: string;
   measurement!: Measurement;
   subscription: Subscription;
   chromatograms: Array<Array<number>> = [];
@@ -54,8 +55,9 @@ export class ThreedimensionalgraphComponent implements OnInit {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
-        this.getWavelengths(this.measurement.name);
-        this.getIds(this.measurement.name);
+        this.tableName = measurement.id.toString() + '_' + measurement.name;
+        this.getWavelengths(this.tableName);
+        this.getIds(this.tableName);
         this.getAllData();
       }
     );
@@ -75,7 +77,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
    * @returns void
    */
   getAllData(): void {
-    this.twodimensionalgraphService.getAllData(this.measurement.name).subscribe(chromatograms => {
+    this.twodimensionalgraphService.getAllData(this.tableName).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
