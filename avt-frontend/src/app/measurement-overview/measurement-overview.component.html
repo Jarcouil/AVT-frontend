@@ -8,7 +8,7 @@
             <th scope="col">Naam</th>
             <th scope="col">Beschrijving</th>
             <th scope="col">Gemaakt op</th>
-            <th scope="col"></th>
+            <th scope="col" *ngIf="isAdmin()"></th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
             <td><a href="measurements/{{measurement.id}}/all">{{measurement.name}}</a></td>
             <td>{{measurement.created_at}}</td>
             <td>{{measurement.description}}</td>
-            <td><button class="btn" (click)="this.deleteMeasurement(measurement.id)">
+            <td *ngIf="isAdmin()"><button class="btn" (click)="this.deleteMeasurement(measurement.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path

@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit {
    * @returns boolean
    */
   isAdmin(): boolean {
-    return this.user.isAdmin === 1;
+    return this.auth.isCurrentUserAdmin();
   }
 
   /**

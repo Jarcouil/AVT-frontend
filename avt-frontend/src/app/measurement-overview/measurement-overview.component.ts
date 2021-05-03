@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '../shared/messages/messages.service';
+import { AuthService } from '../shared/services/auth.service';
 import { Measurement } from './measurement';
 import { MeasurementOverviewService } from './service/measurement-overview.service';
 
@@ -14,6 +15,7 @@ export class MeasurementOverviewComponent implements OnInit {
 
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
+    private auth: AuthService,
     private messagesService: MessagesService
   ) { }
 
@@ -46,5 +48,14 @@ export class MeasurementOverviewComponent implements OnInit {
   deleteMeasurement(id: number): void {
     this.measurementOverviewService.deleteMeasurement(id).subscribe();
     this.getMeasurements();
+  }
+
+  /**
+   * check if user in storage is admin
+   *
+   * @returns boolean
+   */
+   isAdmin(): boolean {
+    return this.auth.isCurrentUserAdmin();
   }
 }

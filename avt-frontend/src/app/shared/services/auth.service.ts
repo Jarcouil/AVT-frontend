@@ -56,6 +56,15 @@ export class AuthService {
   }
 
   /**
+   * Return if current user is admin
+   *
+   * @returns boolean
+   */
+  isCurrentUserAdmin(): boolean {
+    return this.currentUserSubject.value.isAdmin === 1;
+  }
+
+  /**
    * get access token from local storage
    *
    * @returns any
