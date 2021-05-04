@@ -2,6 +2,6 @@ export interface User {
     id: number;
     username: string;
     email: string;
-    createdAt: Date;
+    created_at: Date;
     isAdmin: number;
 }
