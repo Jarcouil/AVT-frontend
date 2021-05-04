@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../account/user';
 import { MessagesService } from '../shared/messages/messages.service';
+import { AuthService } from '../shared/services/auth.service';
 import { UsersOverviewService } from './service/users-overview.service';
 
 @Component({
@@ -11,11 +12,15 @@ import { UsersOverviewService } from './service/users-overview.service';
 export class UsersOverviewComponent implements OnInit {
 
   users: User[] = [];
+  private user: User;
 
   constructor(
     private userOverviewService: UsersOverviewService,
-    private messagesService: MessagesService
-  ) { }
+    private messagesService: MessagesService,
+    private auth: AuthService,
+  ) {
+    this.user = this.auth.currentUserValue;
+  }
 
   /**
    * On init
@@ -59,7 +64,9 @@ export class UsersOverviewComponent implements OnInit {
    * @returns void
    */
   deleteUser(user: User): void {
-    if (confirm('Weet je zeker dat je gebruiker ' + user.username + ' wilt verwijderen?')) {
+    if (user.id === this.user.id) {
+      alert('Je kan niet je eigen account verwijderen!')
+    } else if (confirm('Weet je zeker dat je gebruiker ' + user.username + ' wilt verwijderen?')) {
       this.userOverviewService.deleteUser(user.id).subscribe(result => {
         this.getUsers();
       });
