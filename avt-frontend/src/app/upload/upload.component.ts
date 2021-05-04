@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { minLowerThanMaxValidator } from '../shared/directives/min-lower-than-max.directive';
 import { MessagesService } from '../shared/messages/messages.service';
@@ -23,8 +24,9 @@ export class UploadComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private messagesService: MessagesService,
-    private uploadService: UploadService
-  ) {
+    private uploadService: UploadService,
+    private router: Router,
+    ) {
     this.uploadForm = this.createForm();
   }
 
@@ -60,7 +62,9 @@ export class UploadComponent implements OnInit {
       formData.append('coefficient', this.getCoefficient());
       formData.append('description', this.getDescription());
 
-      this.uploadService.postDadFile(formData).subscribe(measurement => this.measurement = measurement);
+      this.uploadService.postDadFile(formData).subscribe(response => {
+        this.router.navigate([`/measurements/${response.id}`]);
+      });
     }
   }
 

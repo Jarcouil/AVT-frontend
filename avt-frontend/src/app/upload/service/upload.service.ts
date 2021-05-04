@@ -16,40 +16,12 @@ export class UploadService {
   ) { }
 
   postDadFile(uploadForm: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, uploadForm, {
-      reportProgress: true,
-      observe: 'events'
-    })
+    return this.http.post<any>(this.apiUrl, uploadForm)
       .pipe(
-        map(event => this.getEventMessage(event)),
         tap(message => this.log(message, 200)),
         catchError(this.handleError<any>('postDadFile'))
       );
   }
-
-  private getEventMessage(event: HttpEvent<any>): string {
-    switch (event.type) {
-      case HttpEventType.Sent:
-        return `Uploading bestand.`;
-
-      case HttpEventType.UploadProgress:
-        // Compute and show the % done:
-        let percentDone = null;
-        if (event.total) {
-          percentDone = Math.round(100 * event.loaded / event.total);
-        } else {
-          percentDone = 0;
-        }
-        return `Bestand is ${percentDone}% geüpload.`;
-
-      case HttpEventType.Response:
-        return `Bestand is compleet verwerkt!`;
-
-      default:
-        return `Bestand surprising upload event: ${event.type}.`;
-    }
-  }
-
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

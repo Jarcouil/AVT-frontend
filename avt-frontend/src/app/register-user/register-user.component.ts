@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from '../account/user';
 import { MessagesService } from '../shared/messages/messages.service';
 import { RegisterService } from './service/register.service';
@@ -19,7 +20,8 @@ export class RegisterUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messagesService: MessagesService,
     private registerService: RegisterService,
-  ) {
+    private router: Router
+    ) {
     this.registerForm = this.createForm();
   }
 
@@ -40,7 +42,10 @@ export class RegisterUserComponent implements OnInit {
       formData.append('isAdmin', this.getAdmin());
       formData.append('password', this.getPassword());
 
-      this.registerService.register(formData).subscribe(user => this.user = user);
+      this.registerService.register(formData).subscribe(user => {
+        this.user = user;
+        this.router.navigate(['/users']);
+      });
     }
   }
 
