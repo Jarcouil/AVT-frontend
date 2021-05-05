@@ -39,7 +39,7 @@ export class MeasurementOverviewService {
     return this.http.get<Measurement>(this.apiUrl + '/' + id)
       .pipe(
         // tap(_ => this.log('fetched measurement', 200)),
-        catchError(this.handleError<Measurement>('getMeasurement'))
+        catchError(this.handleError<Measurement>())
       );
   }
 
@@ -65,7 +65,7 @@ export class MeasurementOverviewService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`, 400);
+      this.log(`${operation} failed: ${error.error.message}`, 400);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -74,7 +74,7 @@ export class MeasurementOverviewService {
 
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
-      message: `MeasurementService: ${messageString}`,
+      message: `${messageString}`,
       code: httpCode
     };
 
