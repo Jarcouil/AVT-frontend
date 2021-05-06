@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         (res: any) => {
           if (res.accessToken) {
             this.auth.setDataInLocalStorage('accessToken', res.accessToken);
-            const user: User = { id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, created_at: res.created_at };
+            const user: User = { id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt };
             this.auth.setUserInLocalStorage(user);
             this.router.navigate(['measurements']);
           }
