@@ -8,6 +8,7 @@
             <th scope="col">Gebruikersnaam</th>
             <th scope="col">Emailadres</th>
             <th scope="col">Administrator</th>
+            <th scope="col">Gemaakt op</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -17,6 +18,7 @@
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
             <td>{{getAdminText(user.isAdmin)}}</td>
+            <td>{{user.createdAt | date: 'medium'}}</td>
             <td><button class="btn" (click)="this.deleteUser(user)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">

@@ -15,8 +15,8 @@
         <tr *ngFor="let measurement of measurements">
             <td>{{measurement.id}}</td>
             <td><a href="measurements/{{measurement.id}}/all">{{measurement.name}}</a></td>
-            <td>{{measurement.created_at}}</td>
             <td>{{measurement.description}}</td>
+            <td>{{measurement.createdAt | date: 'medium'}}</td>
             <td *ngIf="isAdmin()"><button class="btn" (click)="this.deleteMeasurement(measurement)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">

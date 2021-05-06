@@ -23,7 +23,7 @@ export class ExportComponent implements OnInit {
       measurement => {
         this.measurement = measurement;
         if (this.measurement) {
-          this.exportService.getDadFileName(this.measurement.id).subscribe(file => this.fileName = file.fileName)
+          this.exportService.getDadFileName(this.measurement.id).subscribe(file => this.fileName = file.fileName);
         }
       });
   }
