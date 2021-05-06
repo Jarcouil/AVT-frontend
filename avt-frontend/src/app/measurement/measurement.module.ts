@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { MeasurementRoutingModule } from './measurement-routing.module';
 import { MeasurementComponent } from './measurement.component';
@@ -22,7 +22,8 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     MeasurementRoutingModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    ReactiveFormsModule
   ]
 })
 export class MeasurementModule { }

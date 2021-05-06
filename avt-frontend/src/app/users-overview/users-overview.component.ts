@@ -19,7 +19,7 @@ export class UsersOverviewComponent implements OnInit {
     private messagesService: MessagesService,
     private auth: AuthService,
   ) {
-    this.user = this.auth.currentUserValue;
+    this.user = this.auth.getUser();
   }
 
   /**
@@ -65,7 +65,7 @@ export class UsersOverviewComponent implements OnInit {
    */
   deleteUser(user: User): void {
     if (user.id === this.user.id) {
-      alert('Je kan niet je eigen account verwijderen!')
+      alert('Je kan niet je eigen account verwijderen!');
     } else if (confirm('Weet je zeker dat je gebruiker ' + user.username + ' wilt verwijderen?')) {
       this.userOverviewService.deleteUser(user.id).subscribe(result => {
         this.getUsers();

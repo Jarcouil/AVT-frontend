@@ -94,7 +94,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getWavelengths(name: string): void {
-    this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => this.wavelengths = wavelengths);
+    this.measurementService.getAllWavelengths(name).subscribe(wavelengths => this.wavelengths = wavelengths);
   }
 
   /**
@@ -105,7 +105,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getIds(name: string): void {
-    this.twodimensionalgraphService.getAllIds(name).subscribe(ids => this.ids = ids);
+    this.measurementService.getAllIds(name).subscribe(ids => this.ids = ids);
   }
 
   /**

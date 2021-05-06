@@ -20,7 +20,7 @@ export class AuthGuardService implements CanActivate {
    * @returns boolean
    */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const currentUser = this.authService.currentUserValue;
+    const currentUser = this.authService.getUserDetails();
     if (currentUser) {
       if (next.data.roles && next.data.roles.indexOf(currentUser.isAdmin) === -1) {
         // role not authorised so redirect to home page

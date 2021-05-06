@@ -99,7 +99,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
    * @returns void
    */
   getWavelengths(name: string): void {
-    this.twodimensionalgraphService.getAllWavelengths(name).subscribe(wavelengths => {
+    this.measurementService.getAllWavelengths(name).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
       this.xMin = wavelengths[0];
       this.xMax = wavelengths[wavelengths.length - 1];
@@ -115,7 +115,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
    */
   getIds(name: string): void {
     // TODO change ids to timestamps
-    this.twodimensionalgraphService.getAllIds(name).subscribe(ids => {
+    this.measurementService.getAllIds(name).subscribe(ids => {
       this.ids = ids;
       this.yMin = ids[0];
       this.yMax = ids[ids.length - 1];

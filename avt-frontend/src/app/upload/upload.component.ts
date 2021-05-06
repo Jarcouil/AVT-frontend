@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { minLowerThanMaxValidator } from '../shared/directives/min-lower-than-max.directive';
+import { minLowerThanMaxWaveLengthValidator } from '../shared/directives/min-lower-than-max-wavelength.directive';
 import { MessagesService } from '../shared/messages/messages.service';
 import { UploadService } from './service/upload.service';
 
@@ -81,7 +81,7 @@ export class UploadComponent implements OnInit {
       coefficient: [-0.64, Validators.required],
       description: ['', [Validators.required, Validators.minLength(5)]],
       file: [null, [Validators.required, RxwebValidators.extension({ extensions: ['dad'] })]]
-    }, { validators: minLowerThanMaxValidator });
+    }, { validators: minLowerThanMaxWaveLengthValidator });
   }
 
   /**

@@ -1,26 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../account/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-  constructor() {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user') || ''));
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
 
-  /**
-   * Get current value
-   *
-   * @returns User
-   */
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
-  }
+  constructor() { }
 
   /**
    * Get details of the user
@@ -52,7 +38,6 @@ export class AuthService {
    */
   setUserInLocalStorage(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
-    this.currentUserSubject.next(user);
   }
 
   /**
@@ -61,7 +46,8 @@ export class AuthService {
    * @returns boolean
    */
   isCurrentUserAdmin(): boolean {
-    return this.currentUserSubject.value.isAdmin === 1;
+
+    return this.getUserDetails().isAdmin === 1;
   }
 
   /**

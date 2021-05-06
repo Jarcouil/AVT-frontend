@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private auth: AuthService,
   ) {
-    this.user = this.auth.currentUserValue;
+    this.user = this.auth.getUserDetails();
    }
 
   /**

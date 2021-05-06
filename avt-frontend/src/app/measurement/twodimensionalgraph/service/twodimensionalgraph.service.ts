@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
 import { WavelengthsOfId } from '../twodimensionalgraph.component';
@@ -15,38 +15,6 @@ export class TwodimensionalgraphService {
     private http: HttpClient,
     private messagesService: MessagesService
   ) { }
-
-  /**
-   * Get all wavelengths of measurement
-   *
-   * @param measurementName string
-   *
-   * @returns Observable<number[]>
-   */
-  getAllWavelengths(measurementName: string): Observable<number[]> {
-    const url = `${this.apiUrl}/columns/${measurementName}`;
-    return this.http.get<number[]>(url)
-      .pipe(
-        // tap(_ => this.log('fetched columns',200)),
-        catchError(this.handleError<[]>('getAllWavelengths', []))
-      );
-  }
-
-  /**
-   * Get all ids of measurement
-   *
-   * @param measurementName string
-   *
-   * @returns Observable<number[]>
-   */
-  getAllIds(measurementName: string): Observable<number[]> {
-    const url = `${this.apiUrl}/id/${measurementName}`;
-    return this.http.get<number[]>(url)
-      .pipe(
-        // tap(_ => this.log('fetched ids',200)),
-        catchError(this.handleError<[]>('getAllIds', []))
-      );
-  }
 
   /**
    * Get all ids of given measurment measurementName and wavelength
