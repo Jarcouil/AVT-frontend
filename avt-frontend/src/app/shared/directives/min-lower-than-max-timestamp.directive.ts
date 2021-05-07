@@ -11,5 +11,5 @@ export const minLowerThanMaxTimestampValidator: ValidatorFn = (control: Abstract
   const minTimestamp = control.get('minTimestamp');
   const maxTimestamp = control.get('maxTimestamp');
 
-  return minTimestamp && maxTimestamp && minTimestamp.value > maxTimestamp.value ? { minLowerThanmaxTimestampValidator: true } : null;
+  return minTimestamp && maxTimestamp && minTimestamp.value > maxTimestamp.value ? { minLowerThanMaxTimestampValidator: true } : null;
 };

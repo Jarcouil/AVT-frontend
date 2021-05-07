@@ -18,6 +18,7 @@ export class ExportComponent implements OnInit {
   measurement!: Measurement;
   subscription: Subscription;
   tableName!: string;
+  submit = false;
 
   minWavelength!: number;
   maxWavelength!: number;
@@ -43,6 +44,11 @@ export class ExportComponent implements OnInit {
       });
   }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
     this.exportForm = this.createForm();
   }
@@ -71,11 +77,12 @@ export class ExportComponent implements OnInit {
   }
 
   /**
-   * Download CSV file
+   * Check if exportForm is valid and submit request
    *
    * @returns void
    */
-  exportCSV(): void {
+  onSubmit(): void {
+    this.submit = true;
     if (this.exportForm.valid) {
       const formData: any = new FormData();
       formData.append('minWaveLength', this.getMinWavelength());
@@ -89,7 +96,7 @@ export class ExportComponent implements OnInit {
         + this.getMaxWavelength().toString()
         + '_' + this.getMinTimestamp().toString()
         + '-' + this.getMaxTimestamp().toString();
-        
+
       this.exportService.getCSV(this.measurement.id, formData).subscribe(blob => saveAs(blob, `${filename}.csv`));
     }
   }
