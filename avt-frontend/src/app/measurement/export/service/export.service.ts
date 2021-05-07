@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -22,6 +22,22 @@ export class ExportService {
     })
       .pipe(
         // tap(message => this.log(message, 200)),
+        catchError(this.handleError<any>())
+      );
+  }
+
+  getCSV(measurmentId: number, exportForm: FormData): Observable<Blob> {
+    let parameters = new HttpParams();
+    parameters = parameters.append('minWavelength', exportForm.get('minWaveLength')?.toString()|| '');
+    parameters = parameters.append('maxWavelength', exportForm.get('maxWaveLength')?.toString()|| '');
+    parameters = parameters.append('minTimestamp', exportForm.get('minTimestamp')?.toString()|| '');
+    parameters = parameters.append('maxTimestamp', exportForm.get('maxTimestamp')?.toString() || '');
+
+    return this.http.get(this.apiUrl + '/csv/' + measurmentId, {
+      params: parameters,
+      responseType: 'blob'
+    })
+      .pipe(
         catchError(this.handleError<any>())
       );
   }
