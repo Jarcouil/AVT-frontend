@@ -5,9 +5,6 @@ import { TwodimensionalgraphService } from './service/twodimensionalgraph.servic
 import { MeasurementService } from '../service/measurement.service';
 import { Subscription } from 'rxjs';
 
-import { ChartDataSets, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
-
 declare var Plotly: any;
 
 @Component({
@@ -20,38 +17,37 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   measurement!: Measurement;
   selectedTimestamp!: number;
   selectedWavelength!: number;
-  showGraph1 = false;
-  showGraph2 = false;
   subscription: Subscription;
   tableName!: string;
   wavelengths: number[] = [];
 
-  lineChartData: ChartDataSets[] = [
-    { data: [], label: 'Alle tijdstippen voor één golflengte' },
-  ];
-
-  lineChartLabels: Label[] = [];
-
-  lineChartData2: ChartDataSets[] = [
-    { data: [], label: 'Alle golflengtes voor één tijdstip' },
-  ];
-
-  lineChartLabels2: Label[] = [];
-
-  lineChartOptions = {
-    responsive: true,
+  allWavelengthsLayout = {
+    autoexpand: 'true',
+    title: 'Alle golflengtes per tijdstip',
+    automargin: true,
+    scene: {
+      xaxis: {
+        title: 'Golflengte',
+      },
+      yaxis: {
+        title: 'Absorptie',
+      }
+    }
   };
 
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];
-
-  lineChartLegend = true;
-  lineChartPlugins = [];
-  lineChartType: ChartType = 'line';
+  allTimestampsLayout = {
+    autoexpand: 'true',
+    title: 'Alle tijdstippen per golflengte',
+    automargin: true,
+    scene: {
+      xaxis: {
+        title: 'Tijdstip',
+      },
+      yaxis: {
+        title: 'Absorptie',
+      }
+    }
+  };
 
   constructor(
     private twodimensionalgraphService: TwodimensionalgraphService,
@@ -126,10 +122,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   getAllIdOfWavelength(): void {
     this.twodimensionalgraphService.getAllIdOfWavelength(this.tableName, this.selectedWavelength)
-      .subscribe(wavelengthsOfId => {
-        this.showGraph1 = true;
-        this.lineChartLabels = wavelengthsOfId.map(wavelengthOfId => wavelengthOfId.id.toString());
-        this.lineChartData[0].data = wavelengthsOfId.map(wavelengthOfId => wavelengthOfId.wavelength);
+      .subscribe(timestampsOfIdAndWavelength => {
+        this.plotAllTimestamps(
+          Object.keys(timestampsOfIdAndWavelength).map(x => +x),
+          Object.values(timestampsOfIdAndWavelength).map(x => x.wavelength));
       });
   }
 
@@ -141,10 +137,34 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   getAllWavelengthsOfId(): void {
     this.twodimensionalgraphService.getAllWavelengthsOfId(this.tableName, this.selectedTimestamp)
       .subscribe(wavelengthsOfId => {
-        this.showGraph2 = true;
-        this.lineChartLabels2 = Object.keys(wavelengthsOfId);
-        this.lineChartData2[0].data = Object.values(wavelengthsOfId);
+        this.plotAllWavelengths(Object.keys(wavelengthsOfId).map(x => +x), Object.values(wavelengthsOfId));
       });
+  }
+
+  /**
+   * Plot all wavelenghts graph
+   *
+   * @param xData
+   * @param yData
+   *
+   * @returns void
+   */
+  plotAllWavelengths(xData: Array<number>, yData: Array<number>): void {
+    const data = [{ x: xData, y: yData}];
+    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout);
+  }
+
+  /**
+   * Plot all timestamps graph
+   *
+   * @param xData
+   * @param yData
+   *
+   * @returns void
+   */
+  plotAllTimestamps(xData: Array<number>, yData: Array<number>): void {
+    const data = [{ x: xData, y: yData}];
+    Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout);
   }
 
   /**

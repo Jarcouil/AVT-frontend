@@ -29,27 +29,5 @@
         <button class="btn btn-primary" (click)="getGraphData()">Selecteren</button>
     </div>
 </div>
-
-<div class="chart-wrapper" *ngIf="showGraph1">
-    <canvas baseChart 
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType" 
-        [plugins]="lineChartPlugins">
-    </canvas>
-</div>
-
-<div class="chart-wrapper" *ngIf="showGraph2">
-    <canvas baseChart 
-        [datasets]="lineChartData2" 
-        [labels]="lineChartLabels2" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType" 
-        [plugins]="lineChartPlugins">
-    </canvas>
-</div>
+<div id="allWavelengths" #allWavelengths></div>
+<div id="allTimestamps" #allTimestamps></div>
