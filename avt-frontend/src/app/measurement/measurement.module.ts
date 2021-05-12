@@ -8,7 +8,6 @@ import { ThreedimensionalgraphComponent } from './threedimensionalgraph/threedim
 import { TwodimensionalgraphComponent } from './twodimensionalgraph/twodimensionalgraph.component';
 import { ExportComponent } from './export/export.component';
 import { RawdataComponent } from './rawdata/rawdata.component';
-import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     MeasurementRoutingModule,
     FormsModule,
-    ChartsModule,
     ReactiveFormsModule
   ]
 })
