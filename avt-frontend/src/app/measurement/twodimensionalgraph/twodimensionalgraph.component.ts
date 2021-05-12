@@ -23,15 +23,13 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
   allWavelengthsLayout = {
     autoexpand: 'true',
-    title: 'Alle golflengtes per tijdstip',
     automargin: true,
-    scene: {
-      xaxis: {
-        title: 'Golflengte',
-      },
-      yaxis: {
-        title: 'Absorptie',
-      }
+    title: 'Alle golflengtes per tijdstip',
+    xaxis: {
+      title: 'Golflengte',
+    },
+    yaxis: {
+      title: 'Absorptie',
     }
   };
 
@@ -39,13 +37,11 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     autoexpand: 'true',
     title: 'Alle tijdstippen per golflengte',
     automargin: true,
-    scene: {
-      xaxis: {
-        title: 'Tijdstip',
-      },
-      yaxis: {
-        title: 'Absorptie',
-      }
+    xaxis: {
+      title: 'Tijdstip',
+    },
+    yaxis: {
+      title: 'Absorptie',
     }
   };
 
@@ -151,6 +147,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   plotAllWavelengths(xData: Array<number>, yData: Array<number>): void {
     const data = [{ x: xData, y: yData}];
+    this.allWavelengthsLayout.title = `Alle golflengtes voor tijdstip ${this.selectedTimestamp}`;
     Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout);
   }
 
@@ -164,6 +161,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   plotAllTimestamps(xData: Array<number>, yData: Array<number>): void {
     const data = [{ x: xData, y: yData}];
+    this.allTimestampsLayout.title = `Alle tijdstippen voor golflengte ${this.selectedWavelength}`;
     Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout);
   }
 
