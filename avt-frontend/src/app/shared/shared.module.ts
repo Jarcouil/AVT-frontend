@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MessagesComponent } from './messages/messages.component';
 
-
-
 @NgModule({
   declarations: [MessagesComponent],
   imports: [

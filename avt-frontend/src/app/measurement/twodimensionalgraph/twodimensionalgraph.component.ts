@@ -8,22 +8,23 @@ import { Subscription } from 'rxjs';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
+declare var Plotly: any;
+
 @Component({
   selector: 'app-twodimensionalgraph',
   templateUrl: './twodimensionalgraph.component.html',
   styleUrls: ['./twodimensionalgraph.component.css']
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
-  measurement!: Measurement;
-  wavelengths: number[] = [];
   ids: number[] = [];
-  subscription: Subscription;
+  measurement!: Measurement;
+  selectedTimestamp!: number;
+  selectedWavelength!: number;
   showGraph1 = false;
   showGraph2 = false;
+  subscription: Subscription;
   tableName!: string;
-
-  selectedWavelength!: number;
-  selectedTimestamp!: number;
+  wavelengths: number[] = [];
 
   lineChartData: ChartDataSets[] = [
     { data: [], label: 'Alle tijdstippen voor één golflengte' },

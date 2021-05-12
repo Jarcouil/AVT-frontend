@@ -3,7 +3,7 @@ import { RegisterUserModule } from './register-user/register-user.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
-import localeNl from '@angular/common/locales/nl'
+import localeNl from '@angular/common/locales/nl';
 import { MeasurementModule } from './measurement/measurement.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +17,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor-service.service';
 import { ProtectedModule } from './protected/protected.module';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
-registerLocaleData(localeNl)
+registerLocaleData(localeNl);
+
 @NgModule({
   declarations: [
     AppComponent,

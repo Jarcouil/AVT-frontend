@@ -46,5 +46,4 @@ export class AccountComponent implements OnInit {
         return 'Ja';
       }
     }
-
 }

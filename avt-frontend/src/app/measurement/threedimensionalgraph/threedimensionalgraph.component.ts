@@ -16,7 +16,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
 
   @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
-  
+
   tableName!: string;
   measurement!: Measurement;
   subscription: Subscription;
@@ -81,7 +81,7 @@ export class ThreedimensionalgraphComponent implements OnInit {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
-        for (const [key, value] of Object.entries(chromatogram)) {
+        for (const value of Object.values(chromatogram)) {
           wavelengths.push(value);
         }
         timestamps.push(wavelengths);

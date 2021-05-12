@@ -30,12 +30,23 @@ export class UploadComponent implements OnInit {
     this.uploadForm = this.createForm();
   }
 
+  /**
+   * On init
+   *
+   * @returns void
+   */
   ngOnInit(): void {
     this.messagesService.clear();
   }
 
+  /**
+   * Check if file is submitted and add file to uploadform
+   *
+   * @param event Event
+   *
+   * @returns void
+   */
   uploadFile(event: Event): void {
-
     const element = event.currentTarget as HTMLInputElement;
     const fileList: FileList | null = element.files;
     if (fileList) {
