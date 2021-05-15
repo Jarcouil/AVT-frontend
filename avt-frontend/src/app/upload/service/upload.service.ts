@@ -18,7 +18,7 @@ export class UploadService {
   postDadFile(uploadForm: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, uploadForm)
       .pipe(
-        tap(message => this.log(message, 200)),
+        tap(response => this.log(response.message, 200)),
         catchError(this.handleError<any>('postDadFile'))
       );
   }
@@ -38,8 +38,9 @@ export class UploadService {
   }
 
   private log(messageString: string, httpCode: number): void {
+    console.log(messageString)
     const message: Message = {
-      message: `UploadService: ${messageString}`,
+      message: `${messageString}`,
       code: httpCode
     };
     this.messagesService.clear();

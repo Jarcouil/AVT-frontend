@@ -3,4 +3,5 @@ export interface Measurement {
     name: string;
     description: string;
     createdAt: string;
+    username: string;
 }

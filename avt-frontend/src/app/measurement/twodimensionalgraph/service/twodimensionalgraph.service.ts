@@ -60,7 +60,7 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<Array<number>>
    */
-  getAllData(measurementName: string): Observable<Array<number>>{
+  getAllData(measurementName: string): Observable<Array<number>> {
     // TODO 3d graph in 2d service
     const url = `${this.apiUrl}/data/${measurementName}`;
 

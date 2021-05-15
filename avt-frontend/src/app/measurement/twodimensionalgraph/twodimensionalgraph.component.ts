@@ -20,6 +20,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   tableName!: string;
   wavelengths: number[] = [];
+  settings = {displaylogo: false, responsive: true};
 
   allWavelengthsLayout = {
     autoexpand: 'true',
@@ -148,7 +149,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   plotAllWavelengths(xData: Array<number>, yData: Array<number>): void {
     const data = [{ x: xData, y: yData}];
     this.allWavelengthsLayout.title = `Alle golflengtes voor tijdstip ${this.selectedTimestamp}`;
-    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout);
+    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settings);
   }
 
   /**
@@ -162,7 +163,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   plotAllTimestamps(xData: Array<number>, yData: Array<number>): void {
     const data = [{ x: xData, y: yData}];
     this.allTimestampsLayout.title = `Alle tijdstippen voor golflengte ${this.selectedWavelength}`;
-    Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout);
+    Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout, this.settings);
   }
 
   /**

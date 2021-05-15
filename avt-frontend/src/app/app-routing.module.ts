@@ -21,12 +21,12 @@ const routes: Routes = [
     children: [
       { path: 'measurements/:id', component: MeasurementComponent,
       children: [
-        { path: '', redirectTo: 'all', pathMatch: 'full' },
+        { path: '', redirectTo: 'export', pathMatch: 'full' },
         { path: '3dgraph', component: ThreedimensionalgraphComponent },
         { path: '2dgraph', component: TwodimensionalgraphComponent },
         { path: 'all', component: RawdataComponent },
         { path: 'export', component: ExportComponent },
-        { path: '**', redirectTo: 'all' }
+        { path: '**', redirectTo: 'export' }
       ],
       canActivate: [AuthGuardService]
     },

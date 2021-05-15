@@ -20,8 +20,21 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<Measurement[]>
    */
-  getAllMeasurements(): Observable<Measurement[]> {
+  getAllMeasurementsOfUser(): Observable<Measurement[]> {
     return this.http.get<Measurement[]>(this.apiUrl)
+      .pipe(
+        // tap(_ => this.log('fetched measurements', 200)),
+        catchError(this.handleError<Measurement[]>('getMeasurements', []))
+      );
+  }
+
+  /**
+   * Get all the measurments
+   *
+   * @returns Observable<Measurement[]>
+   */
+   getAllMeasurements(): Observable<Measurement[]> {
+    return this.http.get<Measurement[]>(this.apiUrl + '/all')
       .pipe(
         // tap(_ => this.log('fetched measurements', 200)),
         catchError(this.handleError<Measurement[]>('getMeasurements', []))

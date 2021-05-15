@@ -158,7 +158,8 @@ export class ThreedimensionalgraphComponent implements OnInit {
     Plotly.newPlot(
       this.threedimensionalGraph.nativeElement,
       [this.data],
-      this.layout
+      this.layout,
+      {displaylogo: false}
     );
   }
 }

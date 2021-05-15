@@ -10,9 +10,8 @@ import { MeasurementOverviewService } from './service/measurement-overview.servi
   styleUrls: ['./measurement-overview.component.css']
 })
 export class MeasurementOverviewComponent implements OnInit {
-
   measurements: Measurement[] = [];
-
+  allMeasurments = false;
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
     private auth: AuthService,
@@ -25,8 +24,31 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
-    this.getMeasurements();
+    this.getAllMeasurementsOfUser();
     this.messagesService.clear();
+  }
+
+  /**
+   * On option selected
+   *
+   * @params option
+   *
+   * @returns void
+   */
+  onOptionsSelected(): void {
+    if (this.allMeasurments) {
+      this.measurementOverviewService.getAllMeasurements().subscribe(measurements => this.measurements = measurements);
+    } else {
+      this.measurementOverviewService.getAllMeasurementsOfUser().subscribe(measurements => this.measurements = measurements);
+    }
+  }
+  /**
+   * Get all measuremnts
+   *
+   * @returns void
+   */
+  getAllMeasurementsOfUser(): void {
+    this.measurementOverviewService.getAllMeasurementsOfUser().subscribe(measurements => this.measurements = measurements);
   }
 
   /**
@@ -34,7 +56,7 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getMeasurements(): void {
+  getAllMeasurements(): void {
     this.measurementOverviewService.getAllMeasurements().subscribe(measurements => this.measurements = measurements);
   }
 
@@ -48,7 +70,7 @@ export class MeasurementOverviewComponent implements OnInit {
   deleteMeasurement(measurement: Measurement): void {
     if (confirm('Weet je zeker dat je meting ' + measurement.name + ' wilt verwijderen?')) {
       this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
-        this.getMeasurements();
+        this.getAllMeasurementsOfUser();
       });
     }
   }
@@ -58,7 +80,7 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns boolean
    */
-   isAdmin(): boolean {
+  isAdmin(): boolean {
     return this.auth.isCurrentUserAdmin();
   }
 }

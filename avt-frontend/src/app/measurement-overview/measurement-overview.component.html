@@ -1,5 +1,12 @@
 <h4><strong>Alle metingen</strong></h4>
 
+<div *ngIf="isAdmin()" style="margin-bottom: 1rem;">
+    <select class="form-control col-md-3" #mySelect [(ngModel)]="allMeasurments" (change)='onOptionsSelected()'>
+        <option [value]="false">Eigen metingen</option>
+        <option [value]="true">Alle metingen</option>
+    </select>
+</div>
+
 <table class="table table-striped">
     <caption>Lijst met metingen</caption>
     <thead class="thead-dark">
@@ -8,16 +15,18 @@
             <th scope="col">Naam</th>
             <th scope="col">Beschrijving</th>
             <th scope="col">Gemaakt op</th>
-            <th scope="col" *ngIf="isAdmin()"></th>
+            <th scope="col" *ngIf="isAdmin()">Gemaakt door</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let measurement of measurements">
             <td>{{measurement.id}}</td>
-            <td><a href="measurements/{{measurement.id}}/all">{{measurement.name}}</a></td>
+            <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
             <td>{{measurement.description}}</td>
             <td>{{measurement.createdAt | date: 'medium'}}</td>
-            <td *ngIf="isAdmin()"><button class="btn" (click)="this.deleteMeasurement(measurement)">
+            <td *ngIf="isAdmin()">{{measurement.username}}</td>
+            <td><button class="btn" (click)="this.deleteMeasurement(measurement)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path
