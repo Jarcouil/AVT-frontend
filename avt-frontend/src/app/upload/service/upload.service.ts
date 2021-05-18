@@ -38,7 +38,6 @@ export class UploadService {
   }
 
   private log(messageString: string, httpCode: number): void {
-    console.log(messageString)
     const message: Message = {
       message: `${messageString}`,
       code: httpCode
