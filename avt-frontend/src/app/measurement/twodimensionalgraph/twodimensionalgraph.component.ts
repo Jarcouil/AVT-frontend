@@ -17,10 +17,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   measurement!: Measurement;
   selectedTimestamp!: number;
   selectedWavelength!: number;
+  settings = {displaylogo: false, responsive: true};
   subscription: Subscription;
   tableName!: string;
   wavelengths: number[] = [];
-  settings = {displaylogo: false, responsive: true};
 
   allWavelengthsLayout = {
     autoexpand: 'true',
@@ -141,9 +141,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   /**
    * Plot all wavelenghts graph
    *
-   * @param xData
-   * @param yData
-   *
    * @returns void
    */
   plotAllWavelengths(xData: Array<number>, yData: Array<number>): void {
@@ -154,9 +151,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
   /**
    * Plot all timestamps graph
-   *
-   * @param xData
-   * @param yData
    *
    * @returns void
    */

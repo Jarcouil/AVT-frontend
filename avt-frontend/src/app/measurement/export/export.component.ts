@@ -14,18 +14,17 @@ import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-l
   styleUrls: ['./export.component.css']
 })
 export class ExportComponent implements OnInit {
+  exportForm!: FormGroup;
   fileName!: string;
   measurement!: Measurement;
+  submit = false;
   subscription: Subscription;
   tableName!: string;
-  submit = false;
 
   minWavelength!: number;
   maxWavelength!: number;
   minTimestamp!: number;
   maxTimestamp!: number;
-
-  exportForm!: FormGroup;
 
   constructor(
     private exportService: ExportService,

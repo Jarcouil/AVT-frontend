@@ -10,8 +10,9 @@ import { MeasurementOverviewService } from './service/measurement-overview.servi
   styleUrls: ['./measurement-overview.component.css']
 })
 export class MeasurementOverviewComponent implements OnInit {
-  measurements: Measurement[] = [];
   allMeasurments = false;
+  measurements: Measurement[] = [];
+
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
     private auth: AuthService,

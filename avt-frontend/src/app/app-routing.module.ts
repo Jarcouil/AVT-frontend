@@ -32,11 +32,11 @@ const routes: Routes = [
     { path: 'upload', component: UploadComponent, canActivate: [AuthGuardService] },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuardService] },
     { path: 'users', component: UsersOverviewComponent, canActivate: [AuthGuardService], data: { roles: [Role.Admin] } },
-    { path: 'register', component: RegisterUserComponent, canActivate: [AuthGuardService], data: { roles: [Role.Admin] } },
     ]
   },
-  { path: '**', component: LoginComponent },
+  { path: 'register', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

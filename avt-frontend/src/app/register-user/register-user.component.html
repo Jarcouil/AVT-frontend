@@ -1,91 +1,87 @@
-<h4><strong>Registreer gebruiker</strong></h4>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="login-form">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h2 class="text-center"><strong>Registreren</strong></h2>
+    
+        <div class="form-group row" style="margin-bottom: 0px">
+            <div class="col">
+                <label for="username">
+                    Gebruikersnaam
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <input id="username" type="text" formControlName="username" class="form-control">
+            </div>
+        </div>
+    
+        <div class="form-group row" style="margin-bottom: 0px">
+            <div class="col">
+                <label for="email">
+                    Emailadres
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <input id="email" type="text" formControlName="email" class="form-control">
+            </div>
+        </div>
+    
+        <div class="form-group row">
+            <div class="col">
+                <label for="password">
+                    Wachtwoord
+                </label>
+            </div>
+        </div>
 
-    <div class="form-group row" style="margin-bottom: 0px">
-        <div class="col-md-3">
-            <label for="username">
-                Gebruikersnaam
-            </label>
+        <div class="form-group row">
+            <div class="col">
+                <input id="password" type="password" formControlName="password" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row" style="margin-bottom: 0px">
+            <div class="col">
+                <label for="confirmPassword">
+                    Wachtwoord bevestigen
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control">
+            </div>
+        </div>
+        
+        <button [ngClass]="{'disabled': registerForm.invalid}" class="btn btn-primary" type="submit">Registreer</button>
+
+        <a href="login" class="row" style="margin-left: 0px; margin-top: 10px;">Heb je al een account?</a>
+    
+    <div *ngIf="submit && registerForm.controls['username'].invalid" class="alert alert-danger">
+        <div *ngIf="registerForm.controls['username'].errors?.required">
+            Gebruikersnaam is verplicht
         </div>
     </div>
-    <div class="form-group row">
-        <div class="col-md-5">
-            <input id="username" type="text" formControlName="username" class="form-control">
+    
+    <div *ngIf="submit && registerForm.controls['email'].invalid" class="alert alert-danger">
+        <div *ngIf="registerForm.controls['email'].errors?.required">
+            Emailadres is verplicht
         </div>
+    
+        <div *ngIf="registerForm.controls['email'].errors?.email">
+            Voer een geldig emailadres in
+        </div>
+    </div>
+    
+    <div *ngIf="submit && registerForm.controls['password'].invalid" class="alert alert-danger">
+        Minimale lengte van het wachtwoord is 6
     </div>
 
-    <div class="form-group row" style="margin-bottom: 0px">
-        <div class="col-md-3">
-            <label for="email">
-                Emailadres
-            </label>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-md-5">
-            <input id="email" type="text" formControlName="email" class="form-control">
-        </div>
-    </div>
-
-    <div class="form-group row" style="margin-bottom: 0px">
-        <div class="col-md-3">
-            <label for="password">
-                Wachtwoord
-            </label>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-md-5">
-            <input id="password" type="password" formControlName="password" class="form-control">
-        </div>
-    </div>
-
-    <div class="form-group row" style="margin-bottom: 0px">
-        <div class="col-md-3">
-            <label for="admin">
-                Administrator rechten
-            </label>
-        </div>
-    </div>
-    <div class="form-check">
-        <input type="radio" [value]=1 formControlName="isAdmin" class="form-check-input" id="yes">
-        <label class="form-check-label" for="yes">
-            Ja
-        </label>
-    </div>
-    <div class="form-check">
-        <input type="radio" [value]=0 formControlName="isAdmin" class="form-check-input" id="no">
-        <label class="form-check-label" for="no">
-            Nee
-        </label>
-    </div>
-    <button [ngClass]="{'disabled': registerForm.invalid}" class="btn btn-primary" type="submit">Registreer</button>
-</form>
-
-<div *ngIf="submit && registerForm.controls['username'].invalid" class="alert alert-danger">
-    <div *ngIf="registerForm.controls['username'].errors?.required">
-        Gebruikersnaam is verplicht
-    </div>
+    <div *ngIf="submit && registerForm.errors?.mustMatchValidator" class="alert alert-danger">
+        Wachtwoord komt niet overeen
+    </div>   
+    </form>
 </div>
-
-<div *ngIf="submit && registerForm.controls['email'].invalid" class="alert alert-danger">
-    <div *ngIf="registerForm.controls['email'].errors?.required">
-        Emailadres is verplicht
-    </div>
-
-    <div *ngIf="registerForm.controls['email'].errors?.email">
-        Voer een geldig emailadres in
-    </div>
-</div>
-
-<div *ngIf="submit && registerForm.controls['isAdmin'].invalid" class="alert alert-danger">
-    <div *ngIf="registerForm.controls['isAdmin'].errors?.required">
-        Administrator rechten zijn verplicht
-    </div>
-</div>
-
-<div *ngIf="submit && registerForm.controls['password'].invalid" class="alert alert-danger">
-    Minimale lengte van het wachtwoord is 6
-</div>
-
-<button class="btn btn-primary" style="margin-top: 1rem" routerLink="/account">Terug naar account pagina</button>

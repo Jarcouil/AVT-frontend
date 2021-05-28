@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../account/user';
 import { MessagesService } from '../shared/messages/messages.service';
 import { RegisterService } from './service/register.service';
+import { mustMatchValidator } from './../shared/directives/must-match.directive';
 
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css']
 })
-export class RegisterUserComponent implements OnInit {
+export class RegisterUserComponent {
 
-  submit = false;
   registerForm: FormGroup;
+  submit = false;
   user!: User;
 
   constructor(
@@ -23,9 +24,6 @@ export class RegisterUserComponent implements OnInit {
     private router: Router
     ) {
     this.registerForm = this.createForm();
-  }
-
-  ngOnInit(): void {
   }
 
   /**
@@ -39,12 +37,12 @@ export class RegisterUserComponent implements OnInit {
       const formData: any = new FormData();
       formData.append('username', this.getUsername());
       formData.append('email', this.getEmail());
-      formData.append('isAdmin', this.getAdmin());
       formData.append('password', this.getPassword());
+      formData.append('confirmPassword', this.getConfirmPassword());
 
       this.registerService.register(formData).subscribe(user => {
         this.user = user;
-        this.router.navigate(['/users']);
+        this.router.navigate(['/login']);
       });
     }
   }
@@ -58,10 +56,10 @@ export class RegisterUserComponent implements OnInit {
     return this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      isAdmin: [0, [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
     },
-    );
+    { validator: mustMatchValidator });
   }
 
   /**
@@ -83,20 +81,20 @@ export class RegisterUserComponent implements OnInit {
   }
 
   /**
-   * Get admin from formgroup
-   *
-   * @returns admin Formgroup
-   */
-   getAdmin(): FormGroup {
-    return this.registerForm.get('isAdmin')?.value;
-  }
-
-  /**
    * Get password from formgroup
    *
    * @returns password Formgroup
    */
    getPassword(): FormGroup {
     return this.registerForm.get('password')?.value;
+  }
+
+  /**
+   * Get confirmPassword from formgroup
+   *
+   * @returns confirmPassword Formgroup
+   */
+   getConfirmPassword(): FormGroup {
+    return this.registerForm.get('confirmPassword')?.value;
   }
 }

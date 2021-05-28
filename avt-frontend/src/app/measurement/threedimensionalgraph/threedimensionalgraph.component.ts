@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MeasurementService } from '../service/measurement.service';
 import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/measurement-overview/measurement';
@@ -12,21 +12,21 @@ declare var Plotly: any;
   styleUrls: ['./threedimensionalgraph.component.css']
 })
 
-export class ThreedimensionalgraphComponent implements OnInit {
+export class ThreedimensionalgraphComponent {
 
   @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
 
-  tableName!: string;
+  chromatograms: Array<Array<number>> = [];
+  ids: number[] = [];
   measurement!: Measurement;
   subscription: Subscription;
-  chromatograms: Array<Array<number>> = [];
+  tableName!: string;
   wavelengths: number[] = [];
-  ids: number[] = [];
-  xMin!: number;
   xMax!: number;
-  yMin!: number;
+  xMin!: number;
   yMax!: number;
+  yMin!: number;
 
   layout = {
     autoexpand: 'true',
@@ -61,14 +61,6 @@ export class ThreedimensionalgraphComponent implements OnInit {
         this.getAllData();
       }
     );
-  }
-
-  /**
-   * On init
-   *
-   * @returns void
-   */
-  ngOnInit(): void {
   }
 
   /**

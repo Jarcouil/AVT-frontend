@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { User } from './user';
 
@@ -7,21 +7,15 @@ import { User } from './user';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
-  public user: User;
+export class AccountComponent {
   public admin: string[] = ['Gebruiker', 'Admin'];
+  public user: User;
 
   constructor(
     private auth: AuthService,
   ) {
     this.user = this.auth.getUserDetails();
    }
-
-  /**
-   * On init
-   */
-  ngOnInit(): void {
-  }
 
   /**
    * check if user in storage is admin

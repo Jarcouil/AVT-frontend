@@ -14,13 +14,14 @@ import { UploadService } from './service/upload.service';
 })
 export class UploadComponent implements OnInit {
 
-  submit = false;
-  minMinWaveLength = 0;
-  maxMinWaveLength = 801;
-  minMaxWaveLength = 0;
   maxMaxWaveLength = 801;
+  maxMinWaveLength = 801;
   measurement = {};
+  minMaxWaveLength = 0;
+  minMinWaveLength = 0;
+  submit = false;
   uploadForm: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder,
     private messagesService: MessagesService,
