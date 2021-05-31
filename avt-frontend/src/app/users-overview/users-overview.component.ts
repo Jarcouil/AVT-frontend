@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../account/user';
 import { MessagesService } from '../shared/messages/messages.service';
 import { AuthService } from '../shared/services/auth.service';
@@ -18,6 +19,8 @@ export class UsersOverviewComponent implements OnInit {
     private userOverviewService: UsersOverviewService,
     private messagesService: MessagesService,
     private auth: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.user = this.auth.getUser();
   }
@@ -54,6 +57,39 @@ export class UsersOverviewComponent implements OnInit {
     } else {
       return 'Ja';
     }
+  }
+
+  isChecked(value: number): boolean {
+    return value === 1;
+  }
+
+  /**
+   * toggle admin rights of a user
+   *
+   * @param user User
+   */
+  toggleAdmin(user: User): void {
+    if (user.id === this.user.id) {
+      alert('Je kan niet je eigen administrator rechten niet wijzigen');
+    } else {
+      if (confirm('Weet je zeker dat je de administrator rechten van gebruiker ' + user.username + ' wilt wijzigen?')) {
+        this.userOverviewService.toggleAdmin(user.id).subscribe(result => {
+          this.getUsers();
+        });
+      } else {
+        this.reloadComponent();
+      }
+    }
+  }
+
+  /**
+   * Reload the component
+   */
+  reloadComponent(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
   /**

@@ -64,8 +64,8 @@ export class AuthService {
    *
    * @returns any
    */
-  getUser(): any {
-    return localStorage.getItem('user');
+  getUser(): User {
+    return JSON.parse(localStorage.getItem('user') || '');
   }
 
   /**

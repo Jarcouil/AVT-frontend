@@ -17,9 +17,15 @@
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
-            <td>{{getAdminText(user.isAdmin)}}</td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id={{user.id.toString()}} (change)="toggleAdmin(user)" [checked]="user.isAdmin === 1">
+                    <label class="custom-control-label" for={{user.id.toString()}}>{{getAdminText(user.isAdmin)}}</label>
+                  </div>
+            </td>
             <td>{{user.createdAt | date: 'medium'}}</td>
-            <td><button class="btn" (click)="this.deleteUser(user)">
+            <td>
+            <button class="btn" (click)="this.deleteUser(user)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">
                         <path

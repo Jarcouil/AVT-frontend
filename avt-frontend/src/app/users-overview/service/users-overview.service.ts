@@ -59,6 +59,14 @@ export class UsersOverviewService {
       );
   }
 
+  toggleAdmin(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.post<any>(url, {id})
+      .pipe(
+        catchError(this.handleError('toggleAdmin'))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
