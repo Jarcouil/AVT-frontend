@@ -20,9 +20,8 @@ export class UsersOverviewComponent implements OnInit {
     private messagesService: MessagesService,
     private auth: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {
-    this.user = this.auth.getUser();
+    this.user = JSON.parse(this.auth.getUser());
   }
 
   /**
@@ -70,6 +69,7 @@ export class UsersOverviewComponent implements OnInit {
    */
   toggleAdmin(user: User): void {
     if (user.id === this.user.id) {
+      this.reloadComponent();
       alert('Je kan niet je eigen administrator rechten niet wijzigen');
     } else {
       if (confirm('Weet je zeker dat je de administrator rechten van gebruiker ' + user.username + ' wilt wijzigen?')) {
