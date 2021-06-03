@@ -13,6 +13,7 @@ import { AccountComponent } from './account/account.component';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
 import { Role } from './models/role';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { ResetComponent } from './reset/reset.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
     ]
   },
   { path: 'register', component: RegisterUserComponent },
+  { path: 'reset/:token', component: ResetComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'login' },
 ];

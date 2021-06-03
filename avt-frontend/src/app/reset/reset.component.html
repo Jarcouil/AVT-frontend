@@ -1,0 +1,43 @@
+<div class="login-form">
+    <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+        <h2 class="text-center"><strong>Wachtwoord resetten</strong></h2>
+
+        <div class="form-group row">
+            <div class="col">
+                <label for="password">
+                    Wachtwoord
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                <input id="password" type="password" formControlName="password" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row" style="margin-bottom: 0px">
+            <div class="col">
+                <label for="confirmPassword">
+                    Wachtwoord bevestigen
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control">
+            </div>
+        </div>
+
+        <button [ngClass]="{'disabled': resetForm.invalid}" class="btn btn-primary" type="submit">Reset wachtwoord</button>
+
+        <div *ngIf="submit && resetForm.controls['password'].invalid" class="alert alert-danger">
+            Minimale lengte van het wachtwoord is 6
+        </div>
+
+        <div *ngIf="submit && resetForm.errors?.mustMatchValidator" class="alert alert-danger">
+            Wachtwoord komt niet overeen
+        </div>
+    </form>
+</div>

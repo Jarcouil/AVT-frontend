@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor-service.service';
 import { ProtectedModule } from './protected/protected.module';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
+import { ResetModule } from './reset/reset.module';
 registerLocaleData(localeNl);
 
 @NgModule({
@@ -32,6 +33,7 @@ registerLocaleData(localeNl);
     MeasurementModule,
     UploadModule,
     RegisterUserModule,
+    ResetModule,
     LoginModule,
     MeasurementOverviewModule,
     ProtectedModule,
