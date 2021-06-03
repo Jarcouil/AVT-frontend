@@ -1,4 +1,4 @@
-<div class="login-form">
+<div >
     <form [formGroup]='form' (ngSubmit)='login()'>
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
@@ -10,6 +10,7 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" [disabled]='!this.form.valid'>Log in</button>
         </div>
-        <a href="register">Nog geen account?</a>
+        <a href="register">Nog geen account?</a> <br>
+        <a href="request-reset">Wachtwoord vergeten?</a>
     </form>
 </div>

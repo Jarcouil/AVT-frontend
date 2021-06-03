@@ -14,6 +14,7 @@ import { UsersOverviewComponent } from './users-overview/users-overview.componen
 import { Role } from './models/role';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ResetComponent } from './reset/reset.component';
+import { RequestResetComponent } from './request-reset/request-reset.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterUserComponent },
   { path: 'reset/:token', component: ResetComponent },
+  { path: 'request-reset', component: RequestResetComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'login' },
 ];

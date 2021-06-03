@@ -43,7 +43,7 @@ export class LoginService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`, 400);
+      this.log(`${error.error.message}`, 400);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -60,7 +60,7 @@ export class LoginService {
    */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
-      message: `Loginservice: ${messageString}`,
+      message: `${messageString}`,
       code: httpCode
     };
     this.messagesService.clear();

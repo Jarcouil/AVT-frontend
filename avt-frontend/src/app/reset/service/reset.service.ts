@@ -15,20 +15,50 @@ export class ResetService {
     private http: HttpClient,
     private messagesService: MessagesService) { }
 
+  /**
+   * Update the password
+   *
+   * @param newPassword string
+   * @param token string
+   *
+   * @returns Observable<any>
+   */
   updatePassword(newPassword: string, token: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/new-password', {password: newPassword, resetToken: token})
-    .pipe(
-      tap(_ => this.log('Updated password', 200)),
-      catchError(this.handleError<[]>( []))
-    );
+    return this.http.post<any>(this.apiUrl + '/new-password', { password: newPassword, resetToken: token })
+      .pipe(
+        tap(_ => this.log('Updated password', 200)),
+        catchError(this.handleError<[]>([]))
+      );
   }
 
+  /**
+   * Request mail for reset
+   *
+   * @param resetRequest Formdata
+   *
+   * @returns Observable<any>
+   */
+  requestReset(resetRequest: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/reset', resetRequest)
+      .pipe(
+        tap(_ => this.log('Mail is verzonden', 200)),
+        catchError(this.handleError<[]>([]))
+      );
+  }
+
+  /**
+   * Check if token is valid
+   *
+   * @param token string
+   *
+   * @returns Observable<any>
+   */
   ValidPasswordToken(token: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/reset-valid', {resetToken: token})
-    .pipe(
-      tap(_ => this.log('Token is valid', 200)),
-      catchError(this.handleError<[]>( []))
-    );
+    return this.http.post<any>(this.apiUrl + '/reset-valid', { resetToken: token })
+      .pipe(
+        tap(_ => this.log('Token is valid', 200)),
+        catchError(this.handleError<[]>([]))
+      );
   }
 
   /**
@@ -38,7 +68,7 @@ export class ResetService {
    * @param result T
    * @returns any
    */
-   private handleError<T>( result?: T): any {
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

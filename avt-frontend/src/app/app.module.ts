@@ -18,6 +18,7 @@ import { InterceptorService } from './shared/services/interceptor-service.servic
 import { ProtectedModule } from './protected/protected.module';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
 import { ResetModule } from './reset/reset.module';
+import { SharedModule } from './shared/shared.module';
 registerLocaleData(localeNl);
 
 @NgModule({
@@ -33,6 +34,7 @@ registerLocaleData(localeNl);
     MeasurementModule,
     UploadModule,
     RegisterUserModule,
+    SharedModule,
     ResetModule,
     LoginModule,
     MeasurementOverviewModule,
