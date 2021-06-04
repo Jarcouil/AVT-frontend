@@ -4,7 +4,7 @@
 
         <div class="form-group row">
             <div class="col">
-                <label for="password">
+                <label for="password" style="margin-bottom: 0px">
                     Wachtwoord
                 </label>
             </div>
@@ -30,7 +30,8 @@
             </div>
         </div>
 
-        <button [ngClass]="{'disabled': resetForm.invalid}" class="btn btn-primary" type="submit">Reset wachtwoord</button>
+        <button [ngClass]="{'disabled': resetForm.invalid}" class="btn btn-primary" type="submit">Reset
+            wachtwoord</button>
 
         <div *ngIf="submit && resetForm.controls['password'].invalid" class="alert alert-danger">
             Minimale lengte van het wachtwoord is 6

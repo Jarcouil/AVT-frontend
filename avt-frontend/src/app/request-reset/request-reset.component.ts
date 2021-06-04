@@ -15,7 +15,7 @@ export class RequestResetComponent {
   constructor(
     private formBuilder: FormBuilder,
     private resetService: ResetService,
-    ) {
+  ) {
     this.requestForm = this.createForm();
   }
 

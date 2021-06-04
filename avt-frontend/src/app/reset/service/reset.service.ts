@@ -26,7 +26,7 @@ export class ResetService {
   updatePassword(newPassword: string, token: string): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/new-password', { password: newPassword, resetToken: token })
       .pipe(
-        tap(_ => this.log('Updated password', 200)),
+        tap(_ => this.log('Wachtwoord is succesvol gewijzigd!', 200)),
         catchError(this.handleError<[]>([]))
       );
   }
@@ -56,7 +56,6 @@ export class ResetService {
   ValidPasswordToken(token: string): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/reset-valid', { resetToken: token })
       .pipe(
-        tap(_ => this.log('Token is valid', 200)),
         catchError(this.handleError<[]>([]))
       );
   }

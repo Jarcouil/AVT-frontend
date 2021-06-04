@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mustMatchValidator } from '../shared/directives/must-match.directive';
-import { MessagesService } from '../shared/messages/messages.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-reset',
@@ -21,8 +19,7 @@ export class ResetComponent {
     private resetService: ResetService,
     private router: Router,
     private route: ActivatedRoute,
-    private messagesService: MessagesService,
-    ) {
+  ) {
     this.resetForm = this.createForm();
     this.route.params.subscribe(params => {
       this.resetToken = params.token;
@@ -35,7 +32,7 @@ export class ResetComponent {
    *
    * @returns void
    */
-   onSubmit(): void {
+  onSubmit(): void {
     this.submit = true;
     if (this.resetForm.valid) {
       this.resetService.updatePassword(this.getPassword().toString(), this.resetToken).subscribe(_ => {
@@ -45,7 +42,9 @@ export class ResetComponent {
   }
 
   /**
-   * 
+   * Verify if the token is valid and redirect if it is not.
+   *
+   * @returns void
    */
   VerifyToken(): void {
     this.resetService.ValidPasswordToken(this.resetToken).subscribe(result => {
@@ -73,7 +72,7 @@ export class ResetComponent {
    *
    * @returns password Formgroup
    */
-   getPassword(): FormGroup {
+  getPassword(): FormGroup {
     return this.resetForm.get('password')?.value;
   }
 
