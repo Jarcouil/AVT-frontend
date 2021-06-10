@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { User } from 'src/app/account/user';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
 
@@ -24,8 +24,7 @@ export class UsersOverviewService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl)
       .pipe(
-        // tap(_ => this.log('fetched users', 200)),
-        catchError(this.handleError<User[]>('getUsers', []))
+        catchError(this.handleError<User[]>([]))
       );
   }
 
@@ -39,8 +38,7 @@ export class UsersOverviewService {
   getUser(id: number): Observable<User> {
     return this.http.get<User>(this.apiUrl + '/' + id)
       .pipe(
-        // tap(_ => this.log('fetched user', 200)),
-        catchError(this.handleError<User>('getUser'))
+        catchError(this.handleError<User>())
       );
   }
 
@@ -53,37 +51,52 @@ export class UsersOverviewService {
    */
   deleteUser(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(url)
+    return this.http.delete<any>(url, {observe: 'response'})
       .pipe(
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError('deleteUser'))
       );
   }
 
+  /**
+   * Toogle admin rights for user of given id
+   *
+   * @param id userId
+   * @returns Observable<any>
+   */
   toggleAdmin(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.post<any>(url, {id})
       .pipe(
-        catchError(this.handleError('toggleAdmin'))
+        catchError(this.handleError())
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  /**
+   * handle error
+   *
+   * @param result T
+   * @returns any
+   */
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
+      this.log(`${error.message}`, 400);
       return of(result as T);
     };
   }
 
+  /**
+   * log message with http code
+   *
+   * @param messageString string
+   * @param httpCode number
+   *
+   * @returns void
+   */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
-      message: `UserService: ${messageString}`,
+      message: `${messageString}`,
       code: httpCode
     };
 

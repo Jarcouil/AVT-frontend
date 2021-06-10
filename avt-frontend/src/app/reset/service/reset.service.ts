@@ -24,9 +24,9 @@ export class ResetService {
    * @returns Observable<any>
    */
   updatePassword(newPassword: string, token: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/new-password', { password: newPassword, resetToken: token })
+    return this.http.post<any>(this.apiUrl + '/new-password', { password: newPassword, resetToken: token }, {observe: 'response'})
       .pipe(
-        tap(_ => this.log('Wachtwoord is succesvol gewijzigd!', 200)),
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<[]>([]))
       );
   }
@@ -39,9 +39,9 @@ export class ResetService {
    * @returns Observable<any>
    */
   requestReset(resetRequest: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/reset', resetRequest)
+    return this.http.post<any>(this.apiUrl + '/reset', resetRequest, {observe: 'response'})
       .pipe(
-        tap(_ => this.log('Mail is verzonden', 200)),
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<[]>([]))
       );
   }
@@ -63,20 +63,13 @@ export class ResetService {
   /**
    * handle error
    *
-   * @param operation string
    * @param result T
    * @returns any
    */
   private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
+      console.error(error); // log to console
       this.log(`${error.error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

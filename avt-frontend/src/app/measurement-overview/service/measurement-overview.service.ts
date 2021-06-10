@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
 import { Measurement } from '../measurement';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +23,7 @@ export class MeasurementOverviewService {
   getAllMeasurementsOfUser(): Observable<Measurement[]> {
     return this.http.get<Measurement[]>(this.apiUrl)
       .pipe(
-        // tap(_ => this.log('fetched measurements', 200)),
-        catchError(this.handleError<Measurement[]>('getMeasurements', []))
+        catchError(this.handleError<Measurement[]>([]))
       );
   }
 
@@ -33,11 +32,10 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<Measurement[]>
    */
-   getAllMeasurements(): Observable<Measurement[]> {
+  getAllMeasurements(): Observable<Measurement[]> {
     return this.http.get<Measurement[]>(this.apiUrl + '/all')
       .pipe(
-        // tap(_ => this.log('fetched measurements', 200)),
-        catchError(this.handleError<Measurement[]>('getMeasurements', []))
+        catchError(this.handleError<Measurement[]>([]))
       );
   }
 
@@ -51,7 +49,6 @@ export class MeasurementOverviewService {
   getMeasurement(id: number): Observable<Measurement> {
     return this.http.get<Measurement>(this.apiUrl + '/' + id)
       .pipe(
-        // tap(_ => this.log('fetched measurement', 200)),
         catchError(this.handleError<Measurement>())
       );
   }
@@ -71,20 +68,28 @@ export class MeasurementOverviewService {
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  /**
+   * handle error
+   *
+   * @param result T
+   * @returns any
+   */
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
+      console.error(error); // log to console
+      this.log(`${error.error.message}`, 400);
       return of(result as T);
     };
   }
 
+  /**
+   * log message with http code
+   *
+   * @param messageString string
+   * @param httpCode number
+   *
+   * @returns void
+   */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
       message: `${messageString}`,

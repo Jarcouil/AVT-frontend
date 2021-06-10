@@ -22,9 +22,9 @@ export class RegisterService {
    * @returns Observable<any>
    */
    register(uploadForm: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, uploadForm)
+    return this.http.post<any>(this.apiUrl, uploadForm, {observe: 'response'})
       .pipe(
-        tap(_ => this.log('Registerd user', 200)),
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<[]>( []))
       );
   }
@@ -32,20 +32,13 @@ export class RegisterService {
   /**
    * handle error
    *
-   * @param operation string
    * @param result T
    * @returns any
    */
-  private handleError<T>( result?: T): any {
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${error.error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
+      console.error(error); // log to console
+      this.log(`${error.error.message}`, error.status);
       return of(result as T);
     };
   }

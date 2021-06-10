@@ -75,7 +75,7 @@ export class UploadComponent implements OnInit {
       formData.append('description', this.getDescription());
 
       this.uploadService.postDadFile(formData).subscribe(response => {
-        this.router.navigate([`/measurements/${response.id}`]);
+        this.router.navigate([`/measurements/${response.body.id}`]);
       });
     }
   }

@@ -38,7 +38,7 @@ export class ExportComponent implements OnInit {
           this.tableName = measurement.id.toString() + '_' + measurement.name;
           this.getWavelengths(this.tableName);
           this.getIds(this.tableName);
-          this.exportService.getDadFileName(this.measurement.id).subscribe(file => this.fileName = file.fileName);
+          this.exportService.getDadFileInfo(this.measurement.id).subscribe(file => this.fileName = file.fileName);
         }
       });
   }

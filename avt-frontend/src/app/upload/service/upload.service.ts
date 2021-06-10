@@ -15,28 +15,41 @@ export class UploadService {
     private messagesService: MessagesService
   ) { }
 
+  /**
+   * Post dad file to API
+   *
+   * @param uploadForm FormData
+   * @returns Observable<any>
+   */
   postDadFile(uploadForm: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, uploadForm)
+    return this.http.post<any>(this.apiUrl, uploadForm, {observe: 'response'})
       .pipe(
-        tap(response => this.log(response.message, 200)),
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<any>('postDadFile'))
       );
   }
-
-  private handleError<T>(operation = 'operation', result?: T) {
+  /**
+   * handle error
+   *
+   * @param result T
+   * @returns any
+   */
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
+      console.error(error); // log to console
+      this.log(`${error.message}`, 400);
       return of(result as T);
     };
   }
 
+  /**
+   * log message with http code
+   *
+   * @param messageString string
+   * @param httpCode number
+   *
+   * @returns void
+   */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
       message: `${messageString}`,

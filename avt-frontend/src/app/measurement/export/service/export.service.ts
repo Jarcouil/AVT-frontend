@@ -41,28 +41,42 @@ export class ExportService {
       );
   }
 
-  getDadFileName(measurmentId: number): Observable<File> {
+  /**
+   * Get info of file with given id
+   *
+   * @param measurmentId number
+   *
+   * @returns Observable<File>
+   */
+  getDadFileInfo(measurmentId: number): Observable<File> {
     return this.http.get<File>(this.apiUrl + '/file-name/' + measurmentId)
       .pipe(
-        // tap(message => this.log(message, 200)),
         catchError(this.handleError<any>())
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  /**
+   * handle error
+   *
+   * @param result T
+   * @returns any
+   */
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
+      console.error(error); // log to console
+      this.log(`${error.error.message}`, 400);
       return of(result as T);
     };
   }
 
+  /**
+   * log message with http code
+   *
+   * @param messageString string
+   * @param httpCode number
+   *
+   * @returns void
+   */
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
       message: `${messageString}`,

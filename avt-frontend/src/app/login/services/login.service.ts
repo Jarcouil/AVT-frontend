@@ -25,27 +25,20 @@ export class LoginService {
     return this.http.post<any>(this.apiUrl, uploadForm)
       .pipe(
         tap(_ => this.log('Logged in', 200)),
-        catchError(this.handleError<[]>('login', []))
+        catchError(this.handleError<[]>([]))
       );
   }
 
   /**
    * handle error
    *
-   * @param operation string
    * @param result T
    * @returns any
    */
-  private handleError<T>(operation = 'operation', result?: T): any {
+  private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
+      console.error(error); // log to console
       this.log(`${error.error.message}`, 400);
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
