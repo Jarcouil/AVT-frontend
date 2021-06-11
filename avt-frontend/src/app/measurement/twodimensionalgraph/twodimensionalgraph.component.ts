@@ -13,7 +13,7 @@ declare var Plotly: any;
   styleUrls: ['./twodimensionalgraph.component.css']
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
-  ids: number[] = [];
+  timestamps: number[] = [];
   measurement!: Measurement;
   selectedTimestamp!: number;
   selectedWavelength!: number;
@@ -71,13 +71,13 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get ranges of wavelengths and getIds of current measurement
+   * Get ranges of wavelengths and timestamps of current measurement
    *
    * @returns void
    */
   getRanges(): void {
     this.getWavelengths(this.tableName);
-    this.getIds(this.tableName);
+    this.getTimestamps(this.tableName);
   }
 
   /**
@@ -92,14 +92,14 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get ids of given measurment
+   * Get timestamps of given measurment
    *
    * @param name string
    *
    * @returns void
    */
-  getIds(name: string): void {
-    this.measurementService.getAllIds(name).subscribe(ids => this.ids = ids);
+  getTimestamps(name: string): void {
+    this.measurementService.getAllTimestamps(name).subscribe(timestamps => this.timestamps = timestamps);
   }
 
   /**
@@ -108,17 +108,17 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getGraphData(): void {
-    this.getAllIdOfWavelength();
-    this.getAllWavelengthsOfId();
+    this.getAllTimestampsOfWavelength();
+    this.getAllWavelengthsOfTimestamp();
   }
 
   /**
-   * Get all ids data for the selected wavelength
+   * Get all timestamps data for the selected wavelength
    *
    * @returns void
    */
-  getAllIdOfWavelength(): void {
-    this.twodimensionalgraphService.getAllIdOfWavelength(this.tableName, this.selectedWavelength)
+   getAllTimestampsOfWavelength(): void {
+    this.twodimensionalgraphService.getAllTimestampsOfWavelength(this.tableName, this.selectedWavelength)
       .subscribe(timestampsOfIdAndWavelength => {
         this.plotAllTimestamps(
           Object.keys(timestampsOfIdAndWavelength).map(x => +x),
@@ -127,14 +127,14 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get all wavelengths data for the selected id/timestamp
+   * Get all wavelengths data for the selected timestamp
    *
    * @returns void
    */
-  getAllWavelengthsOfId(): void {
-    this.twodimensionalgraphService.getAllWavelengthsOfId(this.tableName, this.selectedTimestamp)
-      .subscribe(wavelengthsOfId => {
-        this.plotAllWavelengths(Object.keys(wavelengthsOfId).map(x => +x), Object.values(wavelengthsOfId));
+   getAllWavelengthsOfTimestamp(): void {
+    this.twodimensionalgraphService.getAllWavelengthsOfTimestamp(this.tableName, this.selectedTimestamp)
+      .subscribe(wavelengthOfTimestamp => {
+        this.plotAllWavelengths(Object.keys(wavelengthOfTimestamp).map(x => +x), Object.values(wavelengthOfTimestamp));
       });
   }
 
@@ -170,7 +170,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 }
 
-export interface WavelengthsOfId {
-  id: number;
+export interface WavelengthsOfTimestamp {
+  timestamp: number;
   wavelength: number;
 }

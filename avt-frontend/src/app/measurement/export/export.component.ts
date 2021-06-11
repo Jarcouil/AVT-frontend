@@ -37,7 +37,7 @@ export class ExportComponent implements OnInit {
         if (this.measurement) {
           this.tableName = measurement.id.toString() + '_' + measurement.name;
           this.getWavelengths(this.tableName);
-          this.getIds(this.tableName);
+          this.getTimestamps(this.tableName);
           this.exportService.getDadFileInfo(this.measurement.id).subscribe(file => this.fileName = file.fileName);
         }
       });
@@ -120,17 +120,16 @@ export class ExportComponent implements OnInit {
   }
 
   /**
-   * Get all ids of given measurement
+   * Get all timestamps of given measurement
    *
    * @param name string
    *
    * @returns void
    */
-  getIds(name: string): void {
-    // TODO change ids to timestamps
-    this.measurementService.getAllIds(name).subscribe(ids => {
-      this.minTimestamp = ids[0];
-      this.maxTimestamp = ids[ids.length - 1];
+  getTimestamps(name: string): void {
+    this.measurementService.getAllTimestamps(name).subscribe(timestamps => {
+      this.minTimestamp = timestamps[0];
+      this.maxTimestamp = timestamps[timestamps.length - 1];
       this.exportForm.patchValue({
         minTimestamp: this.minTimestamp,
         maxTimestamp: this.maxTimestamp

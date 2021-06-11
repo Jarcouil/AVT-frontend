@@ -46,13 +46,13 @@ export class MeasurementService {
   }
 
   /**
-   * Get all ids of measurement
+   * Get all timestamps of measurement
    *
    * @param measurementName string
    *
    * @returns Observable<number[]>
    */
-  getAllIds(measurementName: string): Observable<number[]> {
+   getAllTimestamps(measurementName: string): Observable<number[]> {
     const url = `${this.apiUrl}/id/${measurementName}`;
     return this.http.get<number[]>(url)
       .pipe(

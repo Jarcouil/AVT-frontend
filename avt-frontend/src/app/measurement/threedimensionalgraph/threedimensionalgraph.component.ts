@@ -18,7 +18,7 @@ export class ThreedimensionalgraphComponent {
   private data!: {};
 
   chromatograms: Array<Array<number>> = [];
-  ids: number[] = [];
+  timestamps: number[] = [];
   measurement!: Measurement;
   subscription: Subscription;
   tableName!: string;
@@ -57,7 +57,7 @@ export class ThreedimensionalgraphComponent {
         this.measurement = measurement;
         this.tableName = measurement.id.toString() + '_' + measurement.name;
         this.getWavelengths(this.tableName);
-        this.getIds(this.tableName);
+        this.getTimestamps(this.tableName);
         this.getAllData();
       }
     );
@@ -99,18 +99,18 @@ export class ThreedimensionalgraphComponent {
   }
 
   /**
-   * Get all ids of given measurement
+   * Get all timestamps of given measurement
    *
    * @param name string
    *
    * @returns void
    */
-  getIds(name: string): void {
-    // TODO change ids to timestamps
-    this.measurementService.getAllIds(name).subscribe(ids => {
-      this.ids = ids;
-      this.yMin = ids[0];
-      this.yMax = ids[ids.length - 1];
+  getTimestamps(name: string): void {
+    // TODO change timestamps to timestamps
+    this.measurementService.getAllTimestamps(name).subscribe(timestamps => {
+      this.timestamps = timestamps;
+      this.yMin = timestamps[0];
+      this.yMax = timestamps[timestamps.length - 1];
     });
   }
 
@@ -132,7 +132,7 @@ export class ThreedimensionalgraphComponent {
   plotGraph(): void {
     this.updateAxisRange();
 
-    const hoverText = this.ids.map((yi, i) => this.wavelengths.map((xi, j) => `
+    const hoverText = this.timestamps.map((yi, i) => this.wavelengths.map((xi, j) => `
       Golflengte: ${xi}<br>
       Tijd: ${yi}<br>
       Absorptie: ${this.chromatograms[i][j]}
@@ -140,7 +140,7 @@ export class ThreedimensionalgraphComponent {
 
     this.data = {
       x: this.wavelengths,
-      y: this.ids,
+      y: this.timestamps,
       z: this.chromatograms,
       type: 'surface',
       hoverinfo: 'text',

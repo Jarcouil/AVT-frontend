@@ -15,7 +15,7 @@ export class AccountComponent {
     private auth: AuthService,
   ) {
     this.user = this.auth.getUserDetails();
-   }
+  }
 
   /**
    * check if user in storage is admin
@@ -33,11 +33,11 @@ export class AccountComponent {
    *
    * @returns string
    */
-     getAdminText(i: number): string {
-      if (i === 0) {
-        return 'Nee';
-      } else {
-        return 'Ja';
-      }
+  getAdminText(i: number): string {
+    if (i === 0) {
+      return 'Nee';
+    } else {
+      return 'Ja';
     }
+  }
 }
