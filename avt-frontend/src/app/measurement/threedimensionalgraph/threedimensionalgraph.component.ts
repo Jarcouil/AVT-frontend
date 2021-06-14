@@ -21,7 +21,6 @@ export class ThreedimensionalgraphComponent {
   timestamps: number[] = [];
   measurement!: Measurement;
   subscription: Subscription;
-  tableName!: string;
   wavelengths: number[] = [];
   xMax!: number;
   xMin!: number;
@@ -55,9 +54,8 @@ export class ThreedimensionalgraphComponent {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
-        this.tableName = measurement.id.toString() + '_' + measurement.name;
-        this.getWavelengths(this.tableName);
-        this.getTimestamps(this.tableName);
+        this.getWavelengths(measurement.id);
+        this.getTimestamps(measurement.id);
         this.getAllData();
       }
     );
@@ -69,7 +67,7 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   getAllData(): void {
-    this.twodimensionalgraphService.getAllData(this.tableName).subscribe(chromatograms => {
+    this.twodimensionalgraphService.getAllData(this.measurement.id).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
@@ -86,12 +84,12 @@ export class ThreedimensionalgraphComponent {
   /**
    * Get all wavelengths of given measurement
    *
-   * @param name string
+   * @param id number
    *
    * @returns void
    */
-  getWavelengths(name: string): void {
-    this.measurementService.getAllWavelengths(name).subscribe(wavelengths => {
+  getWavelengths(id: number): void {
+    this.measurementService.getAllWavelengths(id).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
       this.xMin = wavelengths[0];
       this.xMax = wavelengths[wavelengths.length - 1];
@@ -101,13 +99,12 @@ export class ThreedimensionalgraphComponent {
   /**
    * Get all timestamps of given measurement
    *
-   * @param name string
+   * @param id number
    *
    * @returns void
    */
-  getTimestamps(name: string): void {
-    // TODO change timestamps to timestamps
-    this.measurementService.getAllTimestamps(name).subscribe(timestamps => {
+  getTimestamps(id: number): void {
+    this.measurementService.getAllTimestamps(id).subscribe(timestamps => {
       this.timestamps = timestamps;
       this.yMin = timestamps[0];
       this.yMax = timestamps[timestamps.length - 1];

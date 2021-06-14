@@ -17,15 +17,15 @@ export class TwodimensionalgraphService {
   ) { }
 
   /**
-   * Get all timestamps of given measurment measurementName and wavelength
+   * Get all timestamps of given measurment id and wavelength
    *
-   * @param measurementName string
+   * @param id number
    * @param wavelength number
    *
    * @returns Observable<WavelengthsOfTimestamp[]>
    */
-  getAllTimestampsOfWavelength(measurementName: string, wavelength: number): Observable<WavelengthsOfTimestamp[]> {
-    const url = `${this.apiUrl}/${measurementName}/columns`;
+  getAllTimestampsOfWavelength(id: number, wavelength: number): Observable<WavelengthsOfTimestamp[]> {
+    const url = `${this.apiUrl}/${id}/columns`;
     const parameters = new HttpParams().set('c', wavelength.toString());
 
     return this.http.get<WavelengthsOfTimestamp[]>(url, { params: parameters })
@@ -35,15 +35,15 @@ export class TwodimensionalgraphService {
   }
 
   /**
-   * Get all wavelengths of given measurment measurementName and timestamp
+   * Get all wavelengths of given measurment id and timestamp
    *
-   * @param measurementName string
+   * @param id number
    * @param id number
    *
    * @returns Observable<[]>
    */
-  getAllWavelengthsOfTimestamp(measurementName: string, id: number): Observable<[]> {
-    const url = `${this.apiUrl}/${measurementName}/${id}`;
+  getAllWavelengthsOfTimestamp(id: number, timestamp: number): Observable<[]> {
+    const url = `${this.apiUrl}/${id}/${timestamp}`;
 
     return this.http.get<[]>(url)
       .pipe(
@@ -54,12 +54,12 @@ export class TwodimensionalgraphService {
   /**
    * Get all data for 3d graph
    *
-   * @param measurementName string
+   * @param measurement id number
    *
    * @returns Observable<Array<number>>
    */
-  getAllData(measurementName: string): Observable<Array<number>> {
-    const url = `${this.apiUrl}/data/${measurementName}`;
+  getAllData(id: number): Observable<Array<number>> {
+    const url = `${this.apiUrl}/data/${id}`;
 
     return this.http.get<Array<number>>(url)
       .pipe(
