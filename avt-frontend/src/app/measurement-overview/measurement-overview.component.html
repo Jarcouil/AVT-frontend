@@ -2,8 +2,8 @@
 
 <div *ngIf="isAdmin()" style="margin-bottom: 1rem;">
     <select class="form-control col-md-3" #mySelect [(ngModel)]="allMeasurments" (change)='onOptionsSelected()'>
-        <option [value]="false">Eigen metingen</option>
-        <option [value]="true">Alle metingen</option>
+        <option [ngValue]="false">Eigen metingen</option>
+        <option [ngValue]="true">Alle metingen</option>
     </select>
 </div>
 
