@@ -81,7 +81,7 @@ export class UsersOverviewService {
   private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
-      this.log(`${error.message}`, 400);
+      this.log(`${error.error.message}`, 400);
       return of(result as T);
     };
   }

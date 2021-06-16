@@ -20,6 +20,11 @@ export class AuthGuardService implements CanActivate {
    * @returns boolean
    */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    const timer = JSON.parse(this.authService.getTimer());
+    if (timer && (Date.now() > timer)) {
+      this.authService.logout();
+    }
+
     const currentUser = this.authService.getUserDetails();
     if (currentUser) {
       if (next.data.roles && next.data.roles.indexOf(currentUser.isAdmin) === -1) {

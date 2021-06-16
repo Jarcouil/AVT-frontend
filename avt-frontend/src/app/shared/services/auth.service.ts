@@ -46,7 +46,6 @@ export class AuthService {
    * @returns boolean
    */
   isCurrentUserAdmin(): boolean {
-
     return this.getUserDetails().isAdmin === 1;
   }
 
@@ -69,6 +68,15 @@ export class AuthService {
   }
 
   /**
+   * Get timer
+   *
+   * @returns any
+   */
+  getTimer(): any {
+    return localStorage.getItem('timer');
+  }
+
+  /**
    * Clear local storage
    *
    * @returns void
@@ -85,5 +93,6 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
+    localStorage.removeItem('timer');
   }
 }
