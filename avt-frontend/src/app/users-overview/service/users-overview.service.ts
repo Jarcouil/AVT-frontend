@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -21,8 +21,10 @@ export class UsersOverviewService {
    *
    * @returns Observable<User[]>
    */
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl)
+  getAllUsers(sort: string, order: string): Observable<User[]> {
+    const parameters = new HttpParams().set('sort', sort).set('order', order);
+
+    return this.http.get<User[]>(this.apiUrl, {params: parameters})
       .pipe(
         catchError(this.handleError<User[]>([]))
       );

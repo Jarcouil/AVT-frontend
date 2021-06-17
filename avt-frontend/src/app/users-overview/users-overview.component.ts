@@ -12,6 +12,22 @@ import { UsersOverviewService } from './service/users-overview.service';
 })
 export class UsersOverviewComponent implements OnInit {
 
+  sorting = {
+    id: 'id',
+    username: 'username',
+    email: 'email',
+    isAdmin: 'is_admin',
+    createdAt: 'created_at',
+  };
+
+  orders = {
+    asc: 'asc',
+    desc: 'desc',
+  };
+
+  sort = this.sorting.id;
+  order = this.orders.asc;
+
   users: User[] = [];
   private user: User;
 
@@ -35,12 +51,40 @@ export class UsersOverviewComponent implements OnInit {
   }
 
   /**
+   * Sort users by selected item
+   *
+   * @param sortBy string
+   * @returns void
+   */
+  sortUsers(sortBy: string): void {
+    if (this.sort !== sortBy) {
+      this.sort = sortBy;
+    } else {
+      this.toggleOrder();
+    }
+    this.getUsers();
+  }
+
+  /**
+   * Toggle order by
+   *
+   * @returns void
+   */
+  toggleOrder(): void {
+    if (this.order === this.orders.asc) {
+      this.order = this.orders.desc;
+    } else {
+      this.order = this.orders.asc;
+    }
+  }
+
+  /**
    * Get all users
    *
    * @returns void
    */
   getUsers(): void {
-    this.userOverviewService.getAllUsers().subscribe(users => this.users = users);
+    this.userOverviewService.getAllUsers(this.sort, this.order).subscribe(users => this.users = users);
   }
 
   /**
