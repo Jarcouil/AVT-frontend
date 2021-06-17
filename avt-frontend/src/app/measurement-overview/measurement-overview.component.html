@@ -1,7 +1,7 @@
 <h4><strong>Alle metingen</strong></h4>
 
 <div *ngIf="isAdmin()" style="margin-bottom: 1rem;">
-    <select class="form-control col-md-3" #mySelect [(ngModel)]="allMeasurments" (change)='onOptionsSelected()'>
+    <select class="form-control col-md-3" #mySelect [(ngModel)]="allMeasurments" (change)='getMeasurements()'>
         <option [ngValue]="false">Eigen metingen</option>
         <option [ngValue]="true">Alle metingen</option>
     </select>
@@ -11,11 +11,21 @@
     <caption>Lijst met metingen</caption>
     <thead class="thead-dark">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Naam</th>
-            <th scope="col">Beschrijving</th>
-            <th scope="col">Gemaakt op</th>
-            <th scope="col" *ngIf="isAdmin()">Gemaakt door</th>
+            <th scope="col" (click)="this.sortMeasurements(this.sorting.id)">ID <a
+                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
+            </th>
+            <th scope="col" (click)="this.sortMeasurements(this.sorting.name)">Naam <a
+                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.name && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.name && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.name}"></a>
+            </th>
+            <th scope="col" (click)="this.sortMeasurements(this.sorting.description)">Beschrijving <a
+                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.description && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.description && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.description}"></a>
+            </th>
+            <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
+                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
+            </th>
+            <th scope="col" *ngIf="isAdmin()" (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
+                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdBy && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdBy && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdBy}"></a>
+            </th>
             <th scope="col"></th>
         </tr>
     </thead>

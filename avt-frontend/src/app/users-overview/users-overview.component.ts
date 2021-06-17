@@ -16,8 +16,8 @@ export class UsersOverviewComponent implements OnInit {
     id: 'id',
     username: 'username',
     email: 'email',
-    isAdmin: 'is_admin',
-    createdAt: 'created_at',
+    isAdmin: 'isAdmin',
+    createdAt: 'createdAt',
   };
 
   orders = {

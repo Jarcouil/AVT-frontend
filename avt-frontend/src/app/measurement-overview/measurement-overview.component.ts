@@ -13,6 +13,22 @@ export class MeasurementOverviewComponent implements OnInit {
   allMeasurments = false;
   measurements: Measurement[] = [];
 
+  sorting = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+  };
+
+  orders = {
+    asc: 'asc',
+    desc: 'desc',
+  };
+
+  sort = this.sorting.id;
+  order = this.orders.asc;
+
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
     private auth: AuthService,
@@ -30,26 +46,56 @@ export class MeasurementOverviewComponent implements OnInit {
   }
 
   /**
-   * On option selected
+   * Sort measurements by selected item
+   *
+   * @param sortBy string
+   * @returns void
+   */
+  sortMeasurements(sortBy: string): void {
+    if (this.sort !== sortBy) {
+      this.sort = sortBy;
+    } else {
+      this.toggleOrder();
+    }
+    this.getMeasurements();
+  }
+
+  /**
+   * Toggle order by
+   *
+   * @returns void
+   */
+  toggleOrder(): void {
+    if (this.order === this.orders.asc) {
+      this.order = this.orders.desc;
+    } else {
+      this.order = this.orders.asc;
+    }
+  }
+
+  /**
+   * getMeasurements on option selected
    *
    * @params option
    *
    * @returns void
    */
-  onOptionsSelected(): void {
+  getMeasurements(): void {
     if (this.allMeasurments) {
-      this.measurementOverviewService.getAllMeasurements().subscribe(measurements => this.measurements = measurements);
+      this.getAllMeasurements();
     } else {
-      this.measurementOverviewService.getAllMeasurementsOfUser().subscribe(measurements => this.measurements = measurements);
+      this.getAllMeasurementsOfUser();
     }
   }
+
   /**
    * Get all measuremnts
    *
    * @returns void
    */
   getAllMeasurementsOfUser(): void {
-    this.measurementOverviewService.getAllMeasurementsOfUser().subscribe(measurements => this.measurements = measurements);
+    this.measurementOverviewService.getAllMeasurementsOfUser(this.sort, this.order)
+      .subscribe(measurements => this.measurements = measurements);
   }
 
   /**
@@ -58,7 +104,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   getAllMeasurements(): void {
-    this.measurementOverviewService.getAllMeasurements().subscribe(measurements => this.measurements = measurements);
+    this.measurementOverviewService.getAllMeasurements(this.sort, this.order).subscribe(measurements => this.measurements = measurements);
   }
 
   /**

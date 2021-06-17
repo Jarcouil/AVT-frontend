@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
@@ -20,8 +20,10 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<Measurement[]>
    */
-  getAllMeasurementsOfUser(): Observable<Measurement[]> {
-    return this.http.get<Measurement[]>(this.apiUrl)
+  getAllMeasurementsOfUser(sort: string, order: string): Observable<Measurement[]> {
+    const parameters = new HttpParams().set('sort', sort).set('order', order);
+
+    return this.http.get<Measurement[]>(this.apiUrl, {params: parameters})
       .pipe(
         catchError(this.handleError<Measurement[]>([]))
       );
@@ -32,8 +34,10 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<Measurement[]>
    */
-  getAllMeasurements(): Observable<Measurement[]> {
-    return this.http.get<Measurement[]>(this.apiUrl + '/all')
+  getAllMeasurements(sort: string, order: string): Observable<Measurement[]> {
+    const parameters = new HttpParams().set('sort', sort).set('order', order);
+
+    return this.http.get<Measurement[]>(this.apiUrl + '/all', {params: parameters})
       .pipe(
         catchError(this.handleError<Measurement[]>([]))
       );
