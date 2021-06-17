@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Message, MessagesService } from '../messages/messages.service';
 import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ import { AuthService } from './auth.service';
 export class AuthGuardService implements CanActivate {
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private messagesService: MessagesService) { }
 
   /**
    * Check if the user is validated
@@ -23,6 +24,11 @@ export class AuthGuardService implements CanActivate {
     const timer = JSON.parse(this.authService.getTimer());
     if (timer && (Date.now() > timer)) {
       this.authService.logout();
+      const message: Message = {
+        message: `Je bent automatisch uitgelogd.`,
+        code: 400
+      };
+      this.messagesService.add(message);
     }
 
     const currentUser = this.authService.getUserDetails();
