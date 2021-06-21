@@ -68,8 +68,9 @@ export class UsersOverviewService {
    */
   toggleAdmin(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.post<any>(url, {id})
+    return this.http.post<any>(url, {id}, {observe: 'response'})
       .pipe(
+        tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError())
       );
   }

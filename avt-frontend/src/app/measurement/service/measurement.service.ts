@@ -38,7 +38,7 @@ export class MeasurementService {
    * @returns Observable<number[]>
    */
    getAllWavelengths(id: number): Observable<number[]> {
-    const url = `${this.apiUrl}/columns/${id}`;
+    const url = `${this.apiUrl}/wavelengths/${id}`;
     return this.http.get<number[]>(url)
       .pipe(
         catchError(this.handleError<[]>([]))
@@ -53,7 +53,7 @@ export class MeasurementService {
    * @returns Observable<number[]>
    */
    getAllTimestamps(id: number): Observable<number[]> {
-    const url = `${this.apiUrl}/id/${id}`;
+    const url = `${this.apiUrl}/timestamps/${id}`;
     return this.http.get<number[]>(url)
       .pipe(
         catchError(this.handleError<[]>([]))
