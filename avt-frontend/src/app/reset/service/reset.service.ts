@@ -24,7 +24,7 @@ export class ResetService {
    * @returns Observable<any>
    */
   updatePassword(newPassword: string, token: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/new-password', { password: newPassword, resetToken: token }, {observe: 'response'})
+    return this.http.post<any>(`${this.apiUrl}/new-password`, { password: newPassword, resetToken: token }, {observe: 'response'})
       .pipe(
         tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<[]>([]))
@@ -39,7 +39,7 @@ export class ResetService {
    * @returns Observable<any>
    */
   requestReset(resetRequest: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/reset', resetRequest, {observe: 'response'})
+    return this.http.post<any>(`${this.apiUrl}/reset`, resetRequest, {observe: 'response'})
       .pipe(
         tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<[]>([]))
@@ -54,7 +54,7 @@ export class ResetService {
    * @returns Observable<any>
    */
   ValidPasswordToken(token: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/reset-valid', { resetToken: token })
+    return this.http.post<any>(`${this.apiUrl}/reset-valid`, { resetToken: token })
       .pipe(
         catchError(this.handleError<[]>([]))
       );

@@ -66,11 +66,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   toggleOrder(): void {
-    if (this.order === this.orders.asc) {
-      this.order = this.orders.desc;
-    } else {
-      this.order = this.orders.asc;
-    }
+    this.order = (this.order === this.orders.asc) ? this.orders.desc : this.orders.asc;
   }
 
   /**
@@ -115,7 +111,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   deleteMeasurement(measurement: Measurement): void {
-    if (confirm('Weet je zeker dat je meting ' + measurement.name + ' wilt verwijderen?')) {
+    if (confirm(`Weet je zeker dat je meting ${measurement.name} wilt verwijderen?`)) {
       this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
         this.getAllMeasurementsOfUser();
       });

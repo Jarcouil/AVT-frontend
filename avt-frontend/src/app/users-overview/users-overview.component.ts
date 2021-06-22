@@ -71,11 +71,7 @@ export class UsersOverviewComponent implements OnInit {
    * @returns void
    */
   toggleOrder(): void {
-    if (this.order === this.orders.asc) {
-      this.order = this.orders.desc;
-    } else {
-      this.order = this.orders.asc;
-    }
+    this.order = (this.order === this.orders.asc) ? this.orders.desc : this.orders.asc;
   }
 
   /**
@@ -95,11 +91,7 @@ export class UsersOverviewComponent implements OnInit {
    * @returns string
    */
   getAdminText(i: number): string {
-    if (i === 0) {
-      return 'Nee';
-    } else {
-      return 'Ja';
-    }
+    return (i === 0) ? 'Ja' : 'Nee';
   }
 
   isChecked(value: number): boolean {
@@ -116,7 +108,7 @@ export class UsersOverviewComponent implements OnInit {
       this.reloadComponent();
       alert('Je kan niet je eigen administrator rechten niet wijzigen');
     } else {
-      if (confirm('Weet je zeker dat je de administrator rechten van gebruiker ' + user.username + ' wilt wijzigen?')) {
+      if (confirm(`Weet je zeker dat je de administrator rechten van gebruiker ${user.username} wilt wijzigen?`)) {
         this.userOverviewService.toggleAdmin(user.id).subscribe(result => {
           this.getUsers();
         });
@@ -146,7 +138,7 @@ export class UsersOverviewComponent implements OnInit {
   deleteUser(user: User): void {
     if (user.id === this.user.id) {
       alert('Je kan niet je eigen account verwijderen!');
-    } else if (confirm('Weet je zeker dat je gebruiker ' + user.username + ' wilt verwijderen?')) {
+    } else if (confirm(`Weet je zeker dat je gebruiker ${user.username} wilt verwijderen?`)) {
       this.userOverviewService.deleteUser(user.id).subscribe(result => {
         this.getUsers();
       });

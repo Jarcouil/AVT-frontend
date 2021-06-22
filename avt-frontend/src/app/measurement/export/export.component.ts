@@ -86,13 +86,7 @@ export class ExportComponent implements OnInit {
       formData.append('maxWaveLength', this.getMaxWavelength());
       formData.append('minTimestamp', this.getMinTimestamp());
       formData.append('maxTimestamp', this.getMaxTimestamp());
-      const filename = this.measurement.name
-        + '_'
-        + this.getMinWavelength().toString()
-        + '-'
-        + this.getMaxWavelength().toString()
-        + '_' + this.getMinTimestamp().toString()
-        + '-' + this.getMaxTimestamp().toString();
+      const filename = `${this.measurement.name}_${this.getMinWavelength()}-${this.getMaxWavelength()}_${this.getMinTimestamp()}-${this.getMaxTimestamp()}`;
 
       this.exportService.getCSV(this.measurement.id, formData).subscribe(blob => saveAs(blob, `${filename}.csv`));
     }

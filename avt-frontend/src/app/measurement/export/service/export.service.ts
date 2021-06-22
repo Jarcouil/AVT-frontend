@@ -17,7 +17,7 @@ export class ExportService {
   ) { }
 
   downloadDadFile(measurmentId: number): Observable<Blob> {
-    return this.http.get(this.apiUrl + '/download-file/' + measurmentId, {
+    return this.http.get(`${this.apiUrl}/download-file/${measurmentId}`, {
       responseType: 'blob'
     })
       .pipe(
@@ -32,7 +32,7 @@ export class ExportService {
     parameters = parameters.append('minTimestamp', exportForm.get('minTimestamp')?.toString() || '');
     parameters = parameters.append('maxTimestamp', exportForm.get('maxTimestamp')?.toString() || '');
 
-    return this.http.get(this.apiUrl + '/csv/' + measurmentId, {
+    return this.http.get(`${this.apiUrl}/csv/${measurmentId}`, {
       params: parameters,
       responseType: 'blob'
     })
@@ -49,7 +49,7 @@ export class ExportService {
    * @returns Observable<File>
    */
   getDadFileInfo(measurmentId: number): Observable<File> {
-    return this.http.get<File>(this.apiUrl + '/file-name/' + measurmentId)
+    return this.http.get<File>(`${this.apiUrl}/file-name/${measurmentId}`)
       .pipe(
         catchError(this.handleError<any>())
       );

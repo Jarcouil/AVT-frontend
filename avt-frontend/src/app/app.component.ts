@@ -14,10 +14,6 @@ export class AppComponent {
   ) {}
 
   loggedIn(): boolean {
-    if (this.auth.getToken()) {
-      return true;
-    } else {
-      return false;
-    }
+    return (this.auth.getToken()) ?  true : false;
   }
 }

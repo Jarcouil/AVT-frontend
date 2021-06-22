@@ -37,7 +37,7 @@ export class MeasurementOverviewService {
   getAllMeasurements(sort: string, order: string): Observable<Measurement[]> {
     const parameters = new HttpParams().set('sort', sort).set('order', order);
 
-    return this.http.get<Measurement[]>(this.apiUrl + '/all', {params: parameters})
+    return this.http.get<Measurement[]>(`${this.apiUrl}/all`, {params: parameters})
       .pipe(
         catchError(this.handleError<Measurement[]>([]))
       );
@@ -51,7 +51,7 @@ export class MeasurementOverviewService {
    * @returns Observable<Measurement>
    */
   getMeasurement(id: number): Observable<Measurement> {
-    return this.http.get<Measurement>(this.apiUrl + '/' + id)
+    return this.http.get<Measurement>(`${this.apiUrl}/${id}`)
       .pipe(
         catchError(this.handleError<Measurement>())
       );

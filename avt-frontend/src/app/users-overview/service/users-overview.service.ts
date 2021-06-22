@@ -38,7 +38,7 @@ export class UsersOverviewService {
    * @returns Observable<User>
    */
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(this.apiUrl + '/' + id)
+    return this.http.get<User>(`${this.apiUrl}/${id}`)
       .pipe(
         catchError(this.handleError<User>())
       );
