@@ -45,10 +45,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(formValues).subscribe(
         (res: any) => {
           if (res.accessToken) {
-            this.auth.setDataInLocalStorage('accessToken', res.accessToken);
-            this.auth.setDataInLocalStorage('timer', JSON.stringify(Date.now() + 60 * 60 * 1000));
-            const user: User = { id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt };
-            this.auth.setUserInLocalStorage(user);
+            this.setResponseInLocalStorage(res);
             this.router.navigate(['measurements']);
           }
         }, err => {
@@ -56,5 +53,16 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+
+  /**
+   * Set response data in local storage
+   * @param res any
+   */
+  setResponseInLocalStorage(res: any): any {
+    this.auth.setDataInLocalStorage('accessToken', res.accessToken);
+    this.auth.setDataInLocalStorage('timer', JSON.stringify(Date.now() + 60 * 60 * 1000));
+    const user: User = { id: res.id, username: res.username, email: res.email, isAdmin: res.isAdmin, createdAt: res.createdAt };
+    this.auth.setUserInLocalStorage(user);
   }
 }
