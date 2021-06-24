@@ -3,7 +3,7 @@
 
 <div class="d-flex flex-row-reverse" style="margin-bottom: 1rem;"> 
     <div class="p-2">
-        <select class="form-control" id="page" #mySelect [(ngModel)]="perPage" (change)='refreshMeasurements(page)'>
+        <select class="form-control" id="page" #mySelect [(ngModel)]="perPage" (change)='refreshMeasurements(1)'>
             <option [ngValue]="5">5</option>
             <option [ngValue]="10">10</option>
             <option [ngValue]="15">15</option>
@@ -19,7 +19,7 @@
     </div>
 
     <div *ngIf="isAdmin()" class="mr-auto p-2" style="padding: 0px;" >
-        <select class="form-control" #mySelect [(ngModel)]="allMeasurments" (change)='refreshMeasurements(page)'>
+        <select class="form-control" #mySelect [(ngModel)]="allMeasurments" (change)='refreshMeasurements(1)'>
             <option [ngValue]="false">Eigen metingen</option>
             <option [ngValue]="true">Alle metingen</option>
         </select>
@@ -72,8 +72,12 @@
         </tr>
     </tbody>
 </table>
-
+<div style="text-align: center; padding-right: 40px;">
 <pagination-controls
-  class="pagi"
-  (pageChange)="refreshMeasurements((page = $event))"
-></pagination-controls>
+    class="pagi"
+    (pageChange)="refreshMeasurements((page = $event))"
+    [autoHide]="true"
+    [previousLabel]="'Vorige'"
+    [nextLabel]="'Volgende'"
+  ></pagination-controls>
+</div>

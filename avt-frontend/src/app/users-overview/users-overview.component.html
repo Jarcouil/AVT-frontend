@@ -1,7 +1,7 @@
 <h4><strong>Alle gebruikers</strong></h4>
 <div class="d-flex flex-row-reverse">
     <div class="p-2">
-        <select id="page" class="form-control" #mySelect [(ngModel)]="perPage" (change)='getUsers(page)'>
+        <select id="page" class="form-control" #mySelect [(ngModel)]="perPage" (change)='getUsers(1)'>
             <option [ngValue]="5">5</option>
             <option [ngValue]="10">10</option>
             <option [ngValue]="15">15</option>
@@ -72,9 +72,13 @@
     </tbody>
 </table>
 
-<pagination-controls
-  class="pagi"
-  (pageChange)="getUsers((page = $event))"
-></pagination-controls>
-
+<div style="text-align: center; padding-right: 40px;">
+    <pagination-controls
+      class="pagi"
+      (pageChange)="getUsers((page = $event))"
+      [autoHide]="true"
+      [previousLabel]="'Vorige'"
+      [nextLabel]="'Volgende'"
+    ></pagination-controls>
+</div>
 <button class="btn btn-primary" style="margin-right: 10px" routerLink="/account">Terug naar account pagina</button>
