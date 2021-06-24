@@ -100,7 +100,7 @@ export class ExportComponent implements OnInit {
    * @returns void
    */
   getWavelengths(id: number): void {
-    this.measurementService.getAllWavelengths(id).subscribe(wavelengths => {
+    this.measurementService.getWavelengths(id).subscribe(wavelengths => {
       this.minWavelength = wavelengths[0];
       this.maxWavelength = wavelengths[wavelengths.length - 1];
       this.exportForm.patchValue({
@@ -119,7 +119,7 @@ export class ExportComponent implements OnInit {
    * @returns void
    */
   getTimestamps(id: number): void {
-    this.measurementService.getAllTimestamps(id).subscribe(timestamps => {
+    this.measurementService.getTimestamps(id).subscribe(timestamps => {
       this.minTimestamp = timestamps[0];
       this.maxTimestamp = timestamps[timestamps.length - 1];
       this.exportForm.patchValue({

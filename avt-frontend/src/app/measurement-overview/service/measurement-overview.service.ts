@@ -2,8 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
-import { Measurement } from '../measurement';
-import { MeasurementResponse } from '../measurement';
+import { Measurement, MeasurementResponse } from '../measurement';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -21,7 +20,7 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<MeasurementResponse>
    */
-  getAllMeasurementsOfUser(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
+  getMeasurementsOfUser(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
     const parameters = new HttpParams()
       .set('sort', sort)
       .set('order', order)
@@ -39,7 +38,7 @@ export class MeasurementOverviewService {
    *
    * @returns Observable<MeasurementResponse>
    */
-  getAllMeasurements(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
+  getMeasurements(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
     const parameters = new HttpParams()
       .set('sort', sort)
       .set('order', order)

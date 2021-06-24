@@ -44,7 +44,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
-    this.getAllMeasurementsOfUser(this.page);
+    this.getMeasurementsOfUser(this.page);
     this.messagesService.clear();
   }
 
@@ -60,7 +60,7 @@ export class MeasurementOverviewComponent implements OnInit {
     } else {
       this.toggleOrder();
     }
-    this.getMeasurements(this.page);
+    this.refreshMeasurements(this.page);
   }
 
   /**
@@ -73,17 +73,17 @@ export class MeasurementOverviewComponent implements OnInit {
   }
 
   /**
-   * getMeasurements on option selected
+   * refreshMeasurements on option selected
    *
    * @params option
    *
    * @returns void
    */
-  getMeasurements(page: any): void {
+  refreshMeasurements(page: any): void {
     if (this.allMeasurments) {
-      this.getAllMeasurements(page);
+      this.getMeasurements(page);
     } else {
-      this.getAllMeasurementsOfUser(page);
+      this.getMeasurementsOfUser(page);
     }
   }
 
@@ -92,8 +92,8 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getAllMeasurementsOfUser(page: any): void {
-    this.measurementOverviewService.getAllMeasurementsOfUser(this.sort, this.order, page, this.perPage)
+  getMeasurementsOfUser(page: any): void {
+    this.measurementOverviewService.getMeasurementsOfUser(this.sort, this.order, page, this.perPage)
     .subscribe(response => this.processResponse(response));
   }
 
@@ -102,8 +102,8 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getAllMeasurements(page: any): void {
-    this.measurementOverviewService.getAllMeasurements(this.sort, this.order, page, this.perPage)
+  getMeasurements(page: any): void {
+    this.measurementOverviewService.getMeasurements(this.sort, this.order, page, this.perPage)
       .subscribe(response => this.processResponse(response));
   }
 
@@ -127,7 +127,7 @@ export class MeasurementOverviewComponent implements OnInit {
   deleteMeasurement(measurement: Measurement): void {
     if (confirm(`Weet je zeker dat je meting ${measurement.name} wilt verwijderen?`)) {
       this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
-        this.getAllMeasurementsOfUser(this.page);
+        this.getMeasurementsOfUser(this.page);
       });
     }
   }

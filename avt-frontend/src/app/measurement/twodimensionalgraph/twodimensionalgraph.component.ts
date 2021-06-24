@@ -86,7 +86,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getWavelengths(id: number): void {
-    this.measurementService.getAllWavelengths(id).subscribe(wavelengths => this.wavelengths = wavelengths);
+    this.measurementService.getWavelengths(id).subscribe(wavelengths => this.wavelengths = wavelengths);
   }
 
   /**
@@ -97,7 +97,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getTimestamps(id: number): void {
-    this.measurementService.getAllTimestamps(id).subscribe(timestamps => this.timestamps = timestamps);
+    this.measurementService.getTimestamps(id).subscribe(timestamps => this.timestamps = timestamps);
   }
 
   /**
@@ -106,8 +106,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getGraphData(): void {
-    this.getAllTimestampsOfWavelength();
-    this.getAllWavelengthsOfTimestamp();
+    this.getTimestampsOfWavelength();
+    this.getWavelengthsOfTimestamp();
   }
 
   /**
@@ -115,8 +115,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    *
    * @returns void
    */
-   getAllTimestampsOfWavelength(): void {
-    this.twodimensionalgraphService.getAllTimestampsOfWavelength(this.measurement.id, this.selectedWavelength)
+   getTimestampsOfWavelength(): void {
+    this.twodimensionalgraphService.getTimestampsOfWavelength(this.measurement.id, this.selectedWavelength)
       .subscribe(timestampsOfIdAndWavelength => {
         this.plotAllTimestamps(
           Object.keys(timestampsOfIdAndWavelength).map(x => +x),
@@ -129,8 +129,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    *
    * @returns void
    */
-   getAllWavelengthsOfTimestamp(): void {
-    this.twodimensionalgraphService.getAllWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamp)
+   getWavelengthsOfTimestamp(): void {
+    this.twodimensionalgraphService.getWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamp)
       .subscribe(wavelengthOfTimestamp => {
         this.plotAllWavelengths(Object.keys(wavelengthOfTimestamp).map(x => +x), Object.values(wavelengthOfTimestamp));
       });

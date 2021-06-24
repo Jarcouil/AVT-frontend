@@ -56,7 +56,7 @@ export class ThreedimensionalgraphComponent {
         this.measurement = measurement;
         this.getWavelengths(measurement.id);
         this.getTimestamps(measurement.id);
-        this.getAllData();
+        this.getData();
       }
     );
   }
@@ -66,8 +66,8 @@ export class ThreedimensionalgraphComponent {
    *
    * @returns void
    */
-  getAllData(): void {
-    this.twodimensionalgraphService.getAllData(this.measurement.id).subscribe(chromatograms => {
+  getData(): void {
+    this.twodimensionalgraphService.getData(this.measurement.id).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
@@ -89,7 +89,7 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   getWavelengths(id: number): void {
-    this.measurementService.getAllWavelengths(id).subscribe(wavelengths => {
+    this.measurementService.getWavelengths(id).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
       this.xMin = wavelengths[0];
       this.xMax = wavelengths[wavelengths.length - 1];
@@ -104,7 +104,7 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   getTimestamps(id: number): void {
-    this.measurementService.getAllTimestamps(id).subscribe(timestamps => {
+    this.measurementService.getTimestamps(id).subscribe(timestamps => {
       this.timestamps = timestamps;
       this.yMin = timestamps[0];
       this.yMax = timestamps[timestamps.length - 1];

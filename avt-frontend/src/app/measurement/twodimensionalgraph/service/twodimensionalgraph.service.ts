@@ -24,7 +24,7 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<WavelengthsOfTimestamp[]>
    */
-  getAllTimestampsOfWavelength(id: number, wavelength: number): Observable<WavelengthsOfTimestamp[]> {
+  getTimestampsOfWavelength(id: number, wavelength: number): Observable<WavelengthsOfTimestamp[]> {
     const url = `${this.apiUrl}/${id}/timestamps`;
     const parameters = new HttpParams().set('wavelength', wavelength.toString());
 
@@ -42,7 +42,7 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<[]>
    */
-  getAllWavelengthsOfTimestamp(id: number, timestamp: number): Observable<[]> {
+  getWavelengthsOfTimestamp(id: number, timestamp: number): Observable<[]> {
     const url = `${this.apiUrl}/${id}/wavelengths`;
     const parameters = new HttpParams().set('timestamp', timestamp.toString());
 
@@ -59,7 +59,7 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<Array<number>>
    */
-  getAllData(id: number): Observable<Array<number>> {
+  getData(id: number): Observable<Array<number>> {
     const url = `${this.apiUrl}/data/${id}`;
 
     return this.http.get<Array<number>>(url)
