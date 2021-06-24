@@ -1,10 +1,29 @@
 <h4><strong>Alle metingen</strong></h4>
 
-<div *ngIf="isAdmin()" style="margin-bottom: 1rem;">
-    <select class="form-control col-md-3" #mySelect [(ngModel)]="allMeasurments" (change)='getMeasurements()'>
-        <option [ngValue]="false">Eigen metingen</option>
-        <option [ngValue]="true">Alle metingen</option>
-    </select>
+
+<div class="d-flex flex-row-reverse" style="margin-bottom: 1rem;"> 
+    <div class="p-2">
+        <select class="form-control" id="page" #mySelect [(ngModel)]="perPage" (change)='getMeasurements(page)'>
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="15">15</option>
+            <option [ngValue]="20">20</option>
+            <option [ngValue]="25">25</option>
+        </select>
+    </div>
+
+    <div class="p-2">
+        <label for="page" style="margin-top: 0.5rem">
+            Items per pagina
+        </label>
+    </div>
+
+    <div *ngIf="isAdmin()" class="mr-auto p-2" style="padding: 0px;" >
+        <select class="form-control" #mySelect [(ngModel)]="allMeasurments" (change)='getMeasurements(page)'>
+            <option [ngValue]="false">Eigen metingen</option>
+            <option [ngValue]="true">Alle metingen</option>
+        </select>
+    </div>
 </div>
 
 <table class="table table-striped">
@@ -30,7 +49,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let measurement of measurements">
+        <tr *ngFor="let measurement of measurements | paginate
+        : {
+            itemsPerPage: perPage,
+            currentPage: page,
+            totalItems: total
+          }">
             <td>{{measurement.id}}</td>
             <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
             <td>{{measurement.description}}</td>
@@ -48,3 +72,8 @@
         </tr>
     </tbody>
 </table>
+
+<pagination-controls
+  class="pagi"
+  (pageChange)="getMeasurements((page = $event))"
+></pagination-controls>

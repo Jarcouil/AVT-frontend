@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
 import { Measurement } from '../measurement';
+import { MeasurementResponse } from '../measurement';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -18,28 +19,36 @@ export class MeasurementOverviewService {
   /**
    * Get all the measurments
    *
-   * @returns Observable<Measurement[]>
+   * @returns Observable<MeasurementResponse>
    */
-  getAllMeasurementsOfUser(sort: string, order: string): Observable<Measurement[]> {
-    const parameters = new HttpParams().set('sort', sort).set('order', order);
+  getAllMeasurementsOfUser(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
+    const parameters = new HttpParams()
+      .set('sort', sort)
+      .set('order', order)
+      .set('page', page.toString())
+      .set('perPage', perPage.toString());
 
-    return this.http.get<Measurement[]>(this.apiUrl, {params: parameters})
+    return this.http.get<MeasurementResponse>(this.apiUrl, {params: parameters})
       .pipe(
-        catchError(this.handleError<Measurement[]>([]))
+        catchError(this.handleError<MeasurementResponse>())
       );
   }
 
   /**
    * Get all the measurments
    *
-   * @returns Observable<Measurement[]>
+   * @returns Observable<MeasurementResponse>
    */
-  getAllMeasurements(sort: string, order: string): Observable<Measurement[]> {
-    const parameters = new HttpParams().set('sort', sort).set('order', order);
+  getAllMeasurements(sort: string, order: string, page: number, perPage: number): Observable<MeasurementResponse> {
+    const parameters = new HttpParams()
+      .set('sort', sort)
+      .set('order', order)
+      .set('page', page.toString())
+      .set('perPage', perPage.toString());
 
-    return this.http.get<Measurement[]>(`${this.apiUrl}/all`, {params: parameters})
+    return this.http.get<MeasurementResponse>(`${this.apiUrl}/all`, {params: parameters})
       .pipe(
-        catchError(this.handleError<Measurement[]>([]))
+        catchError(this.handleError<MeasurementResponse>())
       );
   }
 

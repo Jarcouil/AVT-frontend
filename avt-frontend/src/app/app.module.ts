@@ -16,22 +16,22 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor-service.service';
 import { ProtectedModule } from './protected/protected.module';
-import { UsersOverviewComponent } from './users-overview/users-overview.component';
 import { ResetModule } from './reset/reset.module';
 import { SharedModule } from './shared/shared.module';
+import { UsersOverviewModule } from './users-overview/users-overview.module';
 registerLocaleData(localeNl);
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
-    UsersOverviewComponent,
   ],
   imports: [
     BrowserModule,
     CoreModule,
     AppRoutingModule,
     MeasurementModule,
+    UsersOverviewModule,
     UploadModule,
     RegisterUserModule,
     SharedModule,

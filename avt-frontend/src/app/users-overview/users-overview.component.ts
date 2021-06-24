@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../account/user';
 import { MessagesService } from '../shared/messages/messages.service';
 import { AuthService } from '../shared/services/auth.service';
@@ -27,6 +27,9 @@ export class UsersOverviewComponent implements OnInit {
 
   sort = this.sorting.id;
   order = this.orders.asc;
+  page = 0;
+  perPage = 10;
+  total = 0;
 
   users: User[] = [];
   private user: User;
@@ -46,7 +49,7 @@ export class UsersOverviewComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
-    this.getUsers();
+    this.getUsers(this.page);
     this.messagesService.clear();
   }
 
@@ -62,7 +65,7 @@ export class UsersOverviewComponent implements OnInit {
     } else {
       this.toggleOrder();
     }
-    this.getUsers();
+    this.getUsers(this.page);
   }
 
   /**
@@ -79,8 +82,13 @@ export class UsersOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getUsers(): void {
-    this.userOverviewService.getAllUsers(this.sort, this.order).subscribe(users => this.users = users);
+  getUsers(page: any): void {
+    this.userOverviewService.getAllUsers(this.sort, this.order, page, this.perPage)
+      .subscribe(response => {
+        this.users = response.data;
+        this.page = +response.pagination.currentPage;
+        this.total = +response.pagination.total;
+      });
   }
 
   /**
@@ -110,7 +118,7 @@ export class UsersOverviewComponent implements OnInit {
     } else {
       if (confirm(`Weet je zeker dat je de administrator rechten van gebruiker ${user.username} wilt wijzigen?`)) {
         this.userOverviewService.toggleAdmin(user.id).subscribe(result => {
-          this.getUsers();
+          this.getUsers(this.page);
         });
       } else {
         this.reloadComponent();
@@ -140,7 +148,7 @@ export class UsersOverviewComponent implements OnInit {
       alert('Je kan niet je eigen account verwijderen!');
     } else if (confirm(`Weet je zeker dat je gebruiker ${user.username} wilt verwijderen?`)) {
       this.userOverviewService.deleteUser(user.id).subscribe(result => {
-        this.getUsers();
+        this.getUsers(this.page);
       });
     }
   }

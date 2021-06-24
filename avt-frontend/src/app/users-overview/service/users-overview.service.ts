@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from 'src/app/account/user';
+import { User, UserResponse } from 'src/app/account/user';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
 
 @Injectable({
@@ -19,14 +19,18 @@ export class UsersOverviewService {
   /**
    * Get all the measurments
    *
-   * @returns Observable<User[]>
+   * @returns Observable<UserResponse>
    */
-  getAllUsers(sort: string, order: string): Observable<User[]> {
-    const parameters = new HttpParams().set('sort', sort).set('order', order);
+  getAllUsers(sort: string, order: string, page: number, perPage: number): Observable<UserResponse> {
+    const parameters = new HttpParams()
+      .set('sort', sort)
+      .set('order', order)
+      .set('page', page.toString())
+      .set('perPage', perPage.toString());
 
-    return this.http.get<User[]>(this.apiUrl, {params: parameters})
+    return this.http.get<UserResponse>(this.apiUrl, {params: parameters})
       .pipe(
-        catchError(this.handleError<User[]>([]))
+        catchError(this.handleError<UserResponse>())
       );
   }
 

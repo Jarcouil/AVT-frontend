@@ -1,4 +1,4 @@
-import { Measurement } from './measurement';
+import { Measurement, MeasurementResponse } from './measurement';
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '../shared/messages/messages.service';
 import { AuthService } from '../shared/services/auth.service';
@@ -28,11 +28,14 @@ export class MeasurementOverviewComponent implements OnInit {
 
   sort = this.sorting.id;
   order = this.orders.asc;
+  page = 0;
+  perPage = 10;
+  total = 0;
 
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
     private auth: AuthService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
   ) { }
 
   /**
@@ -41,7 +44,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
-    this.getAllMeasurementsOfUser();
+    this.getAllMeasurementsOfUser(this.page);
     this.messagesService.clear();
   }
 
@@ -57,7 +60,7 @@ export class MeasurementOverviewComponent implements OnInit {
     } else {
       this.toggleOrder();
     }
-    this.getMeasurements();
+    this.getMeasurements(this.page);
   }
 
   /**
@@ -76,11 +79,11 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getMeasurements(): void {
+  getMeasurements(page: any): void {
     if (this.allMeasurments) {
-      this.getAllMeasurements();
+      this.getAllMeasurements(page);
     } else {
-      this.getAllMeasurementsOfUser();
+      this.getAllMeasurementsOfUser(page);
     }
   }
 
@@ -89,9 +92,9 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getAllMeasurementsOfUser(): void {
-    this.measurementOverviewService.getAllMeasurementsOfUser(this.sort, this.order)
-      .subscribe(measurements => this.measurements = measurements);
+  getAllMeasurementsOfUser(page: any): void {
+    this.measurementOverviewService.getAllMeasurementsOfUser(this.sort, this.order, page, this.perPage)
+    .subscribe(response => this.processResponse(response));
   }
 
   /**
@@ -99,8 +102,19 @@ export class MeasurementOverviewComponent implements OnInit {
    *
    * @returns void
    */
-  getAllMeasurements(): void {
-    this.measurementOverviewService.getAllMeasurements(this.sort, this.order).subscribe(measurements => this.measurements = measurements);
+  getAllMeasurements(page: any): void {
+    this.measurementOverviewService.getAllMeasurements(this.sort, this.order, page, this.perPage)
+      .subscribe(response => this.processResponse(response));
+  }
+
+  /**
+   * Process response of getting measurements
+   * @param response MeasurementResponse
+   */
+  processResponse(response: MeasurementResponse): void {
+    this.measurements = response.data;
+    this.page = +response.pagination.currentPage;
+    this.total = +response.pagination.total;
   }
 
   /**
@@ -113,7 +127,7 @@ export class MeasurementOverviewComponent implements OnInit {
   deleteMeasurement(measurement: Measurement): void {
     if (confirm(`Weet je zeker dat je meting ${measurement.name} wilt verwijderen?`)) {
       this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
-        this.getAllMeasurementsOfUser();
+        this.getAllMeasurementsOfUser(this.page);
       });
     }
   }
