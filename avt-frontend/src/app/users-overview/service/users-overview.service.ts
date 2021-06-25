@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User, UserResponse } from 'src/app/account/user';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersOverviewService {
 
-  private apiUrl = 'http://localhost:3000/v1/users';
+  private apiUrl = `${environment.apiUrl}/users`;
 
   constructor(
     private http: HttpClient,

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResetService {
-
-  private apiUrl = 'http://localhost:3000/v1/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(
     private http: HttpClient,

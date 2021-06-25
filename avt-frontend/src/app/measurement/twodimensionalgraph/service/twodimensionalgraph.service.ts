@@ -4,12 +4,13 @@ import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
 import { WavelengthsOfTimestamp } from '../twodimensionalgraph.component';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TwodimensionalgraphService {
-  private apiUrl = 'http://localhost:3000/v1/measurement';
+  private apiUrl = `${environment.apiUrl}/measurement`;
 
   constructor(
     private http: HttpClient,

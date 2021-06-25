@@ -4,12 +4,13 @@ import { Observable, of } from 'rxjs';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
 import { Measurement, MeasurementResponse } from '../measurement';
 import { catchError } from 'rxjs/operators';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeasurementOverviewService {
-  private apiUrl = 'http://localhost:3000/v1/measurement';
+  private apiUrl = `${environment.apiUrl}/measurement`;
 
   constructor(
     private http: HttpClient,

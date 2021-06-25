@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private apiUrl = 'http://localhost:3000/v1/auth/login';
+  private apiUrl = `${environment.apiUrl}/auth/login`;
 
   constructor(
     private http: HttpClient,

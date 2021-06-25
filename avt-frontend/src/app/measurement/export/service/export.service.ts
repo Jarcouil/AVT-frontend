@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExportService {
 
-  private apiUrl = 'http://localhost:3000/v1/file';
+  private apiUrl = `${environment.apiUrl}/file`;
 
   constructor(
     private http: HttpClient,

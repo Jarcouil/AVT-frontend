@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { MessagesService, Message } from 'src/app/shared/messages/messages.service';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { environment } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private apiUrl = 'http://localhost:3000/v1/file/upload-file';
+  private apiUrl = `${environment.apiUrl}/file/upload-file`;
 
   constructor(
     private http: HttpClient,
