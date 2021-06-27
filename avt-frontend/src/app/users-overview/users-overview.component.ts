@@ -99,7 +99,7 @@ export class UsersOverviewComponent implements OnInit {
    * @returns string
    */
   getAdminText(i: number): string {
-    return (i === 0) ? 'Ja' : 'Nee';
+    return (i === 0) ? 'Nee' : 'Ja';
   }
 
   isChecked(value: number): boolean {

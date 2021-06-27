@@ -34,6 +34,6 @@ export class AccountComponent {
    * @returns string
    */
   getAdminText(i: number): string {
-    return (i === 0) ? 'Ja' : 'Nee';
+    return (i === 0) ? 'Nee' : 'Ja';
   }
 }
