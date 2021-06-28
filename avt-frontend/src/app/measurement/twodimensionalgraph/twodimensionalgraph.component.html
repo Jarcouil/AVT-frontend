@@ -14,7 +14,6 @@
 <div class="row">
     <div class="col-md-3">
         <select class="form-control" [(ngModel)]="selectedWavelength">
-            <option value="" disabled selected>Select the role</option>
             <option *ngFor="let wavelength of wavelengths" [ngValue]="wavelength">{{wavelength}}</option>
         </select>
     </div>
