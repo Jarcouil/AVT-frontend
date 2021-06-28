@@ -7,22 +7,23 @@
     </div>
 
     <div class="col-md-3">
-        <p>Tijdstip</p>
+        <p>Tijdstippen</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-3">
         <select class="form-control" [(ngModel)]="selectedWavelength">
+            <option value="" disabled selected>Select the role</option>
             <option *ngFor="let wavelength of wavelengths" [ngValue]="wavelength">{{wavelength}}</option>
         </select>
     </div>
 
     <div class="col-md-3">
-        <select class="form-control" [(ngModel)]="selectedTimestamp">
-            <option *ngFor="let timestamp of timestamps" [ngValue]="timestamp">{{timestamp}}</option>
-
-        </select>
+        <ng-multiselect-dropdown [placeholder]="'Tijdstippen'" [settings]="dropdownSettings"
+            [data]="timestamps" [(ngModel)]="selectedTimestamps" 
+        >
+        </ng-multiselect-dropdown>
     </div>
 
     <div class="col-md-3">

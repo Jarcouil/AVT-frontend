@@ -43,9 +43,11 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<[]>
    */
-  getWavelengthsOfTimestamp(id: number, timestamp: number): Observable<[]> {
+  getWavelengthsOfTimestamp(id: number, timestamps: number[]): Observable<[]> {
     const url = `${this.apiUrl}/${id}/wavelengths`;
-    const parameters = new HttpParams().set('timestamp', timestamp.toString());
+    const parameters = new HttpParams().set(
+      'timestamps', JSON.stringify(timestamps.map(timestamp => timestamp.toString()))
+    );
 
     return this.http.get<[]>(url, { params: parameters })
       .pipe(

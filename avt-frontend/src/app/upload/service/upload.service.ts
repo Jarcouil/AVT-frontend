@@ -38,7 +38,7 @@ export class UploadService {
   private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
       console.error(error); // log to console
-      this.log(`${error.message}`, 400);
+      this.log(`${error.error}`, 400);
       return of(result as T);
     };
   }

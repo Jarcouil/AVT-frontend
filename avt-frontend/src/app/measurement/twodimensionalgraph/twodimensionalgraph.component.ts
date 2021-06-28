@@ -15,7 +15,8 @@ declare var Plotly: any;
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   timestamps: number[] = [];
   measurement!: Measurement;
-  selectedTimestamp!: number;
+  selectedTimestamps = [];
+  dropdownSettings = {};
   selectedWavelength!: number;
   settings = {displaylogo: false, responsive: true};
   subscription: Subscription;
@@ -50,6 +51,15 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     private messagesService: MessagesService,
     private measurementService: MeasurementService,
   ) {
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      enableCheckAll: false,
+      maxHeight: 500,
+      noDataAvailablePlaceholderText: 'Er zijn geen tijdstippen beschikbaar'
+    };
 
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
@@ -130,21 +140,47 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
    getWavelengthsOfTimestamp(): void {
-    this.twodimensionalgraphService.getWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamp)
-      .subscribe(wavelengthOfTimestamp => {
-        this.plotAllWavelengths(Object.keys(wavelengthOfTimestamp).map(x => +x), Object.values(wavelengthOfTimestamp));
+    this.twodimensionalgraphService.getWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamps)
+    .subscribe(wavelengthOfTimestamp => {
+        this.plotAllWavelengths(
+          Object.keys(wavelengthOfTimestamp).map(x => +x),
+          Object.values(wavelengthOfTimestamp),
+          Object.values(wavelengthOfTimestamp).pop());
       });
   }
 
   /**
-   * Plot all wavelenghts graph
+   * Plot all wavelenghts graph of selected timestamps
    *
    * @returns void
    */
-  plotAllWavelengths(xData: Array<number>, yData: Array<number>): void {
-    const data = [{ x: xData, y: yData}];
-    this.allWavelengthsLayout.title = `Alle golflengtes voor tijdstip ${this.selectedTimestamp}`;
+  plotAllWavelengths(xData: Array<number>, yData: Array<Array<number>>, names: any): void {
+    yData.pop();
+    const data = [];
+
+    for (let i = 0; i < Object.values(yData)[0].length; i++) {
+      data.push({
+        x: xData,
+        y: Object.values(yData).map(items => items[i]),
+        name: names[i].toString()
+      });
+    }
+
+    this.allWavelengthsLayout.title = this.getTitleText();
     Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settings);
+  }
+
+  /**
+   * Get title of graph based on selected timestamps
+   *
+   * @returns string
+   */
+  getTitleText(): string {
+    if (this.selectedTimestamps.length > 1) {
+      return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp)}`;
+    } else {
+      return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0]}`;
+    }
   }
 
   /**
