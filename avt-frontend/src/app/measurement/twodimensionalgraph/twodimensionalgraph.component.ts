@@ -13,9 +13,9 @@ declare var Plotly: any;
   styleUrls: ['./twodimensionalgraph.component.css']
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
-  timestamps: number[] = [];
+  timestamps: MultiSelectTimestamp[] = [];
   measurement!: Measurement;
-  selectedTimestamps = [];
+  selectedTimestamps: MultiSelectTimestamp[] = [];
   dropdownSettings = {};
   selectedWavelength!: number;
   settings = {displaylogo: false, responsive: true};
@@ -53,12 +53,15 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   ) {
 
     this.dropdownSettings = {
-      singleSelection: false,
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
+      enableSearchFilter: true,
       enableCheckAll: false,
-      maxHeight: 500,
-      noDataAvailablePlaceholderText: 'Er zijn geen tijdstippen beschikbaar'
+      enableFilterSelectAll: true,
+      maxHeight: 600,
+      badgeShowLimit: 5,
+      text: '',
+      noDataLabel: 'Er zijn geen tijdstippen beschikbaar',
+      searchPlaceholderText: 'Zoeken',
+      filterSelectAllText: 'Selecteer alle gevonden tijdstippen'
     };
 
     this.subscription = measurementService.measurement$.subscribe(
@@ -107,7 +110,9 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getTimestamps(id: number): void {
-    this.measurementService.getTimestamps(id).subscribe(timestamps => this.timestamps = timestamps);
+    this.measurementService.getTimestamps(id).subscribe(
+      timestamps => this.timestamps = timestamps.map(timestamp => ({id: timestamp, itemName: timestamp}))
+    );
   }
 
   /**
@@ -140,7 +145,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
    getWavelengthsOfTimestamp(): void {
-    this.twodimensionalgraphService.getWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamps)
+    this.twodimensionalgraphService.getWavelengthsOfTimestamp(this.measurement.id, this.selectedTimestamps.map(x => x.id))
     .subscribe(wavelengthOfTimestamp => {
         this.plotAllWavelengths(
           Object.keys(wavelengthOfTimestamp).map(x => +x),
@@ -177,7 +182,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   getTitleText(): string {
     if (this.selectedTimestamps.length > 1) {
-      return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp)}`;
+      return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp.id)}`;
     } else {
       return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0]}`;
     }
@@ -207,4 +212,9 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 export interface WavelengthsOfTimestamp {
   timestamp: number;
   wavelength: number;
+}
+
+export interface MultiSelectTimestamp {
+  id: number;
+  itemName: number;
 }

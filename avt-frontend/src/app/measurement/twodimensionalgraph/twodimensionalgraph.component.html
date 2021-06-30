@@ -19,10 +19,7 @@
     </div>
 
     <div class="col-md-3">
-        <ng-multiselect-dropdown [placeholder]="'Tijdstippen'" [settings]="dropdownSettings"
-            [data]="timestamps" [(ngModel)]="selectedTimestamps" 
-        >
-        </ng-multiselect-dropdown>
+        <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps" [settings]="dropdownSettings"></angular2-multiselect>
     </div>
 
     <div class="col-md-3">

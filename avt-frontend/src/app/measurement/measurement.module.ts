@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MeasurementRoutingModule } from './measurement-routing.module';
 import { MeasurementComponent } from './measurement.component';
 import { ThreedimensionalgraphComponent } from './threedimensionalgraph/threedimensionalgraph.component';
 import { TwodimensionalgraphComponent } from './twodimensionalgraph/twodimensionalgraph.component';
 import { ExportComponent } from './export/export.component';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { ExportComponent } from './export/export.component';
     ExportComponent,
   ],
   imports: [
-    NgMultiSelectDropDownModule.forRoot(),
+    AngularMultiSelectModule,
     CommonModule,
     MeasurementRoutingModule,
     FormsModule,
