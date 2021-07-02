@@ -3,21 +3,42 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333333;
-}
-
-li {
-  float: left;
+  background-color: #6b6b6b;
+  max-width: 175px;
+  min-width: 100px;
+  min-height: 42vmax;
 }
 
 li a {
   display: block;
   color: white;
-  text-align: center;
+  text-align: left;
   padding: 16px;
   text-decoration: none;
 }
 
+li p {
+  display: block;
+  color: white;
+  text-align: left;
+  padding: 16px;
+  text-decoration: none;
+  margin-bottom: 0;
+}
+
 li a:hover {
-  background-color: #111111;
+  background-color: #333333;
+}
+
+li.select {
+  background-color: #333333;
+}
+
+
+
+.sidebar {
+  position: absolute;
+  top: 56px;
+  margin: 0 auto;
+  margin-left: -148px;
 }

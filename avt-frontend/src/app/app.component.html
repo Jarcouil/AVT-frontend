@@ -1,9 +1,12 @@
-<router-outlet></router-outlet>
-<ng-http-loader></ng-http-loader>
-<div *ngIf="!loggedIn()" class="small-box"> 
+<div class="grand-parent">
     <router-outlet></router-outlet>
-    <app-messages></app-messages>
+    <ng-http-loader></ng-http-loader>
+    <div *ngIf="!loggedIn()" class="small-box"> 
+        <router-outlet></router-outlet>
+        <app-messages></app-messages>
+    </div>
+    <div *ngIf="loggedIn()"> 
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<div *ngIf="loggedIn()"> 
-    <router-outlet></router-outlet>
-</div>
+

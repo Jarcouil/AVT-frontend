@@ -1,14 +1,18 @@
-<h4><strong>Meting: {{measurement?.name}}</strong></h4>
-<ul>
-  <li>
-    <a routerLink="3dgraph">3D grafiek</a>
-  </li>
-  <li>
-    <a routerLink="2dgraph">2D grafieken</a>
-  </li>
-  <li>
-    <a routerLink="export">Exporteren</a>
-  </li>
-</ul>
+<div class="sidebar">
+  <ul style="margin-bottom: 0.5rem;">
+    <li>
+      <p>{{measurement?.name}}</p>
+    </li>
+    <li [ngClass]="{'select': selectedTab === 'export'}">
+      <a routerLink="export" (click)="setSelectedTab('export')">Exporteren</a>
+    </li>
+    <li [ngClass]="{'select': selectedTab === '2dgraph'}">
+      <a routerLink="2dgraph" (click)="setSelectedTab('2dgraph')">2D grafieken</a>
+    </li>
+    <li [ngClass]="{'select': selectedTab === '3dgraph'}">
+      <a routerLink="3dgraph" (click)="setSelectedTab('3dgraph')">3D grafiek</a>
+    </li>
+  </ul>  
+</div>
 
 <router-outlet></router-outlet>

@@ -127,7 +127,7 @@ export class MeasurementOverviewComponent implements OnInit {
   deleteMeasurement(measurement: Measurement): void {
     if (confirm(`Weet je zeker dat je meting ${measurement.name} wilt verwijderen?`)) {
       this.measurementOverviewService.deleteMeasurement(measurement.id).subscribe(result => {
-        this.getMeasurementsOfUser(this.page);
+        this.refreshMeasurements(this.page);
       });
     }
   }

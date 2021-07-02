@@ -77,7 +77,6 @@ export class ThreedimensionalgraphComponent {
         timestamps.push(wavelengths);
       }
       this.chromatograms = timestamps;
-      this.plotGraph();
     });
   }
 

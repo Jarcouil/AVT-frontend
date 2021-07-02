@@ -182,9 +182,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   getTitleText(): string {
     if (this.selectedTimestamps.length > 1) {
+      this.selectedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1);
       return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp.id)}`;
     } else {
-      return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0]}`;
+      return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0].id}`;
     }
   }
 

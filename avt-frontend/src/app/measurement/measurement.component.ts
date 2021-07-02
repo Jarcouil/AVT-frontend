@@ -12,6 +12,7 @@ import { MeasurementService } from './service/measurement.service';
 export class MeasurementComponent implements OnInit {
 
   public measurement!: Measurement;
+  public selectedTab!: string;
 
   constructor(
     private measurementOverviewService: MeasurementOverviewService,
@@ -26,6 +27,16 @@ export class MeasurementComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getMeasurement();
+    this.selectedTab = this.route.snapshot.firstChild?.routeConfig?.path || 'export';
+  }
+
+  /**
+   * set select tab variable
+   *
+   * @param selectedTab string
+   */
+  setSelectedTab(selectedTab: string): void {
+    this.selectedTab = selectedTab;
   }
 
   /**
