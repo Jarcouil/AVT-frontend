@@ -62,22 +62,6 @@ export class MeasurementService {
   }
 
   /**
-   * Get all data for 3d graph
-   *
-   * @param measurementName string
-   *
-   * @returns Observable<Array<number>>
-   */
-   getData(measurementName: string): Observable<Array<number>>{
-    const url = `${this.apiUrl}/data/${measurementName}`;
-
-    return this.http.get<Array<number>>(url)
-      .pipe(
-        catchError(this.handleError<[]>([]))
-      );
-  }
-
-  /**
    * handle error
    *
    * @param result T

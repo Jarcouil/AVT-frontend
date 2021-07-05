@@ -18,7 +18,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   selectedTimestamps: MultiSelectTimestamp[] = [];
   dropdownSettings = {};
   selectedWavelength!: number;
-  settings = {displaylogo: false, responsive: true};
+  settingsTimestamps = {displaylogo: false, responsive: true, toImageButtonOptions: { filename: ''}};
+  settingsWavelengths = {displaylogo: false, responsive: true, toImageButtonOptions: { filename: ''}};
   subscription: Subscription;
   wavelengths: number[] = [];
 
@@ -172,7 +173,9 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     }
 
     this.allWavelengthsLayout.title = this.getTitleText();
-    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settings);
+    this.settingsWavelengths.toImageButtonOptions.filename = `${this.measurement.name}_golflengtes`;
+    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settingsWavelengths);
+
   }
 
   /**
@@ -184,9 +187,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     if (this.selectedTimestamps.length > 1) {
       this.selectedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1);
       return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp.id)}`;
-    } else {
-      return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0].id}`;
     }
+    return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0].id}`;
   }
 
   /**
@@ -197,7 +199,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   plotAllTimestamps(xData: Array<number>, yData: Array<number>): void {
     const data = [{ x: xData, y: yData}];
     this.allTimestampsLayout.title = `Alle tijdstippen voor golflengte ${this.selectedWavelength}`;
-    Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout, this.settings);
+    this.settingsTimestamps.toImageButtonOptions.filename = `${this.measurement.name}_tijdstippen`;
+    Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout, this.settingsTimestamps);
   }
 
   /**

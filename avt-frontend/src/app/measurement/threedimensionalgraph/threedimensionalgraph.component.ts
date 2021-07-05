@@ -56,7 +56,6 @@ export class ThreedimensionalgraphComponent {
         this.measurement = measurement;
         this.getWavelengths(measurement.id);
         this.getTimestamps(measurement.id);
-        this.getData();
       }
     );
   }
@@ -67,7 +66,7 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   getData(): void {
-    this.twodimensionalgraphService.getData(this.measurement.id).subscribe(chromatograms => {
+    this.twodimensionalgraphService.getData(this.measurement.id, this.xMin, this.xMax, this.yMin, this.yMax).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
@@ -77,6 +76,7 @@ export class ThreedimensionalgraphComponent {
         timestamps.push(wavelengths);
       }
       this.chromatograms = timestamps;
+      this.plotGraph();
     });
   }
 
@@ -121,18 +121,44 @@ export class ThreedimensionalgraphComponent {
   }
 
   /**
+   * Add all numbers between min and max wavelength to array
+   * @returns number[]
+   */
+  getSelectedWavelengths(): number[] {
+    const selectedWavelengths = [];
+    for (let i = this.xMin; i <= this.xMax; i++) {
+      selectedWavelengths.push(i);
+    }
+    return selectedWavelengths;
+  }
+
+  /**
+   * Add all numbers between min and max timestamp to array
+   * @returns number[]
+   */
+  getselectedTimestamps(): number[] {
+    const selectedTimestamps = [];
+    for (let i = this.yMin; i <= this.yMax; i++) {
+      selectedTimestamps.push(i);
+    }
+    return selectedTimestamps;
+  }
+
+  /**
    * Plot the 3d graph
    *
    * @returns void
    */
   plotGraph(): void {
     this.updateAxisRange();
+    const selectedTimestamps = this.getselectedTimestamps();
+    const selectedWavelengths = this.getSelectedWavelengths();
 
-    const hoverText = this.timestamps.map((yi, i) => this.wavelengths.map((xi, j) => `
+    const hoverText = selectedTimestamps.map((yi, i) => selectedWavelengths.map((xi, j) => `
       Golflengte: ${xi}<br>
       Tijd: ${yi}<br>
       Absorptie: ${this.chromatograms[i][j]}
-      `));
+    `));
 
     this.data = {
       x: this.wavelengths,
@@ -147,7 +173,7 @@ export class ThreedimensionalgraphComponent {
       this.threedimensionalGraph.nativeElement,
       [this.data],
       this.layout,
-      {displaylogo: false}
+      { displaylogo: false, toImageButtonOptions: { filename: `${this.measurement.name}_3d`}}
     );
   }
 }

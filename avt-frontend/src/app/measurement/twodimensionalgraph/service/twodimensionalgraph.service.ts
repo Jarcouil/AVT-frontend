@@ -62,10 +62,15 @@ export class TwodimensionalgraphService {
    *
    * @returns Observable<Array<number>>
    */
-  getData(id: number): Observable<Array<number>> {
+   getData(id: number, xMin: number, xMax: number, yMin: number, yMax: number): Observable<Array<number>>{
     const url = `${this.apiUrl}/data/${id}`;
+    const parameters = new HttpParams()
+      .set('xMin', xMin.toString())
+      .set('xMax', xMax.toString())
+      .set('yMin', yMin.toString())
+      .set('yMax', yMax.toString());
 
-    return this.http.get<Array<number>>(url)
+    return this.http.get<Array<number>>(url, { params: parameters })
       .pipe(
         catchError(this.handleError<[]>([]))
       );
