@@ -19,11 +19,13 @@
     </div>
 
     <div class="col-md-3">
-        <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps" [settings]="dropdownSettings"></angular2-multiselect>
+        <div class="customDropdown">
+            <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps" [settings]="dropdownSettings"></angular2-multiselect>
+        </div>
     </div>
 
     <div class="col-md-3">
-        <button class="btn btn-primary" (click)="getGraphData()">Selecteren</button>
+        <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1" (click)="getGraphData()">Selecteren</button>
     </div>
 </div>
 

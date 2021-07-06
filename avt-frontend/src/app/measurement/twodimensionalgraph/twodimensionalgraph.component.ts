@@ -16,8 +16,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   timestamps: MultiSelectTimestamp[] = [];
   measurement!: Measurement;
   selectedTimestamps: MultiSelectTimestamp[] = [];
-  dropdownSettings = {};
   selectedWavelength!: number;
+  dropdownSettings = {};
   settingsTimestamps = {displaylogo: false, responsive: true, toImageButtonOptions: { filename: ''}};
   settingsWavelengths = {displaylogo: false, responsive: true, toImageButtonOptions: { filename: ''}};
   subscription: Subscription;
@@ -57,12 +57,13 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       enableSearchFilter: true,
       enableCheckAll: false,
       enableFilterSelectAll: true,
-      maxHeight: 600,
+      maxHeight: 450,
       badgeShowLimit: 5,
       text: '',
       noDataLabel: 'Er zijn geen tijdstippen beschikbaar',
       searchPlaceholderText: 'Zoeken',
-      filterSelectAllText: 'Selecteer alle gevonden tijdstippen'
+      filterSelectAllText: 'Selecteer alle gevonden tijdstippen',
+      classes: 'customDropdown'
     };
 
     this.subscription = measurementService.measurement$.subscribe(
