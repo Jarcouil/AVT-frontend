@@ -16,7 +16,7 @@
     </div>
 
     <div *ngIf="isAdmin()" class="p-2">
-        <select class="form-control" #mySelect [(ngModel)]="allMeasurments" (change)='refreshMeasurements(1)'>
+        <select class="form-control" #mySelect [(ngModel)]="allMeasurements" (change)='refreshMeasurements(1)'>
             <option [ngValue]="false">Eigen metingen</option>
             <option [ngValue]="true">Alle metingen</option>
         </select>
@@ -42,7 +42,7 @@
             <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
                 [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
             </th>
-            <th scope="col" *ngIf="isAdmin()" (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
+            <th scope="col" *ngIf="allMeasurements === true" (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
                 [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdBy && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdBy && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdBy}"></a>
             </th>
             <th scope="col"></th>
@@ -59,7 +59,7 @@
             <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
             <td>{{measurement.description}}</td>
             <td>{{measurement.createdAt | date: 'medium'}}</td>
-            <td *ngIf="isAdmin()">{{measurement.username}}</td>
+            <td *ngIf="allMeasurements == true">{{measurement.username}}</td>
             <td><button class="btn" (click)="this.deleteMeasurement(measurement)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-trash" viewBox="0 0 16 16">

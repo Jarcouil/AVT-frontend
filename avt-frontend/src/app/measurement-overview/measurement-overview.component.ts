@@ -10,7 +10,7 @@ import { MeasurementOverviewService } from './service/measurement-overview.servi
   styleUrls: ['./measurement-overview.component.css']
 })
 export class MeasurementOverviewComponent implements OnInit {
-  allMeasurments = false;
+  allMeasurements = false;
   measurements: Measurement[] = [];
 
   sorting = {
@@ -80,7 +80,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * @returns void
    */
   refreshMeasurements(page: any): void {
-    if (this.allMeasurments) {
+    if (this.allMeasurements) {
       this.getMeasurements(page);
     } else {
       this.getMeasurementsOfUser(page);
