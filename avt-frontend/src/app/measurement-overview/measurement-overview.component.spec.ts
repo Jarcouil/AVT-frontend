@@ -1,4 +1,6 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MeasurementOverviewComponent } from './measurement-overview.component';
 
@@ -8,7 +10,11 @@ describe('MeasurementOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MeasurementOverviewComponent ]
+      declarations: [ MeasurementOverviewComponent ],
+      imports: [
+        HttpClientModule,
+        NgxPaginationModule
+      ]
     })
     .compileComponents();
   });

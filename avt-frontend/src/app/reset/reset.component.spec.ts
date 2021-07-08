@@ -1,4 +1,7 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { ResetComponent } from './reset.component';
 
@@ -8,7 +11,13 @@ describe('ResetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResetComponent ]
+      declarations: [ ResetComponent ],
+      imports: [ 
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([])
+     ]
     })
     .compileComponents();
   });

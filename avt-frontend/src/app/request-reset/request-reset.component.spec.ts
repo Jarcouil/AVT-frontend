@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RequestResetComponent } from './request-reset.component';
 
@@ -8,7 +10,12 @@ describe('RequestResetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RequestResetComponent ]
+      declarations: [ RequestResetComponent ],
+      imports: [ 
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+     ]
     })
     .compileComponents();
   });

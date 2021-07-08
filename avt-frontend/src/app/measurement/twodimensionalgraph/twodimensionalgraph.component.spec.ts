@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { TwodimensionalgraphComponent } from './twodimensionalgraph.component';
 
@@ -8,7 +9,10 @@ describe('TwodimensionalgraphComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TwodimensionalgraphComponent ]
+      declarations: [ TwodimensionalgraphComponent ],
+      imports: [
+        HttpClientModule,
+      ]
     })
     .compileComponents();
   });
