@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ResetComponent } from './reset.component';
+import { AppModule } from '../app.module';
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -13,6 +14,7 @@ describe('ResetComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ResetComponent ],
       imports: [ 
+        AppModule,
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
