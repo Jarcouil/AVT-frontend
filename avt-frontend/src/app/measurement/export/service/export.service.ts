@@ -26,7 +26,41 @@ export class ExportService {
       );
   }
 
-  getCSV(measurmentId: number, exportForm: FormData): Observable<Blob> {
+
+  /**
+   * Get CSV file of given timestamps and wavelenths
+   *
+   * @param measurmentId id
+   * @param timestamps number[]
+   * @param wavelengths number[]
+   * @returns Observable<Blob> file
+   */
+  getCSV(measurmentId: number, wavelengths: number[], minTimestamp: number, maxTimestamp: number): Observable<Blob> {
+    let parameters = new HttpParams().set(
+      'minTimestamp', minTimestamp.toString()
+    ).set(
+      'maxTimestamp', maxTimestamp.toString()
+    ).set(
+      'wavelengths', JSON.stringify(wavelengths.map(wavelength => wavelength.toString()))
+    );
+    return this.http.get(`${this.apiUrl}/csv/${measurmentId}`, {
+      params: parameters,
+      responseType: 'blob'
+    })
+      .pipe(
+        catchError(this.handleError<any>())
+      );
+  }
+
+  /**
+   * Get CSV file of given timestamps and wavelenths
+   *
+   * @param measurmentId id
+   * @param timestamps number[]
+   * @param wavelengths number[]
+   * @returns Observable<Blob> file
+   */
+   getCSVRange(measurmentId: number, exportForm: FormData): Observable<Blob> {
     let parameters = new HttpParams();
     parameters = parameters.append('minWavelength', exportForm.get('minWaveLength')?.toString() || '');
     parameters = parameters.append('maxWavelength', exportForm.get('maxWaveLength')?.toString() || '');

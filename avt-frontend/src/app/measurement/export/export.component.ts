@@ -4,9 +4,10 @@ import { Measurement } from 'src/app/measurement-overview/measurement';
 import { MeasurementService } from '../service/measurement.service';
 import { ExportService } from './service/export.service';
 import { saveAs } from 'file-saver';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { minLowerThanMaxWaveLengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
 import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-lower-than-max-timestamp.directive';
+import { MultiSelectItem } from '../twodimensionalgraph/twodimensionalgraph.component';
 
 @Component({
   selector: 'app-export',
@@ -19,17 +20,34 @@ export class ExportComponent implements OnInit {
   measurement!: Measurement;
   submit = false;
   subscription: Subscription;
+  exportAsRange!: boolean;
+  dropdownSettings = {};
 
   minWavelength!: number;
   maxWavelength!: number;
   minTimestamp!: number;
   maxTimestamp!: number;
 
+  multiSelectWavelengths: MultiSelectItem[] = [];
+
   constructor(
     private exportService: ExportService,
     private measurementService: MeasurementService,
     private formBuilder: FormBuilder,
   ) {
+    this.dropdownSettings = {
+      enableSearchFilter: true,
+      enableCheckAll: true,
+      enableFilterSelectAll: true,
+      maxHeight: 450,
+      badgeShowLimit: 5,
+      text: '',
+      noDataLabel: 'Er is geen data beschikbaar',
+      searchPlaceholderText: 'Zoeken',
+      filterSelectAllText: 'Selecteer alle gevonden data',
+      classes: 'customDropdown'
+    };
+
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
@@ -56,12 +74,10 @@ export class ExportComponent implements OnInit {
    * @returns Formgroup
    */
   createForm(): FormGroup {
-    return this.formBuilder.group({
-      minWaveLength: [],
-      maxWaveLength: [],
-      minTimestamp: [],
-      maxTimestamp: [],
-    }, { validators: [minLowerThanMaxWaveLengthValidator, minLowerThanMaxTimestampValidator] });
+      return this.formBuilder.group({
+        minTimestamp: [],
+        maxTimestamp: [],
+      }, { validators: [minLowerThanMaxTimestampValidator] });
   }
 
   /**
@@ -74,21 +90,63 @@ export class ExportComponent implements OnInit {
   }
 
   /**
-   * Check if exportForm is valid and submit request
+   * Submit request with a range of wavelengths
+   *
+   * @returns void
+   */
+  submitAsRange(): void {
+    const formData: any = new FormData();
+    formData.append('minWaveLength', this.getMinWavelength());
+    formData.append('maxWaveLength', this.getMaxWavelength());
+    formData.append('minTimestamp', this.getMinTimestamp());
+    formData.append('maxTimestamp', this.getMaxTimestamp());
+    const filename = `${this.measurement.name}_${this.getMinWavelength()}-${this.getMaxWavelength()}_${this.getMinTimestamp()}-${this.getMaxTimestamp()}`;
+
+    this.exportService.getCSVRange(this.measurement.id, formData).subscribe(blob => saveAs(blob, `${filename}.csv`));
+  }
+
+  /**
+   * Submit request with selected wavelengths
+   */
+  submitAsSelect(): void {
+      const filename = `${this.measurement.name}`;
+      this.exportService.getCSV(
+        this.measurement.id, 
+        this.getSelectedWavelengths(),
+        this.getMinTimestamp(),
+        this.getMaxTimestamp(),
+      ).subscribe(blob => saveAs(blob, `${filename}.csv`));
+  }
+
+  /**
+   * Switch wavelength FormControl based on boolean.
+   */
+  switchWavelengthControl(): void {
+    if (this.exportAsRange) {
+      this.exportForm.removeControl('wavelengths')
+      this.exportForm.addControl('minWavelength', new FormControl(+this.minWavelength))
+      this.exportForm.addControl('maxWavelength', new FormControl(+this.maxWavelength))
+      this.setWavelengthValidators()
+    } else {
+      this.exportForm.removeControl('minWavelength')
+      this.exportForm.removeControl('maxWavelength')
+      this.exportForm.addControl('wavelengths', new FormControl([], Validators.required))
+    }
+  }
+
+  /**
+   * Call submit function based on exportAsRange if exportForm is valid
    *
    * @returns void
    */
   onSubmit(): void {
     this.submit = true;
-    if (this.exportForm.valid) {
-      const formData: any = new FormData();
-      formData.append('minWaveLength', this.getMinWavelength());
-      formData.append('maxWaveLength', this.getMaxWavelength());
-      formData.append('minTimestamp', this.getMinTimestamp());
-      formData.append('maxTimestamp', this.getMaxTimestamp());
-      const filename = `${this.measurement.name}_${this.getMinWavelength()}-${this.getMaxWavelength()}_${this.getMinTimestamp()}-${this.getMaxTimestamp()}`;
-
-      this.exportService.getCSV(this.measurement.id, formData).subscribe(blob => saveAs(blob, `${filename}.csv`));
+    if (this.exportForm.valid){
+      if (this.exportAsRange){
+        this.submitAsRange();
+      } else {
+        this.submitAsSelect();
+      }
     }
   }
 
@@ -101,13 +159,11 @@ export class ExportComponent implements OnInit {
    */
   getWavelengths(id: number): void {
     this.measurementService.getWavelengths(id).subscribe(wavelengths => {
+      this.multiSelectWavelengths = wavelengths.map(wavelength => ({id: wavelength, itemName: wavelength}))
       this.minWavelength = wavelengths[0];
       this.maxWavelength = wavelengths[wavelengths.length - 1];
-      this.exportForm.patchValue({
-        minWaveLength: this.minWavelength,
-        maxWaveLength: this.maxWavelength
-      });
-      this.setWavelengthValidators();
+      this.exportAsRange = true;
+      this.switchWavelengthControl();
     });
   }
 
@@ -122,10 +178,12 @@ export class ExportComponent implements OnInit {
     this.measurementService.getTimestamps(id).subscribe(timestamps => {
       this.minTimestamp = timestamps[0];
       this.maxTimestamp = timestamps[timestamps.length - 1];
+
       this.exportForm.patchValue({
         minTimestamp: this.minTimestamp,
         maxTimestamp: this.maxTimestamp
       });
+
       this.setTimestampValidators();
     });
   }
@@ -136,19 +194,20 @@ export class ExportComponent implements OnInit {
    * @returns void
    */
   setWavelengthValidators(): void {
-    this.exportForm.get('minWaveLength')?.setValidators(
+    this.exportForm.get('minWavelength')?.setValidators(
       [
         Validators.required,
         Validators.min(this.minWavelength),
         Validators.max(this.maxWavelength)
       ]);
 
-    this.exportForm.get('maxWaveLength')?.setValidators(
+    this.exportForm.get('maxWavelength')?.setValidators(
       [
         Validators.required,
         Validators.min(this.minWavelength),
         Validators.max(this.maxWavelength)
       ]);
+    this.exportForm.setValidators([minLowerThanMaxWaveLengthValidator])
   }
 
   /**
@@ -178,7 +237,7 @@ export class ExportComponent implements OnInit {
    * @returns number minWavelength
    */
   getMinWavelength(): number {
-    return this.exportForm.get('minWaveLength')?.value;
+    return this.exportForm.get('minWavelength')?.value;
   }
 
   /**
@@ -187,7 +246,7 @@ export class ExportComponent implements OnInit {
    * @returns number maxWavelength
    */
   getMaxWavelength(): number {
-    return this.exportForm.get('maxWaveLength')?.value;
+    return this.exportForm.get('maxWavelength')?.value;
   }
 
   /**
@@ -206,5 +265,14 @@ export class ExportComponent implements OnInit {
    */
   getMaxTimestamp(): number {
     return this.exportForm.get('maxTimestamp')?.value;
+  }
+
+  /**
+   * Get wavelengths from exportForm
+   *
+   * @returns number[] wavelengths
+   */
+  getSelectedWavelengths(): number[] {
+    return (this.exportForm.get('wavelengths')?.value).map((x: { id: any; }) => x.id);
   }
 }

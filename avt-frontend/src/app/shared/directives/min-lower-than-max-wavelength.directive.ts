@@ -8,8 +8,8 @@ import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
  * @returns boolean
  */
 export const minLowerThanMaxWaveLengthValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const minWaveLength = control.get('minWaveLength');
-  const maxWaveLength = control.get('maxWaveLength');
+  const minWaveLength = control.get('minWavelength');
+  const maxWaveLength = control.get('maxWavelength');
 
   return minWaveLength && maxWaveLength && minWaveLength.value > maxWaveLength.value ? { minLowerThanMaxWaveLengthValidator: true } : null;
 };

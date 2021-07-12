@@ -13,9 +13,9 @@ declare var Plotly: any;
   styleUrls: ['./twodimensionalgraph.component.css']
 })
 export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
-  timestamps: MultiSelectTimestamp[] = [];
+  timestamps: MultiSelectItem[] = [];
   measurement!: Measurement;
-  selectedTimestamps: MultiSelectTimestamp[] = [];
+  selectedTimestamps: MultiSelectItem[] = [];
   selectedWavelength!: number;
   dropdownSettings = {};
   settingsTimestamps = {displaylogo: false, responsive: true, toImageButtonOptions: { filename: ''}};
@@ -219,7 +219,7 @@ export interface WavelengthsOfTimestamp {
   wavelength: number;
 }
 
-export interface MultiSelectTimestamp {
+export interface MultiSelectItem {
   id: number;
   itemName: number;
 }
