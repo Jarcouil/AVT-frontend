@@ -72,6 +72,7 @@ export class UploadComponent implements OnInit {
       formData.append('minWaveLength', this.getMinWaveLength());
       formData.append('maxWaveLength', this.getMaxWaveLength());
       formData.append('coefficient', this.getCoefficient());
+      formData.append('samplingRate', this.getSamplingRate());
       formData.append('description', this.getDescription());
 
       this.uploadService.postDadFile(formData).subscribe(response => {
@@ -91,6 +92,7 @@ export class UploadComponent implements OnInit {
       minWaveLength: [200, [Validators.required, Validators.min(this.minMinWaveLength), Validators.max(this.maxMinWaveLength)]],
       maxWaveLength: [800, [Validators.required, Validators.min(this.minMaxWaveLength), Validators.max(this.maxMaxWaveLength)]],
       coefficient: [-0.64, Validators.required],
+      samplingRate: [1600, Validators.required],
       description: ['', [Validators.required, Validators.minLength(5)]],
       file: [null, [Validators.required, RxwebValidators.extension({ extensions: ['dad'] })]]
     }, { validators: minLowerThanMaxWaveLengthValidator });
@@ -148,5 +150,14 @@ export class UploadComponent implements OnInit {
    */
   getFile(): FormGroup {
     return this.uploadForm.get('file')?.value;
+  }
+
+  /**
+   * Get samplingRate from formgroup
+   * 
+   * @returns samplingRate FormGroup
+   */
+  getSamplingRate(): FormGroup {
+    return this.uploadForm.get('samplingRate')?.value;
   }
 }

@@ -29,11 +29,11 @@
     </div>
 
     <div class="col-md">
-        <input type="number" class="form-control" [(ngModel)]="yMin">
+        <input type="number" class="form-control" [(ngModel)]="yMin" step="{{this.measurement?.samplingRate}}">
     </div>
 
     <div class="col-md">
-        <input type="number" class="form-control" [(ngModel)]="yMax">
+        <input type="number" class="form-control" [(ngModel)]="yMax" step="{{this.measurement?.samplingRate}}">
     </div>
 
     <div class="col-md">

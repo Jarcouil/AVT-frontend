@@ -39,6 +39,9 @@
             <th scope="col" (click)="this.sortMeasurements(this.sorting.description)">Beschrijving <a
                 [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.description && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.description && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.description}"></a>
             </th>
+            <th scope="col" (click)="this.sortMeasurements(this.sorting.samplingRate)">Sampling rate <a
+                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.samplingRate && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.samplingRate && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.samplingRate}"></a>
+            </th>
             <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
                 [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
             </th>
@@ -58,6 +61,7 @@
             <td>{{measurement.id}}</td>
             <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
             <td>{{measurement.description}}</td>
+            <td>{{measurement.samplingRate}} ms</td>
             <td>{{measurement.createdAt | date: 'medium'}}</td>
             <td *ngIf="allMeasurements == true">{{measurement.username}}</td>
             <td><button class="btn" (click)="this.deleteMeasurement(measurement)">

@@ -163,6 +163,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   plotAllWavelengths(xData: Array<number>, yData: Array<Array<number>>, names: any): void {
     yData.pop();
+    yData.pop();
     const data = [];
 
     for (let i = 0; i < Object.values(yData)[0].length; i++) {
@@ -176,7 +177,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.allWavelengthsLayout.title = this.getTitleText();
     this.settingsWavelengths.toImageButtonOptions.filename = `${this.measurement.name}_golflengtes`;
     Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settingsWavelengths);
-
   }
 
   /**

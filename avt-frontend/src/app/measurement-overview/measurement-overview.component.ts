@@ -17,6 +17,7 @@ export class MeasurementOverviewComponent implements OnInit {
     id: 'id',
     name: 'name',
     description: 'description',
+    samplingRate: 'samplingRate',
     createdBy: 'createdBy',
     createdAt: 'createdAt',
   };
@@ -26,8 +27,8 @@ export class MeasurementOverviewComponent implements OnInit {
     desc: 'desc',
   };
 
-  sort = this.sorting.id;
-  order = this.orders.asc;
+  sort = this.sorting.createdAt;
+  order = this.orders.desc;
   page = 0;
   perPage = 10;
   total = 0;

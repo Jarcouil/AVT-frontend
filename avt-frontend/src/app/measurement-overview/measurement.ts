@@ -5,6 +5,7 @@ export interface Measurement {
     name: string;
     description: string;
     createdAt: string;
+    samplingRate: number;
     username: string;
 }
 

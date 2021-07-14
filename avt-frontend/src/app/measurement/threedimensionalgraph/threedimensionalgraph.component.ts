@@ -54,6 +54,7 @@ export class ThreedimensionalgraphComponent {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
+        this.measurement.samplingRate = measurement.samplingRate / 1000
         this.getWavelengths(measurement.id);
         this.getTimestamps(measurement.id);
       }
@@ -138,7 +139,7 @@ export class ThreedimensionalgraphComponent {
    */
   getselectedTimestamps(): number[] {
     const selectedTimestamps = [];
-    for (let i = this.yMin; i <= this.yMax; i++) {
+    for (let i = this.yMin; i <= this.yMax; i = Math.round((i + this.measurement.samplingRate)*10)/10) {
       selectedTimestamps.push(i);
     }
     return selectedTimestamps;
