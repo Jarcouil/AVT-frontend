@@ -45,7 +45,10 @@ export class ExportComponent implements OnInit {
       noDataLabel: 'Er is geen data beschikbaar',
       searchPlaceholderText: 'Zoeken',
       filterSelectAllText: 'Selecteer alle gevonden data',
-      classes: 'customDropdown'
+      classes: 'customDropdown',
+      selectAllText: 'Selecteer alles',
+      unSelectAllText: 'Deselecteer alles',
+      lazyLoading: true
     };
 
     this.subscription = measurementService.measurement$.subscribe(

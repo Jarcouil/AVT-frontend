@@ -63,7 +63,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       noDataLabel: 'Er zijn geen tijdstippen beschikbaar',
       searchPlaceholderText: 'Zoeken',
       filterSelectAllText: 'Selecteer alle gevonden tijdstippen',
-      classes: 'customDropdown'
+      classes: 'customDropdown',
+      lazyLoading: true
     };
 
     this.subscription = measurementService.measurement$.subscribe(
