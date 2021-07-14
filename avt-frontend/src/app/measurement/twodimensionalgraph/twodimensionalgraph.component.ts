@@ -28,7 +28,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     automargin: true,
     title: 'Alle golflengtes per tijdstip',
     xaxis: {
-      title: 'Golflengte',
+      title: 'Golflengte (nm)',
     },
     yaxis: {
       title: 'Absorptie',
@@ -40,7 +40,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     title: 'Alle tijdstippen per golflengte',
     automargin: true,
     xaxis: {
-      title: 'Tijdstip',
+      title: 'Tijdstip (s)',
     },
     yaxis: {
       title: 'Absorptie',

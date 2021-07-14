@@ -37,11 +37,11 @@ export class ThreedimensionalgraphComponent {
     scene: {
       zaxis: { title: 'Absorptie' },
       xaxis: {
-        title: 'Golflengte',
+        title: 'Golflengte (nm)',
         range: [this.xMin, this.xMax]
       },
       yaxis: {
-        title: 'Tijd',
+        title: 'Tijd (s)',
         range: [this.yMin, this.yMax]
       }
     }
