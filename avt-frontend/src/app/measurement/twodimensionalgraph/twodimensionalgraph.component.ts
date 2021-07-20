@@ -25,25 +25,39 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
   allWavelengthsLayout = {
     autoexpand: 'true',
-    automargin: true,
     title: 'Alle golflengtes per tijdstip',
     xaxis: {
       title: 'Golflengte (nm)',
     },
     yaxis: {
       title: 'Absorptie',
+    },
+    height: 350,
+    margin: {
+      l: 50,
+      r: 50,
+      b: 50,
+      t: 50,
+      pad: 4
     }
   };
 
   allTimestampsLayout = {
     autoexpand: 'true',
     title: 'Alle tijdstippen per golflengte',
-    automargin: true,
     xaxis: {
       title: 'Tijdstip (s)',
     },
     yaxis: {
       title: 'Absorptie',
+    },
+    height: 350,
+    margin: {
+      l: 50,
+      r: 50,
+      b: 50,
+      t: 50,
+      pad: 4
     }
   };
 

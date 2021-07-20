@@ -1,31 +1,36 @@
 <div id="allWavelengths" #allWavelengths></div>
 <div id="allTimestamps" #allTimestamps></div>
+<div class="card  bg-light mb-3" style="border-radius: 10px;">
+    <div class="card-body">
 
-<div class="row">
-    <div class="col-md-3">
-        <p>Golflengte</p>
-    </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Golflengte</p>
+            </div>
 
-    <div class="col-md-3">
-        <p>Tijdstippen</p>
-    </div>
-</div>
+            <div class="col-md-3">
+                <p>Tijdstippen</p>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <select class="form-control" [(ngModel)]="selectedWavelength">
-            <option *ngFor="let wavelength of wavelengths" [ngValue]="wavelength">{{wavelength}}</option>
-        </select>
-    </div>
+        <div class="row">
+            <div class="col-md-3">
+                <select class="form-control" [(ngModel)]="selectedWavelength">
+                    <option *ngFor="let wavelength of wavelengths" [ngValue]="wavelength">{{wavelength}}</option>
+                </select>
+            </div>
 
-    <div class="col-md-3">
-        <div class="customDropdown">
-            <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps" [settings]="dropdownSettings"></angular2-multiselect>
+            <div class="col-md-3">
+                <div class="customDropdown">
+                    <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps"
+                        [settings]="dropdownSettings"></angular2-multiselect>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1"
+                    (click)="getGraphData()">Selecteren</button>
+            </div>
         </div>
     </div>
-
-    <div class="col-md-3">
-        <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1" (click)="getGraphData()">Selecteren</button>
-    </div>
 </div>
-

@@ -1,29 +1,35 @@
-<h4><strong>Account pagina</strong></h4>
-<div class="row">
-    <div class="col-md-6">
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>Gebruikersnaam</td>
-                    <td>{{user!.username}}</td>
-                </tr>
-                <tr>
-                    <td>Emailadres</td>
-                    <td>{{user!.email}}</td>
-                </tr>
-                <tr>
-                    <td>Administrator</td>
-                    <td>{{getAdminText(user!.isAdmin)}}</td>
-                </tr>
-                <tr>
-                    <td>Aangemaakt op:</td>
-                    <td>{{user!.createdAt | date: 'medium'}}</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="card  bg-light mb-3" style="border-radius: 10px;">
+    <div class="card-header">
+        <h4><strong>Account pagina</strong></h4>
     </div>
-</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Gebruikersnaam</td>
+                            <td>{{user!.username}}</td>
+                        </tr>
+                        <tr>
+                            <td>Emailadres</td>
+                            <td>{{user!.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Administrator</td>
+                            <td>{{getAdminText(user!.isAdmin)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Aangemaakt op:</td>
+                            <td>{{user!.createdAt | date: 'medium'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div *ngIf="isAdmin()">
-    <button class="btn btn-primary" style="margin-right: 10px" routerLink="/users">Accounts overzicht</button>
+        <div *ngIf="isAdmin()">
+            <button class="btn btn-primary" style="margin-right: 10px" routerLink="/users">Accounts overzicht</button>
+        </div>
+    </div>
 </div>

@@ -1,3 +1,11 @@
 p {
     margin-bottom: 8px
 }
+
+h5 {
+    margin-bottom: 0;
+}
+
+.first {
+    margin-bottom: 1rem;
+}

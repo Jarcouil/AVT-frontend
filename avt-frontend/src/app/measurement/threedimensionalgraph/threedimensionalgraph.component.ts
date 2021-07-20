@@ -29,11 +29,11 @@ export class ThreedimensionalgraphComponent {
 
   layout = {
     autoexpand: 'true',
-    autosize: 'true',
-    width: '1000',
-    height: '800',
+    autosize: false,
+    width: 1200,
+    height: 700,
     title: 'Absorptie per golflengtes en tijdstippen',
-    automargin: true,
+    automargin: false,
     scene: {
       zaxis: { title: 'Absorptie' },
       xaxis: {
@@ -43,6 +43,13 @@ export class ThreedimensionalgraphComponent {
       yaxis: {
         title: 'Tijd (s)',
         range: [this.yMin, this.yMax]
+      },
+    margin: {
+        l: 50,
+        r: 50,
+        b: 0,
+        t: 0,
+        pad: 0
       }
     }
   };
