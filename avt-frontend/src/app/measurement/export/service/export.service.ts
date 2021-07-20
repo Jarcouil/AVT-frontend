@@ -6,26 +6,30 @@ import { MessagesService, Message } from 'src/app/shared/messages/messages.servi
 import { environment } from '@environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExportService {
-
   private apiUrl = `${environment.apiUrl}/file`;
 
   constructor(
     private http: HttpClient,
     private messagesService: MessagesService
-  ) { }
+  ) {}
 
-  downloadDadFile(measurmentId: number): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/download-file/${measurmentId}`, {
-      responseType: 'blob'
-    })
-      .pipe(
-        catchError(this.handleError<any>())
-      );
+  /**
+   * Download file of measurment and name
+   *
+   * @param measurmentId 
+   * @param file
+   * @returns Observable<Blob> 
+   */
+  downloadFile(measurmentId: number, file: string): Observable<Blob> {
+    return this.http
+      .get(`${this.apiUrl}/download-file/${measurmentId}/${file}`, {
+        responseType: 'blob',
+      })
+      .pipe(catchError(this.handleBlobError<any>()));
   }
-
 
   /**
    * Get CSV file of given timestamps and wavelenths
@@ -36,20 +40,16 @@ export class ExportService {
    * @returns Observable<Blob> file
    */
   getCSV(measurmentId: number, wavelengths: number[], minTimestamp: number, maxTimestamp: number): Observable<Blob> {
-    let parameters = new HttpParams().set(
-      'minTimestamp', minTimestamp.toString()
-    ).set(
-      'maxTimestamp', maxTimestamp.toString()
-    ).set(
-      'wavelengths', JSON.stringify(wavelengths.map(wavelength => wavelength.toString()))
-    );
+    let parameters = new HttpParams()
+      .set('minTimestamp', minTimestamp.toString())
+      .set('maxTimestamp', maxTimestamp.toString())
+      .set('wavelengths', JSON.stringify(wavelengths.map((wavelength) => wavelength.toString())));
+
     return this.http.get(`${this.apiUrl}/csv/${measurmentId}`, {
-      params: parameters,
-      responseType: 'blob'
-    })
-      .pipe(
-        catchError(this.handleError<any>())
-      );
+        params: parameters,
+        responseType: 'blob',
+      })
+      .pipe(catchError(this.handleBlobError<any>()));
   }
 
   /**
@@ -60,34 +60,47 @@ export class ExportService {
    * @param wavelengths number[]
    * @returns Observable<Blob> file
    */
-   getCSVRange(measurmentId: number, exportForm: FormData): Observable<Blob> {
+  getCSVRange(measurmentId: number, exportForm: FormData): Observable<Blob> {
     let parameters = new HttpParams();
     parameters = parameters.append('minWavelength', exportForm.get('minWaveLength')?.toString() || '');
     parameters = parameters.append('maxWavelength', exportForm.get('maxWaveLength')?.toString() || '');
     parameters = parameters.append('minTimestamp', exportForm.get('minTimestamp')?.toString() || '');
     parameters = parameters.append('maxTimestamp', exportForm.get('maxTimestamp')?.toString() || '');
 
-    return this.http.get(`${this.apiUrl}/csv/${measurmentId}`, {
-      params: parameters,
-      responseType: 'blob'
-    })
-      .pipe(
-        catchError(this.handleError<any>())
-      );
+    return this.http
+      .get(`${this.apiUrl}/csv/${measurmentId}`, {
+        params: parameters,
+        responseType: 'blob',
+      })
+      .pipe(catchError(this.handleBlobError<any>()));
   }
 
   /**
-   * Get info of file with given id
+   * Get info of files with given id
    *
    * @param measurmentId number
    *
    * @returns Observable<File>
    */
-  getDadFileInfo(measurmentId: number): Observable<File> {
-    return this.http.get<File>(`${this.apiUrl}/file-name/${measurmentId}`)
-      .pipe(
-        catchError(this.handleError<any>())
-      );
+  getFileInfo(measurmentId: number): Observable<Files> {
+    return this.http
+      .get<File>(`${this.apiUrl}/file-names/${measurmentId}`)
+      .pipe(catchError(this.handleError<any>()));
+  }
+
+  /**
+   * handle error when response type is Blob
+   *
+   * @param result T
+   * @returns any
+   */
+   private handleBlobError<T>(result?: T): any {
+    return async (error: any): Promise<Observable<T>> => {
+      console.error(error); // log to console
+      const message = JSON.parse(await error.error.text()).message;
+      this.log(`${message}`, 400);
+      return of(result as T);
+    };
   }
 
   /**
@@ -115,13 +128,13 @@ export class ExportService {
   private log(messageString: string, httpCode: number): void {
     const message: Message = {
       message: `${messageString}`,
-      code: httpCode
+      code: httpCode,
     };
     this.messagesService.clear();
     this.messagesService.add(message);
   }
 }
 
-export interface File {
-  fileName: string;
+export interface Files {
+  fileNames: string[];
 }

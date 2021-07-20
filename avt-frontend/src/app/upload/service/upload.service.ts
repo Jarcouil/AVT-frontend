@@ -9,7 +9,7 @@ import { environment } from '@environment/environment';
   providedIn: 'root'
 })
 export class UploadService {
-  private apiUrl = `${environment.apiUrl}/file/upload-file`;
+  private apiUrl = `${environment.apiUrl}/file`;
 
   constructor(
     private http: HttpClient,
@@ -23,12 +23,27 @@ export class UploadService {
    * @returns Observable<any>
    */
   postDadFile(uploadForm: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, uploadForm, {observe: 'response'})
+    return this.http.post<any>(`${this.apiUrl}/upload-file`, uploadForm, {observe: 'response'})
       .pipe(
         tap(response => this.log(response.body.message, response.status)),
         catchError(this.handleError<any>('postDadFile'))
       );
   }
+
+  /**
+   * Post dad file to API
+   *
+   * @param uploadForm FormData
+   * @returns Observable<any>
+   */
+   postMetaFile(metaForm: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/meta`, metaForm, {observe: 'response'})
+      .pipe(
+        tap(response => this.log(response.body.message, response.status)),
+        catchError(this.handleError<any>('postDadFile'))
+      );
+  }
+
   /**
    * handle error
    *

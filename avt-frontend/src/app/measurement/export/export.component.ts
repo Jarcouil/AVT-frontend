@@ -16,7 +16,7 @@ import { MultiSelectItem } from '../twodimensionalgraph/twodimensionalgraph.comp
 })
 export class ExportComponent implements OnInit {
   exportForm!: FormGroup;
-  fileName!: string;
+  fileNames!: string[];
   measurement!: Measurement;
   submit = false;
   subscription: Subscription;
@@ -57,7 +57,7 @@ export class ExportComponent implements OnInit {
         if (this.measurement) {
           this.getWavelengths(measurement.id);
           this.getTimestamps(measurement.id);
-          this.exportService.getDadFileInfo(this.measurement.id).subscribe(file => this.fileName = file.fileName);
+          this.exportService.getFileInfo(this.measurement.id).subscribe(files => this.fileNames = files.fileNames);
         }
       });
   }
@@ -88,8 +88,8 @@ export class ExportComponent implements OnInit {
    *
    * @returns void
    */
-  downloadFile(): void {
-    this.exportService.downloadDadFile(this.measurement.id).subscribe(blob => saveAs(blob, this.fileName));
+  downloadFile(file: string): void {
+    this.exportService.downloadFile(this.measurement.id, file).subscribe(blob => saveAs(blob, file));
   }
 
   /**

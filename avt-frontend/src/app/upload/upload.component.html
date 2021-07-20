@@ -1,4 +1,21 @@
 <h4><strong>Nieuwe meting toevoegen</strong></h4>
+<form [formGroup]="metaForm" (ngSubmit)="onMetaSubmit()">
+    <div class="form-group row">
+        <div class="col-md-2">
+            <label for="file">Series.rpt Bestand</label>
+        </div>
+        <div class="col-md-5">
+            <input type="file" class="form-control-file" id="file" formControlName="file" (change)="uploadMetaFile($event)">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-5">
+            <button [ngClass]="{'disabled': metaForm.invalid}" class="btn btn-primary" type="submit">Verwerk .rpt bestand</button>
+        </div>
+    </div>
+
+</form>
+
 <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
 
     <div class="form-group row">
@@ -80,6 +97,15 @@
 
 </form>
 <br>
+
+<div *ngIf="submitMeta && metaForm.controls['file'].invalid" class="alert alert-danger">
+    <div *ngIf="metaForm.controls['file'].errors?.required">
+        Bestand is verplicht
+    </div>
+    <div *ngIf="metaForm.controls['file'].errors?.extension">
+        Bestand moet een .rpt extensie hebben
+    </div>
+</div>
 
 <div *ngIf="submit && uploadForm.controls['file'].invalid" class="alert alert-danger">
     <div *ngIf="uploadForm.controls['file'].errors?.required">
