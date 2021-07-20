@@ -70,6 +70,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
+        this.measurement.samplingRate = measurement.samplingRate / 1000
         this.getRanges();
       }
     );
@@ -137,7 +138,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.twodimensionalgraphService.getTimestampsOfWavelength(this.measurement.id, this.selectedWavelength)
       .subscribe(timestampsOfIdAndWavelength => {
         this.plotAllTimestamps(
-          Object.keys(timestampsOfIdAndWavelength).map(x => +x),
+          Object.keys(timestampsOfIdAndWavelength).map(x => Math.round((+x * this.measurement.samplingRate)*10)/10),
           Object.values(timestampsOfIdAndWavelength).map(x => x.wavelength));
       });
   }

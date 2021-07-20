@@ -115,10 +115,6 @@ export class UploadComponent implements OnInit {
         this.uploadForm.controls.minWaveLength.setValue(response.body.minWaveLength)
         this.uploadForm.controls.maxWaveLength.setValue(response.body.maxWaveLength)
         this.uploadForm.controls.samplingRate.setValue(response.body.samplingPeriod)
-        console.log(response.body.samplingPeriod);
-        console.log(response.body.minWaveLength);
-        console.log(response.body.maxWaveLength);
-
       });
     }
   }
