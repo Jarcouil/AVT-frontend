@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadComponent } from './upload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import {PopoverModule} from "ngx-smart-popover";
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [UploadComponent],
@@ -12,7 +13,8 @@ import {PopoverModule} from "ngx-smart-popover";
     FormsModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
-    PopoverModule 
+    PopoverModule,
+    SharedModule
   ]
 })
 export class UploadModule { }

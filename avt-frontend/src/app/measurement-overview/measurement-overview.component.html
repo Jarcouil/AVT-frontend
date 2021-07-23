@@ -1,87 +1,87 @@
-<div class="d-flex flex-row-reverse"> 
-    <div class="p-2">
-        <select class="form-control" id="page" #mySelect [(ngModel)]="perPage" (change)='refreshMeasurements(1)'>
-            <option [ngValue]="5">5</option>
-            <option [ngValue]="10">10</option>
-            <option [ngValue]="15">15</option>
-            <option [ngValue]="20">20</option>
-            <option [ngValue]="25">25</option>
-        </select>
+<div class="container" style="padding-top: 1rem; padding-bottom: 1rem;">
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <select class="form-control" id="page" #mySelect [(ngModel)]="perPage" (change)='refreshMeasurements(1)'>
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="15">15</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="25">25</option>
+            </select>
+        </div>
+
+        <div class="p-2">
+            <label for="page" style="margin-top: 0.5rem">
+                Items per pagina
+            </label>
+        </div>
+
+        <div *ngIf="isAdmin()" class="p-2">
+            <select class="form-control" #mySelect [(ngModel)]="allMeasurements" (change)='refreshMeasurements(1)'>
+                <option [ngValue]="false">Eigen metingen</option>
+                <option [ngValue]="true">Alle metingen</option>
+            </select>
+        </div>
+        <div class="mr-auto p-2">
+            <h4><strong>Alle metingen</strong></h4>
+        </div>
     </div>
 
-    <div class="p-2">
-        <label for="page" style="margin-top: 0.5rem">
-            Items per pagina
-        </label>
-    </div>
-
-    <div *ngIf="isAdmin()" class="p-2">
-        <select class="form-control" #mySelect [(ngModel)]="allMeasurements" (change)='refreshMeasurements(1)'>
-            <option [ngValue]="false">Eigen metingen</option>
-            <option [ngValue]="true">Alle metingen</option>
-        </select>
-    </div>
-    <div class="mr-auto p-2">
-        <h4><strong>Alle metingen</strong></h4>
-    </div>
-</div>
-
-<table class="table table-striped">
-    <caption>Lijst met metingen</caption>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col" (click)="this.sortMeasurements(this.sorting.id)">ID <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
-            </th>
-            <th scope="col" (click)="this.sortMeasurements(this.sorting.name)">Naam <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.name && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.name && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.name}"></a>
-            </th>
-            <th scope="col" (click)="this.sortMeasurements(this.sorting.description)">Beschrijving <a
-                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.description && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.description && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.description}"></a>
-            </th>
-            <th scope="col" (click)="this.sortMeasurements(this.sorting.samplingRate)">Sampling rate <a
-                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.samplingRate && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.samplingRate && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.samplingRate}"></a>
-            </th>
-            <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
-                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
-            </th>
-            <th scope="col" *ngIf="allMeasurements === true" (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
-                [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdBy && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdBy && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdBy}"></a>
-            </th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let measurement of measurements | paginate
+    <table class="table table-striped">
+        <caption>Lijst met metingen</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.id)">ID <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
+                </th>
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.name)">Naam <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.name && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.name && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.name}"></a>
+                </th>
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.description)">Beschrijving <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.description && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.description && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.description}"></a>
+                </th>
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.samplingRate)">Sampling rate <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.samplingRate && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.samplingRate && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.samplingRate}"></a>
+                </th>
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
+                </th>
+                <th scope="col" *ngIf="allMeasurements === true"
+                    (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdBy && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdBy && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdBy}"></a>
+                </th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let measurement of measurements | paginate
         : {
             itemsPerPage: perPage,
             currentPage: page,
             totalItems: total
           }">
-            <td>{{measurement.id}}</td>
-            <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
-            <td>{{measurement.description}}</td>
-            <td>{{measurement.samplingRate}} ms</td>
-            <td>{{measurement.createdAt | date: 'medium'}}</td>
-            <td *ngIf="allMeasurements == true">{{measurement.username}}</td>
-            <td><button class="btn" (click)="this.deleteMeasurement(measurement)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-trash" viewBox="0 0 16 16">
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                    </svg>
-                </button></td>
-        </tr>
-    </tbody>
-</table>
-<div style="text-align: center; padding-right: 40px;">
-<pagination-controls
-    class="pagi"
-    (pageChange)="refreshMeasurements((page = $event))"
-    [autoHide]="true"
-    [previousLabel]="'Vorige'"
-    [nextLabel]="'Volgende'"
-  ></pagination-controls>
+                <td>{{measurement.id}}</td>
+                <td><a href="measurements/{{measurement.id}}/export">{{measurement.name}}</a></td>
+                <td>{{measurement.description}}</td>
+                <td>{{measurement.samplingRate}} ms</td>
+                <td>{{measurement.createdAt | date: 'medium'}}</td>
+                <td *ngIf="allMeasurements == true">{{measurement.username}}</td>
+                <td><button class="btn" (click)="this.deleteMeasurement(measurement)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                    </button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align: center; padding-right: 40px;">
+        <pagination-controls class="pagi" (pageChange)="refreshMeasurements((page = $event))" [autoHide]="true"
+            [previousLabel]="'Vorige'" [nextLabel]="'Volgende'"></pagination-controls>
+    </div>
+    <app-messages></app-messages>
+
 </div>

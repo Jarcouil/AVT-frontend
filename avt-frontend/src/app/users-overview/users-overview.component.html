@@ -1,85 +1,82 @@
-<div class="d-flex flex-row-reverse">
-    <div class="p-2">
-        <select id="page" class="form-control" #mySelect [(ngModel)]="perPage" (change)='getUsers(1)'>
-            <option [ngValue]="5">5</option>
-            <option [ngValue]="10">10</option>
-            <option [ngValue]="15">15</option>
-            <option [ngValue]="20">20</option>
-            <option [ngValue]="25">25</option>
-        </select>
+<div class="container" style="padding-top: 1rem; padding-bottom: 1rem;">
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <select id="page" class="form-control" #mySelect [(ngModel)]="perPage" (change)='getUsers(1)'>
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="15">15</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="25">25</option>
+            </select>
+        </div>
+        <div class="p-2">
+            <label for="page" style="margin-top: 0.5rem">
+                Items per pagina
+            </label>
+        </div>
+        <div class="mr-auto p-2">
+            <h4><strong>Alle gebruikers</strong></h4>
+        </div>
     </div>
-    <div class="p-2">
-        <label for="page" style="margin-top: 0.5rem">
-            Items per pagina
-        </label>
-    </div>
-    <div class="mr-auto p-2">
-        <h4><strong>Alle gebruikers</strong></h4>
-    </div>
-</div>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col" (click)="this.sortUsers(this.sorting.id)">ID <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
-            </th>
-            <th scope="col" (click)="this.sortUsers(this.sorting.username)">Gebruikersnaam <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.username && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.username && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.username}"></a>
-            </th>
-            <th scope="col" (click)="this.sortUsers(this.sorting.email)">Emailadres <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.email && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.email && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.email}"></a>
-            </th>
-            <th scope="col" (click)="this.sortUsers(this.sorting.isAdmin)">Administrator <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.isAdmin && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.isAdmin && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.isAdmin}"></a>
-            </th>
-            <th scope="col" (click)="this.sortUsers(this.sorting.createdAt)">Gemaakt op <a
-                    [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
-            </th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users | paginate
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" (click)="this.sortUsers(this.sorting.id)">ID <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
+                </th>
+                <th scope="col" (click)="this.sortUsers(this.sorting.username)">Gebruikersnaam <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.username && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.username && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.username}"></a>
+                </th>
+                <th scope="col" (click)="this.sortUsers(this.sorting.email)">Emailadres <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.email && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.email && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.email}"></a>
+                </th>
+                <th scope="col" (click)="this.sortUsers(this.sorting.isAdmin)">Administrator <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.isAdmin && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.isAdmin && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.isAdmin}"></a>
+                </th>
+                <th scope="col" (click)="this.sortUsers(this.sorting.createdAt)">Gemaakt op <a
+                        [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
+                </th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users | paginate
         : {
             itemsPerPage: perPage,
             currentPage: page,
             totalItems: total
           }">
-            <td>{{user.id}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.email}}</td>
-            <td>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id={{user.id.toString()}}
-                        (change)="toggleAdmin(user)" [checked]="user.isAdmin === 1">
-                    <label class="custom-control-label"
-                        for={{user.id.toString()}}>{{getAdminText(user.isAdmin)}}</label>
-                </div>
-            </td>
-            <td>{{user.createdAt | date: 'medium'}}</td>
-            <td>
-                <button class="btn" (click)="this.deleteUser(user)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-trash" viewBox="0 0 16 16">
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                    </svg>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id={{user.id.toString()}}
+                            (change)="toggleAdmin(user)" [checked]="user.isAdmin === 1">
+                        <label class="custom-control-label"
+                            for={{user.id.toString()}}>{{getAdminText(user.isAdmin)}}</label>
+                    </div>
+                </td>
+                <td>{{user.createdAt | date: 'medium'}}</td>
+                <td>
+                    <button class="btn" (click)="this.deleteUser(user)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<div style="text-align: center; padding-right: 40px;">
-    <pagination-controls
-      class="pagi"
-      (pageChange)="getUsers((page = $event))"
-      [autoHide]="true"
-      [previousLabel]="'Vorige'"
-      [nextLabel]="'Volgende'"
-    ></pagination-controls>
+    <div style="text-align: center; padding-right: 40px;">
+        <pagination-controls class="pagi" (pageChange)="getUsers((page = $event))" [autoHide]="true"
+            [previousLabel]="'Vorige'" [nextLabel]="'Volgende'"></pagination-controls>
+    </div>
+    <button class="btn btn-primary" style="margin-right: 10px" routerLink="/account">Terug naar account pagina</button>
 </div>
-<button class="btn btn-primary" style="margin-right: 10px" routerLink="/account">Terug naar account pagina</button>

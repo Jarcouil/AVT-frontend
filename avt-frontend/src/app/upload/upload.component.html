@@ -1,195 +1,198 @@
-<div class="card  bg-light mb-3" style="border-radius: 10px;">
-    <div class="card-header">
-        <h5><strong>
-                Metadata uploaden
-                <button class="btn" style="float: right; padding: 0;"
-                    popover="Wanneer je de Series.rpt bestand van de meting upload, worden de golflengtes en sampling rate uit dit bestand gehaald en worden deze automatisch ingevuld. Dit bestand is te vinden in de subfolder die 'original' of 'modified' genaamd is."
-                    popoverPlacement="bottom-left" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true"
-                    popoverSize="auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-question-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path
-                            d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-                    </svg>
-                </button>
-            </strong></h5>
-    </div>
-    <div class="card-body">
-        <form [formGroup]="metaForm" (ngSubmit)="onMetaSubmit()">
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="file">Series.rpt Bestand</label>
+<div class="container" style="padding-top: 1rem; padding-bottom: 1rem; width: 50rem">
+    <div class="card  bg-light mb-4" style="border-radius: 10px;">
+        <div class="card-header">
+            <h5><strong>
+                    Metadata uploaden
+                    <button class="btn" style="float: right; padding: 0;"
+                        popover="Wanneer je de Series.rpt bestand van de meting upload, worden de golflengtes en sampling rate uit dit bestand gehaald en worden deze automatisch ingevuld. Dit bestand is te vinden in de subfolder die 'original' of 'modified' genaamd is."
+                        popoverPlacement="bottom-left" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true"
+                        popoverSize="auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-question-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                                d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                        </svg>
+                    </button>
+                </strong></h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="metaForm" (ngSubmit)="onMetaSubmit()">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="file">Series.rpt Bestand</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="file" class="form-control-file" id="file" formControlName="file"
+                            (change)="uploadMetaFile($event)">
+                    </div>
                 </div>
-                <div class="col-md-5">
-                    <input type="file" class="form-control-file" id="file" formControlName="file"
-                        (change)="uploadMetaFile($event)">
+                <div class="form-group row" style="margin-bottom: 0px">
+                    <div class="col-md-4">
+                        <button [ngClass]="{'disabled': metaForm.invalid}" class="btn btn-primary" type="submit">Verwerk
+                            bestand</button>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row" style="margin-bottom: 0px">
-                <div class="col-md-5">
-                    <button [ngClass]="{'disabled': metaForm.invalid}" class="btn btn-primary" type="submit">Verwerk
-                        bestand</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="card bg-light mb-3" style="border-radius: 10px;">
-    <div class="card-header">
-        <h5><strong>Meting uploaden</strong></h5>
-    </div>
-    <div class="card-body">
-        <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="file">DAD Bestand</label>
-                </div>
-                <div class="col-md-5">
-                    <input type="file" class="form-control-file" id="file" formControlName="file"
-                        (change)="uploadFile($event)">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="name">
-                        Naam
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <input id="name" type="text" formControlName="name" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="minWaveLength">
-                        Minimale golflengte
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <input id="minWaveLength" type="number" formControlName="minWaveLength" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="maxWaveLength">
-                        Maximale golflengte
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <input id="maxWaveLength" type="number" formControlName="maxWaveLength" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="coefficient">
-                        Coëfficiënt
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <input id="coefficient" type="number" formControlName="coefficient" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="coefficient">
-                        Sampling rate
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <input id="coefficient" type="number" formControlName="samplingRate" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <label for="description">
-                        Beschrijving
-                    </label>
-                </div>
-                <div class="col-md-4">
-                    <textarea id="description" type="text" formControlName="description"
-                        class="form-control"></textarea>
-                </div>
-            </div>
-
-            <button [ngClass]="{'disabled': uploadForm.invalid}" class="btn btn-primary" type="submit">Verwerk
-                bestand</button>
-        </form>
-    </div>
-</div>
-
-<br>
-
-<div *ngIf="submitMeta && metaForm.controls['file'].invalid" class="alert alert-danger">
-    <div *ngIf="metaForm.controls['file'].errors?.required">
-        Bestand is verplicht
-    </div>
-    <div *ngIf="metaForm.controls['file'].errors?.extension">
-        Bestand moet een .rpt extensie hebben
-    </div>
-</div>
-
-<div *ngIf="submit && uploadForm.controls['file'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['file'].errors?.required">
-        Bestand is verplicht
-    </div>
-    <div *ngIf="uploadForm.controls['file'].errors?.extension">
-        Bestand moet een .dad extensie hebben
-    </div>
-</div>
-
-<div *ngIf="submit && uploadForm.controls['name'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['name'].errors?.required">
-        Naam is verplicht
+            </form>
+        </div>
     </div>
 
-</div>
+    <div class="card bg-light mb-4" style="border-radius: 10px;">
+        <div class="card-header">
+            <h5><strong>Meting uploaden</strong></h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="file">DAD Bestand</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="file" class="form-control-file" id="file" formControlName="file"
+                            (change)="uploadFile($event)">
+                    </div>
+                </div>
 
-<div *ngIf="submit && uploadForm.controls['minWaveLength'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.required">
-        Minimale golflengte is verplicht
-    </div>
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.min">
-        Minimale golflengte moet minimaal {{minMinWaveLength}} zijn
-    </div>
-    <div *ngIf="uploadForm.controls['minWaveLength'].errors?.max">
-        Minimale golflengte mag maximaal {{maxMinWaveLength}} zijn
-    </div>
-</div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="name">
+                            Naam
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="name" type="text" formControlName="name" class="form-control">
+                    </div>
+                </div>
 
-<div *ngIf="submit && uploadForm.controls['maxWaveLength'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.required">
-        Maximale golflengte is verplicht
-    </div>
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.min">
-        Maximale golflengte moet minimaal {{minMaxWaveLength}} zijn
-    </div>
-    <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.max">
-        Maximale golflengte mag maximaal {{maxMaxWaveLength}} zijn
-    </div>
-</div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="minWaveLength">
+                            Minimale golflengte
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="minWaveLength" type="number" formControlName="minWaveLength" class="form-control">
+                    </div>
+                </div>
 
-<div *ngIf="submit && uploadForm.controls['coefficient'].invalid" class="alert alert-danger">
-    Coëfficiënt is verplicht
-</div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="maxWaveLength">
+                            Maximale golflengte
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="maxWaveLength" type="number" formControlName="maxWaveLength" class="form-control">
+                    </div>
+                </div>
 
-<div *ngIf="submit && uploadForm.controls['description'].invalid" class="alert alert-danger">
-    <div *ngIf="uploadForm.controls['description'].errors?.required">
-        Beschrijving is verplicht
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="coefficient">
+                            Coëfficiënt
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="coefficient" type="number" formControlName="coefficient" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="coefficient">
+                            Sampling periode
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="coefficient" type="number" formControlName="samplingRate" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="description">
+                            Beschrijving
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <textarea id="description" type="text" formControlName="description"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <button [ngClass]="{'disabled': uploadForm.invalid}" class="btn btn-primary" type="submit">Verwerk
+                    bestand</button>
+            </form>
+        </div>
     </div>
 
-    <div *ngIf="uploadForm.controls['description'].errors?.minLength">
-        Minimale lengte van de beschrijving is 4
-    </div>
-</div>
+    <br>
 
-<div *ngIf="submit && uploadForm.errors?.minLowerThanMaxWaveLengthValidator" class="alert alert-danger">
-    Maximale golflengte mag niet minder zijn dan de minimale golflengte
+    <div *ngIf="submitMeta && metaForm.controls['file'].invalid" class="alert alert-danger">
+        <div *ngIf="metaForm.controls['file'].errors?.required">
+            Bestand is verplicht
+        </div>
+        <div *ngIf="metaForm.controls['file'].errors?.extension">
+            Bestand moet een .rpt extensie hebben
+        </div>
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['file'].invalid" class="alert alert-danger">
+        <div *ngIf="uploadForm.controls['file'].errors?.required">
+            Bestand is verplicht
+        </div>
+        <div *ngIf="uploadForm.controls['file'].errors?.extension">
+            Bestand moet een .dad extensie hebben
+        </div>
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['name'].invalid" class="alert alert-danger">
+        <div *ngIf="uploadForm.controls['name'].errors?.required">
+            Naam is verplicht
+        </div>
+
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['minWaveLength'].invalid" class="alert alert-danger">
+        <div *ngIf="uploadForm.controls['minWaveLength'].errors?.required">
+            Minimale golflengte is verplicht
+        </div>
+        <div *ngIf="uploadForm.controls['minWaveLength'].errors?.min">
+            Minimale golflengte moet minimaal {{minMinWaveLength}} zijn
+        </div>
+        <div *ngIf="uploadForm.controls['minWaveLength'].errors?.max">
+            Minimale golflengte mag maximaal {{maxMinWaveLength}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['maxWaveLength'].invalid" class="alert alert-danger">
+        <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.required">
+            Maximale golflengte is verplicht
+        </div>
+        <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.min">
+            Maximale golflengte moet minimaal {{minMaxWaveLength}} zijn
+        </div>
+        <div *ngIf="uploadForm.controls['maxWaveLength'].errors?.max">
+            Maximale golflengte mag maximaal {{maxMaxWaveLength}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['coefficient'].invalid" class="alert alert-danger">
+        Coëfficiënt is verplicht
+    </div>
+
+    <div *ngIf="submit && uploadForm.controls['description'].invalid" class="alert alert-danger">
+        <div *ngIf="uploadForm.controls['description'].errors?.required">
+            Beschrijving is verplicht
+        </div>
+
+        <div *ngIf="uploadForm.controls['description'].errors?.minLength">
+            Minimale lengte van de beschrijving is 4
+        </div>
+    </div>
+
+    <div *ngIf="submit && uploadForm.errors?.minLowerThanMaxWaveLengthValidator" class="alert alert-danger">
+        Maximale golflengte mag niet minder zijn dan de minimale golflengte
+    </div>
+    <app-messages></app-messages>
 </div>

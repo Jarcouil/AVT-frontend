@@ -2,11 +2,12 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #6b6b6b;
-  max-width: 120px;
-  min-width: 100px;
-  min-height: 42vmax;
+  height: 100%;
+}
+
+.breed{
+  max-width: 80%;
 }
 
 li a {

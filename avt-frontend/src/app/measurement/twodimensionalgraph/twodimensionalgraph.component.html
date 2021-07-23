@@ -1,5 +1,6 @@
 <div id="allWavelengths" #allWavelengths></div>
 <div id="allTimestamps" #allTimestamps></div>
+
 <div class="card  bg-light mb-3" style="border-radius: 10px;">
     <div class="card-body">
 
@@ -10,6 +11,13 @@
 
             <div class="col-md-3">
                 <p>Tijdstippen</p>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+            <div class="col-md-3">
+                <p>Tijdstippen som</p>
             </div>
         </div>
 
@@ -27,10 +35,58 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1"
+            <div class="col-md-2">
+                <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1 || timestampSum.length == 1"
                     (click)="getGraphData()">Selecteren</button>
             </div>
+
+            <div class="col-md-3">
+                <div class="customDropdown">
+                    <angular2-multiselect [data]="timestamps" [(ngModel)]="timestampSum"
+                        [settings]="dropdownSettings2"></angular2-multiselect>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+<div class="card  bg-light mb-3" style="border-radius: 10px;">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 1rem;">
+            <div class="col-md-1 my-auto">Vector A: </div>
+            <div class="col-md-2">
+                <select id="vectorA" class="form-control" [(ngModel)]="vectorA">
+                    <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 my-auto">Vector B: </div>
+            <div class="col-md-2">
+                <select id="vectorB" class="form-control" [(ngModel)]="vectorB">
+                    <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 my-auto">Vector C: </div>
+            <div class="col-md-2">
+                <select id="vectorC" class="form-control" [(ngModel)]="vectorC">
+                    <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" [disabled]="!vectorA || !vectorB || !vectorC"
+                (click)="calculateValues()">Bereken waardes</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 my-auto">aa:</div>
+            <div class="col-md-2"> <input class="form-control" type="text" placeholder="aa" readonly [value]="aa"></div>
+            <div class="col-md-1 my-auto">bb:</div>
+            <div class="col-md-2"> <input class="form-control" type="text" placeholder="bb" readonly [value]="bb"></div>
+            <div class="col-md-1 my-auto">distance:</div>
+            <div class="col-md-2"> <input class="form-control" type="text" placeholder="distance" readonly [value]="distance"></div>
+        </div>
+    </div>
+</div>  

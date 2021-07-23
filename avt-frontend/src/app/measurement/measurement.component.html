@@ -1,18 +1,24 @@
-<div class="sidebar">
-  <ul style="margin-bottom: 0.5rem;">
-    <li>
-      <p>{{measurement?.name}}</p>
-    </li>
-    <li [ngClass]="{'select': selectedTab === 'export'}">
-      <a routerLink="export" (click)="setSelectedTab('export')">Exporteren</a>
-    </li>
-    <li [ngClass]="{'select': selectedTab === '2dgraph'}">
-      <a routerLink="2dgraph" (click)="setSelectedTab('2dgraph')">2D grafieken</a>
-    </li>
-    <li [ngClass]="{'select': selectedTab === '3dgraph'}">
-      <a routerLink="3dgraph" (click)="setSelectedTab('3dgraph')">3D grafiek</a>
-    </li>
-  </ul>  
+<div class="container breed">
+  <div class="row" style="min-height: 42vmax;">
+    <div class="col-2" style="padding-left: 0;">
+      <ul>
+        <li>
+          <p>{{measurement?.name}}</p>
+        </li>
+        <li [ngClass]="{'select': selectedTab === 'export'}">
+          <a routerLink="export" (click)="setSelectedTab('export')">Exporteren</a>
+        </li>
+        <li [ngClass]="{'select': selectedTab === '2dgraph'}">
+          <a routerLink="2dgraph" (click)="setSelectedTab('2dgraph')">2D grafieken</a>
+        </li>
+        <li [ngClass]="{'select': selectedTab === '3dgraph'}">
+          <a routerLink="3dgraph" (click)="setSelectedTab('3dgraph')">3D grafiek</a>
+        </li>
+      </ul>  
+    </div>
+    <div class="col-10" style="padding-top: 1rem;">
+      <router-outlet></router-outlet>
+      <app-messages></app-messages>
+    </div>
+  </div> 
 </div>
-
-<router-outlet></router-outlet>

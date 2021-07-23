@@ -7,6 +7,7 @@ import { ThreedimensionalgraphComponent } from './threedimensionalgraph/threedim
 import { TwodimensionalgraphComponent } from './twodimensionalgraph/twodimensionalgraph.component';
 import { ExportComponent } from './export/export.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     CommonModule,
     MeasurementRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class MeasurementModule { }
