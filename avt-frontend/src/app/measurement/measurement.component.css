@@ -4,6 +4,7 @@ ul {
   padding: 0;
   background-color: #6b6b6b;
   height: 100%;
+  border-radius: 10px 0px 0px 10px;
 }
 
 .breed{
@@ -25,13 +26,15 @@ li p {
   padding: 16px;
   text-decoration: none;
   margin-bottom: 0;
+  border-bottom: 1px solid #c4c4c4;
+
 }
 
 li a:hover {
   background-color: #333333;
 }
 
-li.select {
+li a.select {
   background-color: #333333;
 }
 

@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  public selectedTab: string = 'measurements';
 
   constructor(
     private auth: AuthService,
@@ -22,5 +23,14 @@ export class NavbarComponent {
   logout(): void {
     this.auth.logout();
     this.router.navigate(['login']);
+  }
+
+  /**
+   * set select tab variable
+   *
+   * @param selectedTab string
+   */
+  setSelectedTab(selectedTab: string): void {
+    this.selectedTab = selectedTab;
   }
 }

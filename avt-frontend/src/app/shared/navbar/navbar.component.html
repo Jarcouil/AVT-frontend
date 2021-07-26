@@ -1,14 +1,15 @@
 <ul>
-  <li>
-    <a routerLink="/measurements">Metingen</a>
+  <li><p>AVT</p></li>
+  <li [ngClass]="{'select': selectedTab === 'measurements'}">
+    <a routerLink="/measurements" (click)="setSelectedTab('measurements')">Metingen</a>
   </li>
-  <li>
-    <a routerLink="/upload">Meting toevoegen</a>
+  <li [ngClass]="{'select': selectedTab === 'upload'}">
+    <a routerLink="/upload" (click)="setSelectedTab('upload')">Meting toevoegen</a>
   </li>
 
   <button (click)="logout()" class="btn"> Uitloggen</button>
 
-  <li class="li-right">
-    <a routerLink="/account">Account</a>
+  <li class="li-right" [ngClass]="{'select': selectedTab === 'account'}">
+    <a routerLink="/account" (click)="setSelectedTab('account')" >Account</a>
   </li>
 </ul>

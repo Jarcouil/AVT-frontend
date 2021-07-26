@@ -84,7 +84,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       enableCheckAll: false,
       enableFilterSelectAll: true,
       maxHeight: 450,
-      badgeShowLimit: 5,
+      badgeShowLimit: 3,
       text: '',
       noDataLabel: 'Er zijn geen tijdstippen beschikbaar',
       searchPlaceholderText: 'Zoeken',

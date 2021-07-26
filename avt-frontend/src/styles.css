@@ -10,4 +10,12 @@ body {
 
 .container {
     background-color: white;
+    margin-top: 1rem;
+    border-radius: 10px !important; 
+    border: 1px solid #c4c4c4;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card {
+    border-radius: 10px;
 }

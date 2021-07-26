@@ -1,57 +1,42 @@
 <div id="allWavelengths" #allWavelengths></div>
 <div id="allTimestamps" #allTimestamps></div>
 
-<div class="card  bg-light mb-3" style="border-radius: 10px;">
+<div class="card bg-light mb-3" style="margin-top: 1rem;" >
     <div class="card-body">
-
         <div class="row">
-            <div class="col-md-3">
-                <p>Golflengte</p>
-            </div>
-
-            <div class="col-md-3">
-                <p>Tijdstippen</p>
-            </div>
-
-            <div class="col-md-2">
-            </div>
-
-            <div class="col-md-3">
-                <p>Tijdstippen som</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-1 my-auto" style="padding-right: 0px;">Golflengte: </div>
+            <div class="col-md-2 my-auto">
                 <select class="form-control" [(ngModel)]="selectedWavelength">
                     <option *ngFor="let wavelength of wavelengths" [ngValue]="wavelength">{{wavelength}}</option>
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-1 my-auto" style="padding-right: 0px;">Tijdstippen: </div>
+            <div class="col-md-3 my-auto">
                 <div class="customDropdown">
                     <angular2-multiselect [data]="timestamps" [(ngModel)]="selectedTimestamps"
                         [settings]="dropdownSettings"></angular2-multiselect>
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1 || timestampSum.length == 1"
-                    (click)="getGraphData()">Selecteren</button>
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-md-1 my-auto" style="padding-right: 0px;">Som: </div>
+            <div class="col-md-2 my-auto">
                 <div class="customDropdown">
                     <angular2-multiselect [data]="timestamps" [(ngModel)]="timestampSum"
                         [settings]="dropdownSettings2"></angular2-multiselect>
                 </div>
             </div>
 
+            <div class="col-md-2 my-auto">
+                <button class="btn btn-primary" [disabled]="!selectedWavelength || selectedTimestamps.length < 1 || timestampSum.length == 1"
+                    (click)="getGraphData()">Selecteren</button>
+            </div>
+
         </div>
     </div>
 </div>
 
-<div class="card  bg-light mb-3" style="border-radius: 10px;">
+<div class="card bg-light mb-3">
     <div class="card-body">
         <div class="row" style="margin-bottom: 1rem;">
             <div class="col-md-1 my-auto">Vector A: </div>
