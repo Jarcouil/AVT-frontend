@@ -34,11 +34,9 @@ li a:hover {
   background-color: #333333;
 }
 
-li a.select {
+li.select {
   background-color: #333333;
 }
-
-
 
 .sidebar {
   position: absolute;
