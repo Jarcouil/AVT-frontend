@@ -1,6 +1,8 @@
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthServiceStub } from 'src/mocks/services/auth.service.stub';
+import { AuthService } from '../shared/services/auth.service';
 
 import { MeasurementOverviewComponent } from './measurement-overview.component';
 
@@ -14,7 +16,8 @@ describe('MeasurementOverviewComponent', () => {
       imports: [
         HttpClientModule,
         NgxPaginationModule
-      ]
+      ],
+      providers: [{ provide: AuthService, useClass: AuthServiceStub }],
     })
     .compileComponents();
   });

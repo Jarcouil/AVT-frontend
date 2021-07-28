@@ -62,12 +62,6 @@ export class UsersOverviewServiceStub {
     }
 
     toggleAdmin(id: number){
-        var isAdmin;
-        if (this.users[id-1].isAdmin === 1) {
-            isAdmin = 0
-        } else {
-            isAdmin = 1
-        }
         return of({
             message: 'Succesvol rechten gewijzigd'
         });

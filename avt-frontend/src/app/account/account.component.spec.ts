@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthServiceStub } from 'src/mocks/services/auth.service.stub';
+import { AuthService } from '../shared/services/auth.service';
 
 import { AccountComponent } from './account.component';
 
@@ -8,7 +10,8 @@ describe('AccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountComponent ]
+      declarations: [ AccountComponent ],
+      providers: [{ provide: AuthService, useClass: AuthServiceStub }],
     })
     .compileComponents();
   });
