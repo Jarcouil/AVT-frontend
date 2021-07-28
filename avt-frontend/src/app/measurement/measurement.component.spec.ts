@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { MeasurementComponent } from './measurement.component';
+import { MeasurementService } from './service/measurement.service';
+import { MeasurementServiceStub } from 'src/mocks/services/measurement.service.stub';
 
 describe('MeasurementComponent', () => {
   let component: MeasurementComponent;
@@ -14,7 +16,8 @@ describe('MeasurementComponent', () => {
       imports: [ 
         HttpClientModule,
         RouterModule.forRoot([])
-     ]
+     ],
+     providers: [{ provide: MeasurementService, useClass: MeasurementServiceStub }],
     })
     .compileComponents();
   });

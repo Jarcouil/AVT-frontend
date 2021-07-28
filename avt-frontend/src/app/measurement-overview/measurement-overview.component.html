@@ -31,23 +31,23 @@
         <caption>Lijst met metingen</caption>
         <thead class="thead-dark">
             <tr>
-                <th scope="col" (click)="this.sortMeasurements(this.sorting.id)">ID <a
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.id)">ID<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.id && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.id && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.id}"></a>
                 </th>
-                <th scope="col" (click)="this.sortMeasurements(this.sorting.name)">Naam <a
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.name)">Naam<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.name && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.name && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.name}"></a>
                 </th>
-                <th scope="col" (click)="this.sortMeasurements(this.sorting.description)">Beschrijving <a
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.description)" style="width: 25%">Beschrijving<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.description && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.description && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.description}"></a>
                 </th>
-                <th scope="col" (click)="this.sortMeasurements(this.sorting.samplingRate)">Sampling rate <a
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.samplingRate)">Sampling rate<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.samplingRate && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.samplingRate && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.samplingRate}"></a>
                 </th>
-                <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op <a
+                <th scope="col" (click)="this.sortMeasurements(this.sorting.createdAt)">Gemaakt op<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdAt && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdAt && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdAt}"></a>
                 </th>
                 <th scope="col" *ngIf="allMeasurements === true"
-                    (click)="this.sortMeasurements(this.sorting.createdBy)">Gemaakt door <a
+                    (click)="this.sortMeasurements(this.sorting.createdBy)">Gebruiker<a
                         [ngClass]="{'sort-by-selected-up': this.sort == this.sorting.createdBy && this.order == this.orders.desc, 'sort-by-selected-down': this.sort == this.sorting.createdBy && this.order == this.orders.asc, 'sort-by': this.sort !== this.sorting.createdBy}"></a>
                 </th>
                 <th scope="col"></th>
