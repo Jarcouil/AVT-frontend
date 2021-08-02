@@ -1,8 +1,9 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MeasurementService } from '../service/measurement.service';
 import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/measurement-overview/measurement';
 import { TwodimensionalgraphService } from '../twodimensionalgraph/service/twodimensionalgraph.service';
+import { UrlService } from 'src/app/shared/services/url.service';
 
 declare var Plotly: any;
 
@@ -11,10 +12,7 @@ declare var Plotly: any;
   templateUrl: './threedimensionalgraph.component.html',
   styleUrls: ['./threedimensionalgraph.component.css']
 })
-
 export class ThreedimensionalgraphComponent {
-
-  @ViewChild('threedimensionalGraph') threedimensionalGraph!: ElementRef;
   private data!: {};
 
   chromatograms: Array<Array<number>> = [];
@@ -57,16 +55,28 @@ export class ThreedimensionalgraphComponent {
   constructor(
     private twodimensionalgraphService: TwodimensionalgraphService,
     private measurementService: MeasurementService,
-  ) {
+    private urlService: UrlService
+    ) {
     this.subscription = measurementService.measurement$.subscribe(
       measurement => {
         this.measurement = measurement;
-        this.measurement.samplingRate = measurement.samplingRate / 1000
+        this.measurement.samplingRate = measurement.samplingRate / 1000 // ms --> seconds
         this.getWavelengths(measurement.id);
         this.getTimestamps(measurement.id);
       }
     );
   }
+
+    /**
+   * On init
+   *
+   * @returns void
+   */
+     ngOnInit(): void {
+      if(this.urlService.getPreviousUrl().split('/').pop() === '2dgraph'){
+        window.location.reload();
+      }
+    }
 
   /**
    * Get all data for the graph and plot graph
@@ -168,18 +178,28 @@ export class ThreedimensionalgraphComponent {
       Absorptie: ${this.chromatograms[i][j]}
     `));
 
-    this.data = {
+    this.data = [{
+      colorscale: [
+        ['0.00', '#000000'],
+        ['0.14', '#3F3F3F'],
+        ['0.28', '#5672C7'],
+        ['0.42', '#60A0FF'],
+        ['0.57', '#54FFFF'],
+        ['0.71', '#00AD00'],
+        ['0.85', '#FFBD7A'],
+        ['1.0',    '#E81123'],
+      ],
       x: this.wavelengths,
       y: this.timestamps,
       z: this.chromatograms,
       type: 'surface',
       hoverinfo: 'text',
       text: hoverText,
-    };
+    }];
 
     Plotly.newPlot(
-      this.threedimensionalGraph.nativeElement,
-      [this.data],
+      'threedimensionalGraph',
+      this.data,
       this.layout,
       { displaylogo: false, toImageButtonOptions: { filename: `${this.measurement.name}_3d`}}
     );

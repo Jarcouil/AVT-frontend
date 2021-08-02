@@ -8,6 +8,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { minLowerThanMaxWaveLengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
 import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-lower-than-max-timestamp.directive';
 import { MultiSelectItem } from '../twodimensionalgraph/twodimensionalgraph.component';
+import { UrlService } from 'src/app/shared/services/url.service';
 
 @Component({
   selector: 'app-export',
@@ -34,7 +35,8 @@ export class ExportComponent implements OnInit {
     private exportService: ExportService,
     private measurementService: MeasurementService,
     private formBuilder: FormBuilder,
-  ) {
+    private urlService: UrlService
+    ) {
     this.dropdownSettings = {
       enableSearchFilter: true,
       enableCheckAll: true,
@@ -68,6 +70,10 @@ export class ExportComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
+    const previousUrl = this.urlService.getPreviousUrl().split('/').pop();
+    if(previousUrl === '3dgraph' || previousUrl === '2dgraph'){
+      window.location.reload();
+    }
     this.exportForm = this.createForm();
   }
 
