@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -7,13 +7,24 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  public selectedTab: string = 'measurements';
+export class NavbarComponent implements OnInit {
+  public selectedTab!: string;
 
   constructor(
     private auth: AuthService,
     private router: Router
   ) { }
+
+  /**
+   * On init
+   *
+   * @returns void
+   */
+  ngOnInit(): void {
+    console.log(this.router.routerState.snapshot.url.replace(/\//g,''))
+    this.selectedTab = this.router.routerState.snapshot.url.replace(/\//g,'') || 'measurements';
+  }
+
 
   /**
    * logout and navigate to login page
