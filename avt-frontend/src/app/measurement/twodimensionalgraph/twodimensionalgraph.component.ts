@@ -4,6 +4,8 @@ import { MessagesService } from 'src/app/shared/messages/messages.service';
 import { TwodimensionalgraphService } from './service/twodimensionalgraph.service';
 import { MeasurementService } from '../service/measurement.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { UrlService } from './../../shared/services/url.service';
 
 declare var Plotly: any;
 
@@ -24,9 +26,14 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   wavelengths: number[] = [];
   timestampSum: MultiSelectItem[] = [];
-  vectorA!: string;
-  vectorB!: string;
-  vectorC!: string;
+  vectorAName!: string;
+  vectorBName!: string;
+  vectorCName!: string;
+
+  arrayA: number[] = [];
+  arrayB: number[] = [];
+  arrayC: number[] = [];
+
 
   aa!: number;
   bb!: number;
@@ -77,8 +84,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   constructor(
     private twodimensionalgraphService: TwodimensionalgraphService,
     private messagesService: MessagesService,
-    private measurementService: MeasurementService
-  ) {
+    private measurementService: MeasurementService,
+    private router: Router,
+    private urlService: UrlService
+    ) {
     this.dropdownSettings = {
       enableSearchFilter: true,
       enableCheckAll: false,
@@ -124,6 +133,19 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.messagesService.clear();
+    if(this.urlService.getPreviousUrl().split('/').pop() === '3dgraph'){
+      window.location.reload();
+    }
+  }
+
+  /**
+   * Reload the component
+   */
+   reloadComponent(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
   /**
@@ -132,6 +154,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   getRanges(): void {
+
     this.getWavelengths(this.measurement.id);
     this.getTimestamps(this.measurement.id);
   }
@@ -195,6 +218,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
         this.xData = Object.keys(wavelengthOfTimestamp).map((x) => +x);
         this.yData = Object.values(wavelengthOfTimestamp);
         this.names = Object.values(wavelengthOfTimestamp).pop();
+        this.yData.pop();
+        this.yData.pop();
+        this.setVectors();
+        
         if (this.timestampSum.length > 0) {
           this.getSumTimestamps();
         } else {
@@ -229,10 +256,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   plotAllWavelengths(xData: Array<number>, yData: Array<Array<number>>, names: any): void {
-    yData.pop();
-    yData.pop();
     const data = [];
-    
     for (let i = 0; i < Object.values(yData)[0].length; i++) {
       data.push({
         x: xData,
@@ -241,7 +265,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.setVectors();
     this.allWavelengthsLayout.title = this.getTitleText();
     this.settingsWavelengths.toImageButtonOptions.filename = `${this.measurement.name}_golflengtes`;
     Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settingsWavelengths);
@@ -278,11 +301,43 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   setVectors() {
-    this.vectorA = this.names[0];
-    this.vectorB = this.names[1];
-    this.vectorC = this.names[2];
+    if (!this.vectorAName) { this.vectorAName = this.names[0]; }
+    if (!this.vectorBName) { this.vectorBName = this.names[1]; }
+    if (!this.vectorCName) { this.vectorCName = this.names[2]; }
     if(this.names.length > 2){
       this.calculateValues();
+    }
+  }
+
+  /**
+   * Calculate vector D based on Vectors A, B, C, aa and bb
+   * VectorD = VectorC - VectorA*aa - VectorB*bb 
+   *
+   * @returns void
+   */
+  calculateVectorD(){
+    this.removeVectorD();
+    let arrayAaa = this.arrayA.map(x => x * this.aa);
+    let arrayBbb = this.arrayB.map(x => x * this.bb);
+    for (let i in this.arrayC) {
+      this.yData[i].push(this.arrayC[i] - arrayAaa[i] - arrayBbb[i]);
+    }
+    this.names.push('vectorD')
+    this.plotAllWavelengths(this.xData, this.yData, this.names);
+  }
+
+  /**
+   * Remove VectorD from yData and names if exists
+   *
+   * @returns void
+   */
+  removeVectorD(){
+    let indexOfVectorD = this.names.indexOf('vectorD');
+    if (indexOfVectorD !== -1) {
+      for (let i in this.yData) {
+        this.yData[i].splice(indexOfVectorD, 1);
+      }
+      this.names.splice(indexOfVectorD, 1);  
     }
   }
 
@@ -292,10 +347,10 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   calculateValues(){
-    let arrayA = this.yData.map(y => y[this.names.indexOf(this.vectorA)]);
-    let arrayB = this.yData.map(y => y[this.names.indexOf(this.vectorB)]);
-    let arrayC = this.yData.map(y => y[this.names.indexOf(this.vectorC)]);
-    let values = this.findCo(arrayA, arrayB, arrayC);
+    this.arrayA = this.yData.map(y => y[this.names.indexOf(this.vectorAName)]);
+    this.arrayB = this.yData.map(y => y[this.names.indexOf(this.vectorBName)]);
+    this.arrayC = this.yData.map(y => y[this.names.indexOf(this.vectorCName)]);
+    let values = this.findCo(this.arrayA, this.arrayB, this.arrayC);
     this.aa = values[0];
     this.bb = values[1];
     this.distance = values[2];

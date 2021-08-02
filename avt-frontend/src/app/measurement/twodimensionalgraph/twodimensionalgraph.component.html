@@ -1,6 +1,5 @@
 <div id="allWavelengths" #allWavelengths></div>
 <div id="allTimestamps" #allTimestamps></div>
-
 <div class="card bg-light mb-3" style="margin-top: 1rem;" >
     <div class="card-body">
         <div class="row">
@@ -41,26 +40,26 @@
         <div class="row" style="margin-bottom: 1rem;">
             <div class="col-md-1 my-auto">Vector A: </div>
             <div class="col-md-2">
-                <select id="vectorA" class="form-control" [(ngModel)]="vectorA">
+                <select id="vectorAName" class="form-control" [(ngModel)]="vectorAName">
                     <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
                 </select>
             </div>
 
             <div class="col-md-1 my-auto">Vector B: </div>
             <div class="col-md-2">
-                <select id="vectorB" class="form-control" [(ngModel)]="vectorB">
+                <select id="vectorBName" class="form-control" [(ngModel)]="vectorBName">
                     <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
                 </select>
             </div>
 
             <div class="col-md-1 my-auto">Vector C: </div>
             <div class="col-md-2">
-                <select id="vectorC" class="form-control" [(ngModel)]="vectorC">
+                <select id="vectorCName" class="form-control" [(ngModel)]="vectorCName">
                     <option *ngFor="let name of names" [ngValue]="name">{{name}}</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <button class="btn btn-primary" [disabled]="!vectorA || !vectorB || !vectorC"
+                <button class="btn btn-primary" [disabled]="!vectorAName || !vectorBName || !vectorCName"
                 (click)="calculateValues()">Bereken waardes</button>
             </div>
         </div>
@@ -72,6 +71,10 @@
             <div class="col-md-2"> <input class="form-control" type="text" placeholder="bb" readonly [value]="bb"></div>
             <div class="col-md-1 my-auto">distance:</div>
             <div class="col-md-2"> <input class="form-control" type="text" placeholder="distance" readonly [value]="distance"></div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" [disabled]="!vectorAName || !vectorBName || !vectorCName"
+                (click)="calculateVectorD()">Bereken D</button>
+            </div>
         </div>
     </div>
 </div>  
