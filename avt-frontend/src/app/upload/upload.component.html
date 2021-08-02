@@ -150,7 +150,9 @@
         <div *ngIf="uploadForm.controls['name'].errors?.required">
             Naam is verplicht
         </div>
-
+        <div *ngIf="uploadForm.controls['name'].errors?.pattern">
+            Gebruik alleen letters en nummers
+        </div>
     </div>
 
     <div *ngIf="submit && uploadForm.controls['minWaveLength'].invalid" class="alert alert-danger">

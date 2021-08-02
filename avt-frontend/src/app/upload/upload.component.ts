@@ -126,7 +126,7 @@ export class UploadComponent implements OnInit {
    */
   createForm(): FormGroup {
     return this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]],
       minWaveLength: [[Validators.required, Validators.min(this.minMinWaveLength), Validators.max(this.maxMinWaveLength)]],
       maxWaveLength: [[Validators.required, Validators.min(this.minMaxWaveLength), Validators.max(this.maxMaxWaveLength)]],
       coefficient: [-0.64, Validators.required],
