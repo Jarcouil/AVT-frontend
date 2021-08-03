@@ -79,6 +79,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
       t: 50,
       pad: 4,
     },
+    annotations: []
   };
 
   constructor(
@@ -267,7 +268,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
 
     this.allWavelengthsLayout.title = this.getTitleText();
     this.settingsWavelengths.toImageButtonOptions.filename = `${this.measurement.name}_golflengtes`;
-    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settingsWavelengths);
+    Plotly.newPlot('allWavelengths', data, this.allWavelengthsLayout, this.settingsWavelengths);    
   }
 
   /**
@@ -293,6 +294,33 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.allTimestampsLayout.title = `Alle tijdstippen voor golflengte ${this.selectedWavelength}`;
     this.settingsTimestamps.toImageButtonOptions.filename = `${this.measurement.name}_tijdstippen`;
     Plotly.newPlot('allTimestamps', data, this.allTimestampsLayout, this.settingsTimestamps);
+    this.addAnnotations(data[0])
+  }
+
+  addAnnotations(data: {x: number[], y: number[]}) {
+    const d3colors = Plotly.d3.scale.category10().range();
+    let annotations: Annotation[] = [];
+    const sortedTimestamps = this.selectedTimestamps;
+    sortedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1)
+    let i = 0
+
+    for (let timestamp of sortedTimestamps) {
+      let id = Math.round(timestamp.id / this.measurement.samplingRate)
+      annotations.push({
+        text: timestamp.id.toString(),
+        x: timestamp.id,
+        y: data.y[id],
+        showarrow: true,
+        arrowcolor: d3colors[i],
+        arrowhead: 7,
+        ax: 0,
+        ay: -50,
+      });
+
+      if (i == d3colors.length - 1) { i = 0 } 
+      else { i += 1; }
+    }
+    Plotly.relayout('allTimestamps', {annotations: annotations});
   }
 
   /**
@@ -459,4 +487,15 @@ export interface WavelengthsOfTimestamp {
 export interface MultiSelectItem {
   id: number;
   itemName: number;
+}
+
+export interface Annotation {
+  x: number;
+  y: number;
+  text: string;
+  showarrow?: boolean;
+  arrowhead?: number,
+  ax?: number,
+  ay?: number,
+  arrowcolor?: any,
 }

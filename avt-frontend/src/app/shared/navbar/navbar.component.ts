@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
    * @returns void
    */
   ngOnInit(): void {
-    console.log(this.router.routerState.snapshot.url.replace(/\//g,''))
     this.selectedTab = this.router.routerState.snapshot.url.replace(/\//g,'') || 'measurements';
   }
 
