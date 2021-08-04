@@ -297,7 +297,12 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     this.addAnnotations(data[0])
   }
 
-  addAnnotations(data: {x: number[], y: number[]}) {
+  /**
+   * Add annotations of selected timestamps
+   * 
+   * @returns void
+   */
+  addAnnotations(data: {x: number[], y: number[]}): void {
     const d3colors = Plotly.d3.scale.category10().range();
     let annotations: Annotation[] = [];
     const sortedTimestamps = this.selectedTimestamps;
