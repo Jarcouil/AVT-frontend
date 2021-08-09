@@ -245,7 +245,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
         this.yData[i].push(yValuesSum[i]);
       }
       let name = yValues[yValues.length-1][0] + ' + ' + yValues[yValues.length-1][1]
-      this.names.pop();
       this.names.push(name);
       this.plotAllWavelengths(this.xData, this.yData, this.names);
     });
@@ -309,8 +308,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
     sortedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1)
     let i = 0
 
-    for (let timestamp of sortedTimestamps) {
-      let id = Math.round(timestamp.id / this.measurement.samplingRate)
+    for (const timestamp of sortedTimestamps) {
+      const id = Math.round(timestamp.id / this.measurement.samplingRate)
       annotations.push({
         text: timestamp.id.toString(),
         x: timestamp.id,

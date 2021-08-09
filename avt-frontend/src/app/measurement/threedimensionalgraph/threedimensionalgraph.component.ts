@@ -173,8 +173,8 @@ export class ThreedimensionalgraphComponent {
     const selectedWavelengths = this.getSelectedWavelengths();
 
     const hoverText = selectedTimestamps.map((yi, i) => selectedWavelengths.map((xi, j) => `
-      Golflengte: ${xi}<br>
-      Tijd: ${yi}<br>
+      Golflengte: ${xi}nm<br>
+      Tijd: ${yi}s<br>
       Absorptie: ${this.chromatograms[i][j]}
     `));
 
