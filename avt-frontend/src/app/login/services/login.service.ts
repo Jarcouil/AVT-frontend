@@ -4,9 +4,11 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Message, MessagesService } from 'src/app/shared/messages/messages.service';
 import { environment } from '@environment/environment';
+import { DatePipe } from '@angular/common'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+
 })
 export class LoginService {
 
@@ -14,7 +16,9 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private messagesService: MessagesService) { }
+    private messagesService: MessagesService,
+    private datePipe: DatePipe
+    ) { }
 
   /**
    * login
@@ -39,7 +43,13 @@ export class LoginService {
   private handleError<T>(result?: T): any {
     return (error: any): Observable<T> => {
       console.error(error); // log to console
-      this.log(`${error.error.message}`, 400);
+      if (error.status === 429) {
+        const date = this.datePipe.transform(error.error.error.nextValidRequestDate, 'medium')
+        this.log(`${error.error.error.text} Try again after ${date}`, 400)
+      } else{
+        this.log(`${error.error.message}`, 400);
+
+      }
       return of(result as T);
     };
   }
