@@ -1,47 +1,108 @@
 <div class="card  bg-light mb-3" style="border-radius: 10px; margin-bottom: 0;">
     <div class="card-body">
-        <div class="row">
-            <div class="col-md">
-                <p>Minimale golflengte</p>
+        <form [formGroup]="graphForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md">
+                    <p>Minimale golflengte</p>
+                </div>
+    
+                <div class="col-md">
+                    <p>Maximale golflengte</p>
+                </div>
+    
+                <div class="col-md">
+                    <p>Minimaal tijdstip</p>
+                </div>
+    
+                <div class="col-md">
+                    <p>Maximaal tijdstip</p>
+                </div>
+    
+                <div class="col-md">
+                </div>
             </div>
-
-            <div class="col-md">
-                <p>Maximale golflengte</p>
+    
+            <div class="row">
+                <div class="col-md">
+                    <input type="number" class="form-control" formControlName="minWavelength" min="{{xMin}}" max="{{xMax}}">
+                </div>
+    
+                <div class="col-md">
+                    <input type="number" class="form-control" formControlName="maxWavelength" min="{{xMin}}" max="{{xMax}}">
+                </div>
+    
+                <div class="col-md">
+                    <input type="number" class="form-control" formControlName="minTimestamp" min="{{yMin}}" max="{{yMax}}" step="{{this.measurement?.samplingRate}}">
+                </div>
+    
+                <div class="col-md">
+                    <input type="number" class="form-control" formControlName="maxTimestamp" min="{{yMin}}" max="{{yMax}}" step="{{this.measurement?.samplingRate}}">
+                </div>
+    
+                <div class="col-md">
+                    <button class="btn btn-primary" (click)="onSubmit()" [ngClass]="{'disabled': graphForm.invalid }">Selecteren</button>
+                </div>
             </div>
-
-            <div class="col-md">
-                <p>Minimaal tijdstip</p>
-            </div>
-
-            <div class="col-md">
-                <p>Maximaal tijdstip</p>
-            </div>
-
-            <div class="col-md">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md">
-                <input type="number" class="form-control" [(ngModel)]="xMin">
-            </div>
-
-            <div class="col-md">
-                <input type="number" class="form-control" [(ngModel)]="xMax">
-            </div>
-
-            <div class="col-md">
-                <input type="number" class="form-control" [(ngModel)]="yMin" step="{{this.measurement?.samplingRate}}">
-            </div>
-
-            <div class="col-md">
-                <input type="number" class="form-control" [(ngModel)]="yMax" step="{{this.measurement?.samplingRate}}">
-            </div>
-
-            <div class="col-md">
-                <button class="btn btn-primary" (click)="getData()">Selecteren</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 <div id="threedimensionalGraph" #threedimensionalGraph></div>
+
+
+<div style="margin-top:1rem">
+    <div *ngIf="submit && graphForm.controls['minWavelength'].invalid" class="alert alert-danger">
+        <div *ngIf="graphForm.controls['minWavelength'].errors?.required">
+            Minimale golflengte is verplicht
+        </div>
+        <div *ngIf="graphForm.controls['minWavelength'].errors?.min">
+            Minimale golflengte moet minimaal {{xMin}} zijn
+        </div>
+        <div *ngIf="graphForm.controls['minWavelength'].errors?.max">
+            Minimale golflengte mag maximaal {{xMax}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit  && graphForm.controls['maxWavelength'].invalid" class="alert alert-danger">
+        <div *ngIf="graphForm.controls['maxWavelength'].errors?.required">
+            Maximale golflengte is verplicht
+        </div>
+        <div *ngIf="graphForm.controls['maxWavelength'].errors?.min">
+            Maximale golflengte moet minimaal {{xMin}} zijn
+        </div>
+        <div *ngIf="graphForm.controls['maxWavelength'].errors?.max">
+            Maximale golflengte mag maximaal {{xMax}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit && graphForm.controls['minTimestamp'].invalid" class="alert alert-danger">
+        <div *ngIf="graphForm.controls['minTimestamp'].errors?.required">
+            Minimale tijdstip is verplicht
+        </div>
+        <div *ngIf="graphForm.controls['minTimestamp'].errors?.min">
+            Minimale tijdstip moet minimaal {{yMin}} zijn
+        </div>
+        <div *ngIf="graphForm.controls['minTimestamp'].errors?.max">
+            Minimale tijdstip mag maximaal {{yMax}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit && graphForm.controls['maxTimestamp'].invalid" class="alert alert-danger">
+        <div *ngIf="graphForm.controls['maxTimestamp'].errors?.required">
+            Maximale tijdstip is verplicht
+        </div>
+        <div *ngIf="graphForm.controls['maxTimestamp'].errors?.min">
+            Maximale tijdstip moet minimaal {{yMin}} zijn
+        </div>
+        <div *ngIf="graphForm.controls['maxTimestamp'].errors?.max">
+            Maximale tijdstip mag maximaal {{yMax}} zijn
+        </div>
+    </div>
+
+    <div *ngIf="submit && graphForm.errors?.minLowerThanmaxWavelengthValidator" class="alert alert-danger">
+        Maximale golflengte mag niet minder zijn dan de minimale golflengte
+    </div>
+
+    <div *ngIf="submit && graphForm.errors?.minLowerThanMaxTimestampValidator" class="alert alert-danger">
+        Maximale tijdstip mag niet minder zijn dan het minimale tijdstip
+    </div>
+</div>

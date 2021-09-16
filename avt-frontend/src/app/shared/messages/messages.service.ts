@@ -15,6 +15,9 @@ export class MessagesService {
    * @returns void
    */
   add(message: Message): void {
+    if (message.message == "undefined") {
+      message.message = "Er is een probleem opgetreden."
+    }
     this.messages.push(message);
   }
 

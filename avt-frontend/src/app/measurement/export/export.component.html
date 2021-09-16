@@ -160,13 +160,13 @@
 
     <div *ngIf="submit && exportForm.controls['minTimestamp'].invalid" class="alert alert-danger">
         <div *ngIf="exportForm.controls['minTimestamp'].errors?.required">
-            Maximale golflengte is verplicht
+            Minimale golflengte is verplicht
         </div>
         <div *ngIf="exportForm.controls['minTimestamp'].errors?.min">
-            Maximale golflengte moet minimaal {{minTimestamp}} zijn
+            Minimale golflengte moet minimaal {{minTimestamp}} zijn
         </div>
         <div *ngIf="exportForm.controls['minTimestamp'].errors?.max">
-            Maximale golflengte mag maximaal {{maxTimestamp}} zijn
+            Minimale golflengte mag maximaal {{maxTimestamp}} zijn
         </div>
     </div>
 

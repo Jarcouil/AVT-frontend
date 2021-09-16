@@ -4,7 +4,9 @@ import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/measurement-overview/measurement';
 import { TwodimensionalgraphService } from '../twodimensionalgraph/service/twodimensionalgraph.service';
 import { UrlService } from 'src/app/shared/services/url.service';
-
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { minLowerThanMaxWaveLengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
+import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-lower-than-max-timestamp.directive';
 declare var Plotly: any;
 
 @Component({
@@ -14,6 +16,8 @@ declare var Plotly: any;
 })
 export class ThreedimensionalgraphComponent {
   private data!: {};
+  graphForm!: FormGroup;
+  submit = false;
 
   chromatograms: Array<Array<number>> = [];
   timestamps: number[] = [];
@@ -24,6 +28,10 @@ export class ThreedimensionalgraphComponent {
   xMin!: number;
   yMax!: number;
   yMin!: number;
+  selectedxMax!: number;
+  selectedxMin!: number;
+  selectedyMax!: number;
+  selectedyMin!: number;
 
   layout = {
     autoexpand: 'true',
@@ -36,11 +44,11 @@ export class ThreedimensionalgraphComponent {
       zaxis: { title: 'Absorptie' },
       xaxis: {
         title: 'Golflengte (nm)',
-        range: [this.xMin, this.xMax]
+        range: [this.selectedxMin, this.selectedxMax]
       },
       yaxis: {
         title: 'Tijd (s)',
-        range: [this.yMin, this.yMax]
+        range: [this.selectedyMin, this.selectedyMax]
       },
     margin: {
         l: 50,
@@ -55,6 +63,7 @@ export class ThreedimensionalgraphComponent {
   constructor(
     private twodimensionalgraphService: TwodimensionalgraphService,
     private measurementService: MeasurementService,
+    private formBuilder: FormBuilder,
     private urlService: UrlService
     ) {
     this.subscription = measurementService.measurement$.subscribe(
@@ -67,7 +76,7 @@ export class ThreedimensionalgraphComponent {
     );
   }
 
-    /**
+  /**
    * On init
    *
    * @returns void
@@ -76,7 +85,29 @@ export class ThreedimensionalgraphComponent {
       if(this.urlService.getPreviousUrl().split('/').pop() === '2dgraph'){
         window.location.reload();
       }
+      this.graphForm = this.createForm();
+  }
+
+  /**
+   * Create form
+   *
+   * @returns Formgroup
+   */
+    createForm(): FormGroup {
+      return this.formBuilder.group({
+        minTimestamp: [],
+        maxTimestamp: [],
+        minWavelength: [],
+        maxWavelength: [],
+      }, { validators: [minLowerThanMaxTimestampValidator, minLowerThanMaxWaveLengthValidator] });
+  }
+
+  onSubmit(): void {
+    this.submit = true;
+    if (this.graphForm.valid){
+      this.getData()
     }
+  }
 
   /**
    * Get all data for the graph and plot graph
@@ -84,7 +115,7 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   getData(): void {
-    this.twodimensionalgraphService.getData(this.measurement.id, this.xMin, this.xMax, this.yMin, this.yMax).subscribe(chromatograms => {
+    this.twodimensionalgraphService.getData(this.measurement.id, this.getMinWavelength(), this.getMaxWavelength(), this.getMinTimestamp(), this.getMaxTimestamp()).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
@@ -108,8 +139,9 @@ export class ThreedimensionalgraphComponent {
   getWavelengths(id: number): void {
     this.measurementService.getWavelengths(id).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
-      this.xMin = wavelengths[0];
-      this.xMax = wavelengths[wavelengths.length - 1];
+      this.xMin = this.selectedxMin = wavelengths[0];
+      this.xMax = this.selectedxMax = wavelengths[wavelengths.length - 1];
+      this.setWavelengthValidators();
     });
   }
 
@@ -123,8 +155,9 @@ export class ThreedimensionalgraphComponent {
   getTimestamps(id: number): void {
     this.measurementService.getTimestamps(id).subscribe(timestamps => {
       this.timestamps = timestamps;
-      this.yMin = timestamps[0];
-      this.yMax = timestamps[timestamps.length - 1];
+      this.yMin = this.selectedyMin = timestamps[0];
+      this.yMax = this.selectedyMax = timestamps[timestamps.length - 1];
+      this.setTimestampValidators();
     });
   }
 
@@ -134,8 +167,8 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   updateAxisRange(): void {
-    this.layout.scene.xaxis.range = [this.xMin, this.xMax];
-    this.layout.scene.yaxis.range = [this.yMin, this.yMax];
+    this.layout.scene.xaxis.range = [this.selectedxMin, this.selectedxMax];
+    this.layout.scene.yaxis.range = [this.selectedyMin, this.selectedyMax];
   }
 
   /**
@@ -203,5 +236,88 @@ export class ThreedimensionalgraphComponent {
       this.layout,
       { displaylogo: false, toImageButtonOptions: { filename: `${this.measurement.name}_3d`}}
     );
+  }
+
+  /**
+   * Set wavelength validators
+   *
+   * @returns void
+   */
+   setWavelengthValidators(): void {
+    this.graphForm.get('minWavelength')?.setValue(this.xMin)
+    this.graphForm.get('maxWavelength')?.setValue(this.xMax)
+      this.graphForm.get('minWavelength')?.setValidators(
+      [
+        Validators.required,
+        Validators.min(this.xMin),
+        Validators.max(this.xMax),
+      ]);
+
+    this.graphForm.get('maxWavelength')?.setValidators(
+      [
+        Validators.required,
+        Validators.min(this.xMin),
+        Validators.max(this.xMax),
+      ]);
+    this.graphForm.setValidators([minLowerThanMaxWaveLengthValidator])
+  }
+
+  /**
+   * Set tiemstamp validators
+   *
+   * @returns void
+   */
+  setTimestampValidators(): void {
+    this.graphForm.get('minTimestamp')?.setValue(this.yMin)
+    this.graphForm.get('maxTimestamp')?.setValue(this.yMax)
+    this.graphForm.get('minTimestamp')?.setValidators(
+      [
+        Validators.required,
+        Validators.min(this.yMin),
+        Validators.max(this.yMax),
+      ]);
+
+    this.graphForm.get('maxTimestamp')?.setValidators(
+      [
+        Validators.required,
+        Validators.min(this.yMin),
+        Validators.max(this.yMax),
+      ]);
+  }
+
+  /**
+   * Get minWavelength from graphForm
+   *
+   * @returns number minWavelength
+   */
+   getMinWavelength(): number {
+    return this.graphForm.get('minWavelength')?.value;
+  }
+
+  /**
+   * Get maxWavelength from graphForm
+   *
+   * @returns number maxWavelength
+   */
+  getMaxWavelength(): number {
+    return this.graphForm.get('maxWavelength')?.value;
+  }
+
+  /**
+   * Get minTimestamp from graphForm
+   *
+   * @returns number minTimestamp
+   */
+  getMinTimestamp(): number {
+    return this.graphForm.get('minTimestamp')?.value;
+  }
+
+  /**
+   * Get maxTimestamp from graphForm
+   *
+   * @returns number maxTimestamp
+   */
+  getMaxTimestamp(): number {
+    return this.graphForm.get('maxTimestamp')?.value;
   }
 }
