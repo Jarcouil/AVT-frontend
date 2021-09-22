@@ -131,6 +131,7 @@ export class ExportComponent implements OnInit {
    * Switch wavelength FormControl based on boolean.
    */
   switchWavelengthControl(): void {
+    this.submit = false;
     if (this.exportAsRange) {
       this.exportForm.removeControl('wavelengths')
       this.exportForm.addControl('minWavelength', new FormControl(+this.minWavelength))

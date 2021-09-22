@@ -28,10 +28,6 @@ export class ThreedimensionalgraphComponent {
   xMin!: number;
   yMax!: number;
   yMin!: number;
-  selectedxMax!: number;
-  selectedxMin!: number;
-  selectedyMax!: number;
-  selectedyMin!: number;
 
   layout = {
     autoexpand: 'true',
@@ -44,11 +40,11 @@ export class ThreedimensionalgraphComponent {
       zaxis: { title: 'Absorptie' },
       xaxis: {
         title: 'Golflengte (nm)',
-        range: [this.selectedxMin, this.selectedxMax]
+        range: [this.xMin, this.xMax]
       },
       yaxis: {
         title: 'Tijd (s)',
-        range: [this.selectedyMin, this.selectedyMax]
+        range: [this.yMin, this.yMax]
       },
     margin: {
         l: 50,
@@ -139,8 +135,8 @@ export class ThreedimensionalgraphComponent {
   getWavelengths(id: number): void {
     this.measurementService.getWavelengths(id).subscribe(wavelengths => {
       this.wavelengths = wavelengths;
-      this.xMin = this.selectedxMin = wavelengths[0];
-      this.xMax = this.selectedxMax = wavelengths[wavelengths.length - 1];
+      this.xMin = wavelengths[0];
+      this.xMax = wavelengths[wavelengths.length - 1];
       this.setWavelengthValidators();
     });
   }
@@ -155,8 +151,8 @@ export class ThreedimensionalgraphComponent {
   getTimestamps(id: number): void {
     this.measurementService.getTimestamps(id).subscribe(timestamps => {
       this.timestamps = timestamps;
-      this.yMin = this.selectedyMin = timestamps[0];
-      this.yMax = this.selectedyMax = timestamps[timestamps.length - 1];
+      this.yMin = timestamps[0];
+      this.yMax = timestamps[timestamps.length - 1];
       this.setTimestampValidators();
     });
   }
@@ -167,8 +163,8 @@ export class ThreedimensionalgraphComponent {
    * @returns void
    */
   updateAxisRange(): void {
-    this.layout.scene.xaxis.range = [this.selectedxMin, this.selectedxMax];
-    this.layout.scene.yaxis.range = [this.selectedyMin, this.selectedyMax];
+    this.layout.scene.xaxis.range = [this.getMinWavelength(), this.getMaxWavelength()];
+    this.layout.scene.yaxis.range = [this.getMinTimestamp(), this.getMaxTimestamp()];
   }
 
   /**
@@ -177,7 +173,7 @@ export class ThreedimensionalgraphComponent {
    */
   getSelectedWavelengths(): number[] {
     const selectedWavelengths = [];
-    for (let i = this.xMin; i <= this.xMax; i++) {
+    for (let i = this.getMinWavelength(); i <= this.getMaxWavelength(); i++) {
       selectedWavelengths.push(i);
     }
     return selectedWavelengths;
@@ -189,7 +185,7 @@ export class ThreedimensionalgraphComponent {
    */
   getselectedTimestamps(): number[] {
     const selectedTimestamps = [];
-    for (let i = this.yMin; i <= this.yMax; i = Math.round((i + this.measurement.samplingRate)*10)/10) {
+    for (let i = this.getMinTimestamp(); i <= this.getMaxTimestamp(); i = Math.round((i + this.measurement.samplingRate)*10)/10) {
       selectedTimestamps.push(i);
     }
     return selectedTimestamps;

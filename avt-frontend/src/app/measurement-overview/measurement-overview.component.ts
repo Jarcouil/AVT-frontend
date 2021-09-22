@@ -95,7 +95,11 @@ export class MeasurementOverviewComponent implements OnInit {
    */
   getMeasurementsOfUser(page: any): void {
     this.measurementOverviewService.getMeasurementsOfUser(this.sort, this.order, page, this.perPage)
-    .subscribe(response => this.processResponse(response));
+    .subscribe(response => {
+      if (response !== undefined){
+        this.processResponse(response)
+      }
+    });
   }
 
   /**

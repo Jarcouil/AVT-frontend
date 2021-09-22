@@ -45,7 +45,7 @@ export class LoginService {
       console.error(error); // log to console
       if (error.status === 429) {
         const date = this.datePipe.transform(error.error.error.nextValidRequestDate, 'medium')
-        this.log(`${error.error.error.text} Try again after ${date}`, 400)
+        this.log(`Teveel foutieve inlogpogingen. Probeer opnieuw na ${date}`, 400)
       } else{
         this.log(`${error.error.message}`, 400);
 
