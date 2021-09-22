@@ -267,7 +267,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    */
   getTitleText(): string {
     if (this.selectedTimestamps.length > 1) {
-      this.selectedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1);
+      this.selectedTimestamps.sort((a, b) => (+a.id > +b.id) ? 1 : -1);
       return `Alle golflengtes voor tijdstippen${this.selectedTimestamps.map(timestamp => ' ' + timestamp.id)}`;
     }
     return `Alle golflengtes voor tijdstip ${this.selectedTimestamps[0].id}`;
@@ -294,7 +294,7 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   addAnnotations(data: {x: number[], y: number[]}): void {
     let annotations: Annotation[] = [];
     const sortedTimestamps = this.selectedTimestamps;
-    sortedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1)
+    sortedTimestamps.sort((a, b) => (+a.id > +b.id) ? 1 : -1)
     let i = 0
 
     for (const timestamp of sortedTimestamps) {
