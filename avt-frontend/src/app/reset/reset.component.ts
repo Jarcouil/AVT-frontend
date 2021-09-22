@@ -75,5 +75,4 @@ export class ResetComponent {
   getPassword(): FormGroup {
     return this.resetForm.get('password')?.value;
   }
-
 }

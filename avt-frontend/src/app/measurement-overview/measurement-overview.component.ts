@@ -53,6 +53,7 @@ export class MeasurementOverviewComponent implements OnInit {
    * Sort measurements by selected item
    *
    * @param sortBy string
+   *
    * @returns void
    */
   sortMeasurements(sortBy: string): void {
@@ -76,7 +77,7 @@ export class MeasurementOverviewComponent implements OnInit {
   /**
    * refreshMeasurements on option selected
    *
-   * @params option
+   * @param page any
    *
    * @returns void
    */
@@ -91,6 +92,8 @@ export class MeasurementOverviewComponent implements OnInit {
   /**
    * Get all measuremnts
    *
+   * @param page any
+   *
    * @returns void
    */
   getMeasurementsOfUser(page: any): void {
@@ -104,6 +107,8 @@ export class MeasurementOverviewComponent implements OnInit {
 
   /**
    * Get all measuremnts
+   * 
+   * @param page any
    *
    * @returns void
    */
@@ -114,7 +119,10 @@ export class MeasurementOverviewComponent implements OnInit {
 
   /**
    * Process response of getting measurements
+   *
    * @param response MeasurementResponse
+   *
+   * @returns void
    */
   processResponse(response: MeasurementResponse): void {
     this.measurements = response.data;

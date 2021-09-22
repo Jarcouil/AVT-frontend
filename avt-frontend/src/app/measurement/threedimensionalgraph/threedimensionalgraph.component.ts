@@ -5,7 +5,7 @@ import { Measurement } from 'src/app/measurement-overview/measurement';
 import { TwodimensionalgraphService } from '../twodimensionalgraph/service/twodimensionalgraph.service';
 import { UrlService } from 'src/app/shared/services/url.service';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { minLowerThanMaxWaveLengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
+import { minLowerThanMaxWavelengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
 import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-lower-than-max-timestamp.directive';
 declare var Plotly: any;
 
@@ -29,6 +29,16 @@ export class ThreedimensionalgraphComponent {
   yMax!: number;
   yMin!: number;
 
+  colorscale = [
+    ['0.00', '#000000'],
+    ['0.14', '#3F3F3F'],
+    ['0.28', '#5672C7'],
+    ['0.42', '#60A0FF'],
+    ['0.57', '#54FFFF'],
+    ['0.71', '#00AD00'],
+    ['0.85', '#FFBD7A'],
+    ['1.0',    '#E81123'],
+  ]
   layout = {
     autoexpand: 'true',
     autosize: false,
@@ -77,7 +87,7 @@ export class ThreedimensionalgraphComponent {
    *
    * @returns void
    */
-     ngOnInit(): void {
+  ngOnInit(): void {
       if(this.urlService.getPreviousUrl().split('/').pop() === '2dgraph'){
         window.location.reload();
       }
@@ -89,15 +99,20 @@ export class ThreedimensionalgraphComponent {
    *
    * @returns Formgroup
    */
-    createForm(): FormGroup {
+  createForm(): FormGroup {
       return this.formBuilder.group({
         minTimestamp: [],
         maxTimestamp: [],
         minWavelength: [],
         maxWavelength: [],
-      }, { validators: [minLowerThanMaxTimestampValidator, minLowerThanMaxWaveLengthValidator] });
+      }, { validators: [minLowerThanMaxTimestampValidator, minLowerThanMaxWavelengthValidator] });
   }
 
+  /**
+   * On submit
+   *
+   * @returns void
+   */
   onSubmit(): void {
     this.submit = true;
     if (this.graphForm.valid){
@@ -106,12 +121,18 @@ export class ThreedimensionalgraphComponent {
   }
 
   /**
-   * Get all data for the graph and plot graph
+   * Get all data for the graph
    *
    * @returns void
    */
   getData(): void {
-    this.twodimensionalgraphService.getData(this.measurement.id, this.getMinWavelength(), this.getMaxWavelength(), this.getMinTimestamp(), this.getMaxTimestamp()).subscribe(chromatograms => {
+    this.twodimensionalgraphService.getData(
+      this.measurement.id, 
+      this.getMinWavelength(), 
+      this.getMaxWavelength(), 
+      this.getMinTimestamp(), 
+      this.getMaxTimestamp()
+    ).subscribe(chromatograms => {
       const timestamps: Array<Array<number>> = [];
       for (const chromatogram of chromatograms) {
         const wavelengths: Array<number> = [];
@@ -169,6 +190,7 @@ export class ThreedimensionalgraphComponent {
 
   /**
    * Add all numbers between min and max wavelength to array
+   *
    * @returns number[]
    */
   getSelectedWavelengths(): number[] {
@@ -181,6 +203,7 @@ export class ThreedimensionalgraphComponent {
 
   /**
    * Add all numbers between min and max timestamp to array
+   *
    * @returns number[]
    */
   getselectedTimestamps(): number[] {
@@ -208,16 +231,7 @@ export class ThreedimensionalgraphComponent {
     `));
 
     this.data = [{
-      colorscale: [
-        ['0.00', '#000000'],
-        ['0.14', '#3F3F3F'],
-        ['0.28', '#5672C7'],
-        ['0.42', '#60A0FF'],
-        ['0.57', '#54FFFF'],
-        ['0.71', '#00AD00'],
-        ['0.85', '#FFBD7A'],
-        ['1.0',    '#E81123'],
-      ],
+      colorscale: this.colorscale,
       x: this.wavelengths,
       y: this.timestamps,
       z: this.chromatograms,
@@ -255,7 +269,7 @@ export class ThreedimensionalgraphComponent {
         Validators.min(this.xMin),
         Validators.max(this.xMax),
       ]);
-    this.graphForm.setValidators([minLowerThanMaxWaveLengthValidator])
+    this.graphForm.setValidators([minLowerThanMaxWavelengthValidator])
   }
 
   /**
@@ -286,7 +300,7 @@ export class ThreedimensionalgraphComponent {
    *
    * @returns number minWavelength
    */
-   getMinWavelength(): number {
+  getMinWavelength(): number {
     return this.graphForm.get('minWavelength')?.value;
   }
 

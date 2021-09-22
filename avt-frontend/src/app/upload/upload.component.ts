@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { minLowerThanMaxWaveLengthValidator } from '../shared/directives/min-lower-than-max-wavelength.directive';
+import { minLowerThanMaxWavelengthValidator } from '../shared/directives/min-lower-than-max-wavelength.directive';
 import { MessagesService } from '../shared/messages/messages.service';
 import { UploadService } from './service/upload.service';
 
@@ -133,7 +133,7 @@ export class UploadComponent implements OnInit {
       samplingRate: [Validators.required],
       description: ['', [Validators.required, Validators.minLength(5)]],
       file: [null, [Validators.required, RxwebValidators.extension({ extensions: ['dad'] })]]
-    }, { validators: minLowerThanMaxWaveLengthValidator });
+    }, { validators: minLowerThanMaxWavelengthValidator });
   }
 
   /**
@@ -146,7 +146,7 @@ export class UploadComponent implements OnInit {
       {
         file: [null, [Validators.required, RxwebValidators.extension({ extensions: ['rpt'] })]]
       },
-      { validators: minLowerThanMaxWaveLengthValidator }
+      { validators: minLowerThanMaxWavelengthValidator }
     );
   }
 

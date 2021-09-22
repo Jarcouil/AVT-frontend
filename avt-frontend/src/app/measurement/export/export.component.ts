@@ -5,7 +5,7 @@ import { MeasurementService } from '../service/measurement.service';
 import { ExportService } from './service/export.service';
 import { saveAs } from 'file-saver';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { minLowerThanMaxWaveLengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
+import { minLowerThanMaxWavelengthValidator } from 'src/app/shared/directives/min-lower-than-max-wavelength.directive';
 import { minLowerThanMaxTimestampValidator } from '../../shared/directives/min-lower-than-max-timestamp.directive';
 import { MultiSelectItem } from '../twodimensionalgraph/twodimensionalgraph.component';
 import { UrlService } from 'src/app/shared/services/url.service';
@@ -86,7 +86,7 @@ export class ExportComponent implements OnInit {
       return this.formBuilder.group({
         minTimestamp: [],
         maxTimestamp: [],
-      }, { validators: [minLowerThanMaxTimestampValidator] });
+      });
   }
 
   /**
@@ -116,6 +116,8 @@ export class ExportComponent implements OnInit {
 
   /**
    * Submit request with selected wavelengths
+   *
+   * @returns void
    */
   submitAsSelect(): void {
       const filename = `${this.measurement.name}`;
@@ -129,6 +131,8 @@ export class ExportComponent implements OnInit {
 
   /**
    * Switch wavelength FormControl based on boolean.
+   *
+   * @returns void
    */
   switchWavelengthControl(): void {
     this.submit = false;
@@ -151,6 +155,7 @@ export class ExportComponent implements OnInit {
    */
   onSubmit(): void {
     this.submit = true;
+    console.log(this.exportForm.errors)
     if (this.exportForm.valid){
       if (this.exportAsRange){
         this.submitAsRange();
@@ -217,7 +222,7 @@ export class ExportComponent implements OnInit {
         Validators.min(this.minWavelength),
         Validators.max(this.maxWavelength)
       ]);
-    this.exportForm.setValidators([minLowerThanMaxWaveLengthValidator])
+    this.exportForm.setValidators([minLowerThanMaxTimestampValidator, minLowerThanMaxWavelengthValidator])
   }
 
   /**
@@ -239,7 +244,8 @@ export class ExportComponent implements OnInit {
         Validators.min(this.minTimestamp),
         Validators.max(this.maxTimestamp)
       ]);
-  }
+    this.exportForm.setValidators([minLowerThanMaxTimestampValidator, minLowerThanMaxWavelengthValidator])
+    }
 
   /**
    * Get minWavelength from exportForm

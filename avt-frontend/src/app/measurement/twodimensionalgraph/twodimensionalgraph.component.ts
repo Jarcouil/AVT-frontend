@@ -34,7 +34,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   arrayB: number[] = [];
   arrayC: number[] = [];
 
-
   aa!: number;
   bb!: number;
   distance!: number;
@@ -42,6 +41,8 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   xData: Array<number> = [];
   yData: Array<Array<number>> = [];
   names: any = [];
+
+  d3colors = Plotly.d3.scale.category10().range();
 
   allWavelengthsLayout = {
     autoexpand: 'true',
@@ -140,22 +141,11 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Reload the component
-   */
-   reloadComponent(): void {
-    const currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
-  }
-
-  /**
    * Get ranges of wavelengths and timestamps of current measurement
    *
    * @returns void
    */
   getRanges(): void {
-
     this.getWavelengths(this.measurement.id);
     this.getTimestamps(this.measurement.id);
   }
@@ -302,7 +292,6 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
    * @returns void
    */
   addAnnotations(data: {x: number[], y: number[]}): void {
-    const d3colors = Plotly.d3.scale.category10().range();
     let annotations: Annotation[] = [];
     const sortedTimestamps = this.selectedTimestamps;
     sortedTimestamps.sort((a, b) => (a.id > b.id) ? 1 : -1)
@@ -315,13 +304,13 @@ export class TwodimensionalgraphComponent implements OnInit, OnDestroy {
         x: timestamp.id,
         y: data.y[id],
         showarrow: true,
-        arrowcolor: d3colors[i],
+        arrowcolor: this.d3colors[i],
         arrowhead: 7,
         ax: 0,
         ay: -50,
       });
 
-      if (i == d3colors.length - 1) { i = 0 } 
+      if (i == this.d3colors.length - 1) { i = 0 } // re-iterate over array 
       else { i += 1; }
     }
     Plotly.relayout('allTimestamps', {annotations: annotations});

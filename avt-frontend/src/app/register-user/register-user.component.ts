@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../account/user';
-import { MessagesService } from '../shared/messages/messages.service';
 import { RegisterService } from './service/register.service';
 import { mustMatchValidator } from './../shared/directives/must-match.directive';
 
@@ -15,11 +14,9 @@ export class RegisterUserComponent {
 
   registerForm: FormGroup;
   submit = false;
-  user!: User;
 
   constructor(
     private formBuilder: FormBuilder,
-    private messagesService: MessagesService,
     private registerService: RegisterService,
     private router: Router
     ) {
@@ -31,7 +28,7 @@ export class RegisterUserComponent {
    *
    * @returns void
    */
-   onSubmit(): void {
+  onSubmit(): void {
     this.submit = true;
     if (this.registerForm.valid) {
       const formData: any = new FormData();
@@ -40,9 +37,10 @@ export class RegisterUserComponent {
       formData.append('password', this.getPassword());
       formData.append('confirmPassword', this.getConfirmPassword());
 
-      this.registerService.register(formData).subscribe(user => {
-        this.user = user;
-        this.router.navigate(['/login']);
+      this.registerService.register(formData).subscribe(res => {
+        if (res.status == 200) {
+          this.router.navigate(['/login']);
+        }
       });
     }
   }
