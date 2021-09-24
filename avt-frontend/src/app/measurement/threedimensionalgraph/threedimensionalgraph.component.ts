@@ -196,7 +196,7 @@ export class ThreedimensionalgraphComponent {
   getSelectedWavelengths(): number[] {
     const selectedWavelengths = [];
     for (let i = this.getMinWavelength(); i <= this.getMaxWavelength(); i++) {
-      selectedWavelengths.push(i);
+      selectedWavelengths.push(+i);
     }
     return selectedWavelengths;
   }
@@ -208,8 +208,8 @@ export class ThreedimensionalgraphComponent {
    */
   getselectedTimestamps(): number[] {
     const selectedTimestamps = [];
-    for (let i = this.getMinTimestamp(); i <= this.getMaxTimestamp(); i = Math.round((i + this.measurement.samplingRate)*10)/10) {
-      selectedTimestamps.push(i);
+    for (let i = +this.getMinTimestamp(); i <= +this.getMaxTimestamp(); i = Math.round((i + this.measurement.samplingRate)*10)/10) {
+      selectedTimestamps.push(+i);
     }
     return selectedTimestamps;
   }
