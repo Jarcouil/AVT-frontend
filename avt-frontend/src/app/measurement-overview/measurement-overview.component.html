@@ -65,7 +65,7 @@
                 <td>{{measurement.description}}</td>
                 <td>{{measurement.samplingRate}} ms</td>
                 <td>{{measurement.createdAt | date: 'medium'}}</td>
-                <td *ngIf="allMeasurements == true">{{measurement.username}}</td>
+                <td *ngIf="allMeasurements == true">{{measurement.createdBy}}</td>
                 <td><button class="btn" (click)="this.deleteMeasurement(measurement)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
