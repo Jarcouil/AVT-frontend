@@ -232,8 +232,8 @@ export class ThreedimensionalgraphComponent {
 
     this.data = [{
       colorscale: this.colorscale,
-      x: this.wavelengths,
-      y: this.timestamps,
+      x: this.getSelectedWavelengths(),
+      y: this.getselectedTimestamps(),
       z: this.chromatograms,
       type: 'surface',
       hoverinfo: 'text',
